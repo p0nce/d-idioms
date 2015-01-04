@@ -11,19 +11,69 @@ body
     font-size: 10px;
     display: block;
     color: #bbbbbb;
-    background-color: #ccc
+    background-color: #808087;
 }
 
 .container
 {
-    width: 1000px;
+    width: 1200px;
+    padding: 1em;
     margin: 0 auto;
+    background-color: #99999c;
+}
+
+header
+{
+    width: 1200px;
+    font-size: 2.0em;
+    padding: 0.5em;
+    margin: 0 auto;
+    height: 4em;
+    text-align: center;
+    background-color: #445;
+    font-weight: 700;
+    line-height: 4em;
+    vertical-align: middle;
+}
+nav
+{
+    width: 1200px;
+    font-size: 1.6em;
+    padding: 0.6em;
+    margin: 0 auto;
+    background-color: #88888a;
+    list-style-type: square;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+a
+{
+    color: #404090;
+    font-weight: 700;
+}
+
+a:hover
+{
+    color: #400090;
+}
+
+nav a
+{
+    padding: 0em;
+    margin: 0.5em 5.0em 0.5em 5.0em;
+    display: list-item;
+
 }
 
 h1
 {
-    font-size: 2.0em;
+    font-size: 1.6em;
     padding: 0.5em;
+    color: #444;
 }
 
 .prettyprint
@@ -40,13 +90,11 @@ pre
 
 .idiom
 {
-    border-color: #808080;
-    border-width: 2px;
     font-size: 1.8em;
     color: #222;
-    background-color: #aaa;
-    width: 100%;
-    display: inline-block;
+    background-color: #bbbbb8;
+    display: block;
     padding: 2em;
+    margin: 2em;
 }
 

@@ -5,11 +5,12 @@ Struct inheritance with alias this
 What if we want to decorate an struct with additional features without delegating every method to a member by hand?
 We can't use virtual dispatch since the parent aggregate is a `struct`.
 
-Fortunately The `alias this` feature comes to the rescue!
+Fortunately the `alias this` feature comes to the rescue!
 
 For example, let's write a wrapper around the Phobos `File` struct to write HTML page.
 
 
+    import std.stdio;
     import std.file;
     class HTMLPage
     {
