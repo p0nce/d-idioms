@@ -14,24 +14,16 @@ For example, let's write a wrapper around the Phobos `File` struct to write HTML
     import std.file;
     class HTMLPage
     {
-        public:
-        // subtype of File
+    public:
         File file;
-        alias file this;
+        alias file this; // file's methods are looked at on name lookup.
         this(string path)
         {
-            file = File(path, "w");
+            file = File(path, "w"); // akin to calling parent constructor
         }
-        void push(string anchor)
+        void writeAnchor(string anchor)
         {
-            _anchors ~= anchor;
-            file.write("<" ~ anchor ~ ">");
-        }
-        void pop()
-        {
-            string last = _anchors[$-1];
-            _anchors = _anchors[0..$-1];
-            file.writef("</" ~ last ~ ">");
+            writeln("<" ~ anchor ~ ">"); // will call file.writeln
         }
     }
 
