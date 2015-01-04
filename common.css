@@ -1,0 +1,14 @@
+html
+{
+    height: 100%;    
+}
+
+body
+{    
+    font-family: "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman", "HelveticaNeue-Roman", "Helvetica Neue Roman", 'TeXGyreHerosRegular', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+    font-weight: 400;
+    font-stretch: normal;
+    font-size: 10px;
+    display: block;
+    color: #bbbbbb;
+}

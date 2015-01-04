@@ -1,0 +1,7 @@
+{
+	"name": "d-idioms",
+    "dependencies":
+    {
+        "dmarkdown": "~>0.1.0"
+    }
+}
