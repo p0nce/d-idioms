@@ -2,12 +2,15 @@
 Struct inheritance with alias this
 ==================================
 
-What if we want to decorate an struct with additional features without delegating every method to a member by hand?
+What if we want to decorate a struct with additional features?
 We can't use virtual dispatch since the parent aggregate is a `struct`.
+That means we are on board for extensive manual delegation of method calls to a member.
+
 
 Fortunately the `alias this` feature comes to the rescue!
 
-For example, let's write a wrapper around the Phobos `File` struct to write HTML page.
+
+As an example, let's write a wrapper around the Phobos `File` struct to write HTML page.
 
 
     import std.stdio;
@@ -29,7 +32,7 @@ For example, let's write a wrapper around the Phobos `File` struct to write HTML
 
 When using `HTMLPage` you will still have access to every File method. For example, you'll be able to do:
 
-    htmlPage.writeln("<doctype html");
+    htmlPage.writeln("<doctype html>");
 
 This site uses this idiom.
 

@@ -85,7 +85,9 @@ h1
 pre
 {
     font-family: "Inconsolata", "Courier New", "Courier", monospace, sans-serif;
-    padding: 1em;
+    padding: 0em;
+    margin: 1em;
+    font-size: 0.9em;
 }
 
 .idiom

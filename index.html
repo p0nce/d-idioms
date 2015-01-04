@@ -9,9 +9,43 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 <title>d-idioms</title></head><body><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header>d-idioms: things you might now know about the D Programming Language
-</header><nav><a href="#Qualified-switch-using-with">Qualified switch using with
+</header><nav><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
+</a><a href="#Inheriting-from-Exception">Inheriting from Exception
+</a><a href="#Qualified-switch-using-with">Qualified switch using with
 </a><a href="#Struct-inheritance-with-alias-this">Struct inheritance with alias this
-</a></nav><div class="container"><a name="Qualified-switch-using-with"></a><div class="idiom"><h1>Qualified switch using "with"</h1>
+</a></nav><div class="container"><a name="Embed-a-dynamic-library-in-an-executable"></a><div class="idiom"><h1>Embed a dynamic library in an executable</h1>
+<p>Let's say we want to distribute a stand-alone executable that doesn't need any installation.
+Here we'll see how to embed SDL.dll into an executable.
+</p>
+<pre class="prettyprint"><code>import std.uuid;
+import std.file;
+import std.path;
+import std.string;
+ubyte[] sdlBytes = cast(ubyte[]) import("SDL2.dll");                  // SDL2.dll contents
+void main(string[] args)
+{
+    auto uuid = randomUUID();
+    string filename = format("SDL2-%s.dll", randomUUID().toString()); // Making an unique file name.
+    string depacked = buildPath(tempDir(), filename);
+    std.file.write(depacked, sdlBytes);                               // Writing the dynlib to a temporary file.
+    DerelictSDL2.load(depacked);                                      // Use the depacked dynlib and load its symbols.
+}
+</code></pre><p>A similar trick can be done for embedding fonts, images, etc... without ever dealing with a resource compiler.
+</p>
+</div><a name="Inheriting-from-Exception"></a><div class="idiom"><h1>Inheriting from Exception</h1>
+<p>When in doubt, do it like Phobos!
+</p>
+<pre class="prettyprint"><code>class MyOwnException : Exception
+{
+    public
+    {
+        @safe pure nothrow this(string message, string file =__FILE__, size_t line = __LINE__, Throwable next = null)
+        {
+            super(message, file, line, next);
+        }
+    }
+}
+</code></pre></div><a name="Qualified-switch-using-with"></a><div class="idiom"><h1>Qualified switch using "with"</h1>
 <p>Let's say we have an enum:
 </p>
 <pre class="prettyprint"><code>enum MyEnum
@@ -48,15 +82,16 @@ case huge:
     writeln("huge");
     break;
 }
-</code></pre><p>Found by deadalnix.
+</code></pre><p>This idiom was discovered by deadalnix.
 </p>
 </div><a name="Struct-inheritance-with-alias-this"></a><div class="idiom"><h1>Struct inheritance with alias this</h1>
-<p>What if we want to decorate an struct with additional features without delegating every method to a member by hand?
+<p>What if we want to decorate a struct with additional features?
 We can't use virtual dispatch since the parent aggregate is a <code class="prettyprint">struct</code>.
+That means we are on board for extensive manual delegation of method calls to a member.
 </p>
 <p>Fortunately the <code class="prettyprint">alias this</code> feature comes to the rescue!
 </p>
-<p>For example, let's write a wrapper around the Phobos <code class="prettyprint">File</code> struct to write HTML page.
+<p>As an example, let's write a wrapper around the Phobos <code class="prettyprint">File</code> struct to write HTML page.
 </p>
 <pre class="prettyprint"><code>import std.stdio;
 import std.file;
@@ -76,7 +111,7 @@ public:
 }
 </code></pre><p>When using <code class="prettyprint">HTMLPage</code> you will still have access to every File method. For example, you'll be able to do:
 </p>
-<pre class="prettyprint"><code>htmlPage.writeln("&lt;doctype html");
+<pre class="prettyprint"><code>htmlPage.writeln("&lt;doctype html&gt;");
 </code></pre><p>This site uses this idiom.
 </p>
 </div></div><a href="https://github.com/p0nce/d-idioms/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
