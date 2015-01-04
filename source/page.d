@@ -7,7 +7,6 @@ import dmarkdown;
 class Page
 {
 public:
-
     // subtype of File
     File file;
     alias file this;
