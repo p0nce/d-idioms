@@ -16,7 +16,7 @@ body
 
 .container
 {
-    width: 1200px;
+    width: 1100px;
     padding: 1em;
     margin: 0 auto;
     background-color: #99999c;
@@ -24,7 +24,7 @@ body
 
 header
 {
-    width: 1200px;
+    width: 1100px;
     font-size: 2.0em;
     padding: 0.5em;
     margin: 0 auto;
@@ -37,7 +37,7 @@ header
 }
 nav
 {
-    width: 1200px;
+    width: 1100px;
     font-size: 1.6em;
     padding: 0.6em;
     margin: 0 auto;
@@ -73,6 +73,7 @@ h1
 {
     font-size: 1.6em;
     padding: 0.5em;
+    margin: 0em 0em 1em 0.5em;
     color: #444;
 }
 
@@ -88,15 +89,17 @@ pre
     padding: 0em;
     margin: 1em;
     font-size: 0.9em;
+    line-height: 1.1em;
 }
 
 .idiom
 {
-    font-size: 1.8em;
+    font-size: 1.6em;
     color: #222;
     background-color: #bbbbb8;
     display: block;
     padding: 2em;
     margin: 2em;
+    line-height: 1.5em;
 }
 

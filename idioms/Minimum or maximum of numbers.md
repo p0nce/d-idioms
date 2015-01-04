@@ -1,9 +1,8 @@
-==================
-Minimum or maximum
-==================
+=============================
+Minimum or maximum of numbers
+=============================
 
 `min` and `max` are found in `std.algorithm`, not `std.math`.
-
 
     import std.algorithm : max;
     int a = -5;
@@ -13,3 +12,5 @@ Minimum or maximum
     assert(max_abc == 10.0);
 
 They work with builtin types and any number of arguments.
+
+See: [http://dlang.org/phobos/std_algorithm.html#.min](http://dlang.org/phobos/std_algorithm.html#.min)

@@ -1,0 +1,13 @@
+
+- vibe.d's CloneFunction
+
+https://github.com/rejectedsoftware/vibe.d/blob/master/source/vibe/internal/meta/codegen.d#L272
+
+Ensure a string mixin encodes the right type of function
+
+
+- vibe.d's mixin template foreach
+https://github.com/rejectedsoftware/vibe.d/blob/master/source/vibe/web/rest.d#L832
+
+
+- DUB dub using allMembers

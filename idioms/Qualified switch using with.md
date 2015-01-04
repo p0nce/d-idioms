@@ -30,7 +30,7 @@ Switching on an enum value is annoying and redundant: `MyEnum` has to be repeate
 
 We can work-around this by using `with`:
 
-    final switch(e) with (MyEnum)
+    final switch(enumValue) with (MyEnum)
     {
     case small:
         writeln("small");
