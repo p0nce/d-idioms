@@ -61,7 +61,7 @@ void main(string[] args)
                     writeln("<script>hljs.initHighlightingOnLoad();</script>");
 
                     push("header");
-                        writeln("d-idioms: things you might now know about the D Programming Language");
+                        writeln("D Programming Language idioms");
                     pop;
 
                     push("nav");
@@ -79,6 +79,9 @@ void main(string[] args)
                             push("a", "name=\"" ~ idiom.anchorName() ~ "\"");
                             pop;
                             push("div", "class=\"idiom\"");
+                                push("a", "class=\"permalink\" href=\"#" ~ idiom.anchorName() ~ "\"");
+                                    writeln("Link");
+                                pop;
                                 appendMarkdown(idiom.markdownFile);
                             pop;
                         }

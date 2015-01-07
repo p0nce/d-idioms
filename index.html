@@ -8,14 +8,17 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
 <title>d-idioms</title></head><body><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<header>d-idioms: things you might now know about the D Programming Language
+<header>D Programming Language idioms
 </header><nav><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
+</a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
 </a><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><a href="#Minimum-or-maximum-of-numbers">Minimum or maximum of numbers
+</a><a href="#Patching-a-library-available-on-the-DUB-registry">Patching a library available on the DUB registry
 </a><a href="#Qualified-switch-using-with">Qualified switch using with
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
 </a><a href="#Struct-inheritance-with-alias-this">Struct inheritance with alias this
-</a></nav><div class="container"><a name="Embed-a-dynamic-library-in-an-executable"></a><div class="idiom"><h1>Embed a dynamic library in an executable</h1>
+</a></nav><div class="container"><a name="Embed-a-dynamic-library-in-an-executable"></a><div class="idiom"><a class="permalink" href="#Embed-a-dynamic-library-in-an-executable">Link
+</a><h1>Embed a dynamic library in an executable</h1>
 <p>Let's say we want to distribute a stand-alone executable that doesn't need any installation.
 Here we'll see how to embed SDL.dll into an executable.
 </p>
@@ -23,31 +26,45 @@ Here we'll see how to embed SDL.dll into an executable.
 import std.file;
 import std.path;
 import std.string;
-ubyte[] sdlBytes = cast(ubyte[]) import("SDL2.dll");                  // SDL2.dll contents
+ubyte[] sdlBytes = cast(ubyte[]) import("SDL2.dll");   // SDL2.dll contents
 void main(string[] args)
 {
     auto uuid = randomUUID();
-    string filename = format("SDL2-%s.dll", randomUUID().toString()); // Making an unique file name.
+    string uuid = randomUUID().toString();
+    string filename = format("SDL2-%s.dll", uuid);     // Making an unique file name.
     string depacked = buildPath(tempDir(), filename);
-    std.file.write(depacked, sdlBytes);                               // Writing the dynlib to a temporary file.
-    DerelictSDL2.load(depacked);                                      // Use the depacked dynlib and load its symbols.
+    std.file.write(depacked, sdlBytes);                // Writing the dynlib to a temporary file.
+    DerelictSDL2.load(depacked);                       // Use the depacked dynlib and load its symbols.
 }
 </code></pre><p>A similar trick can be done for embedding fonts, images, etc... without ever dealing with a resource compiler.
 </p>
-</div><a name="Inheriting-from-Exception"></a><div class="idiom"><h1>Inheriting from Exception</h1>
+</div><a name="Ensure-array-access-without-bounds-checking"></a><div class="idiom"><a class="permalink" href="#Ensure-array-access-without-bounds-checking">Link
+</a><h1>Ensure array access without bounds checking</h1>
+<p>Slice indexing can perform bounds check depending on <code class="prettyprint">-boundscheck</code> and <code class="prettyprint">@safe</code>.
+</p>
+<p>But pointer indexing won't ever check bounds.
+</p>
+<pre class="prettyprint"><code>int[] myArray;
+myArray.ptr[index] = 4; // no bounds check, guaranteed
+</code></pre></div><a name="Inheriting-from-Exception"></a><div class="idiom"><a class="permalink" href="#Inheriting-from-Exception">Link
+</a><h1>Inheriting from Exception</h1>
 <p>When in doubt, do it like Phobos!
 </p>
 <pre class="prettyprint"><code>class MyOwnException : Exception
 {
     public
     {
-        @safe pure nothrow this(string message, string file =__FILE__, size_t line = __LINE__, Throwable next = null)
+        @safe pure nothrow this(string message,
+                                string file =__FILE__,
+                                size_t line = __LINE__,
+                                Throwable next = null)
         {
             super(message, file, line, next);
         }
     }
 }
-</code></pre></div><a name="Minimum-or-maximum-of-numbers"></a><div class="idiom"><h1>Minimum or maximum of numbers</h1>
+</code></pre></div><a name="Minimum-or-maximum-of-numbers"></a><div class="idiom"><a class="permalink" href="#Minimum-or-maximum-of-numbers">Link
+</a><h1>Minimum or maximum of numbers</h1>
 <p><code class="prettyprint">min</code> and <code class="prettyprint">max</code> are found in <code class="prettyprint">std.algorithm</code>, not <code class="prettyprint">std.math</code>.
 </p>
 <pre class="prettyprint"><code>import std.algorithm : max;
@@ -60,7 +77,28 @@ assert(max_abc == 10.0);
 </p>
 <p>See: <a href="http://dlang.org/phobos/std_algorithm.html#.min">http://dlang.org/phobos/std_algorithm.html#.min</a>
 </p>
-</div><a name="Qualified-switch-using-with"></a><div class="idiom"><h1>Qualified switch using "with"</h1>
+</div><a name="Patching-a-library-available-on-the-DUB-registry"></a><div class="idiom"><a class="permalink" href="#Patching-a-library-available-on-the-DUB-registry">Link
+</a><h1>Patching a library available on the DUB registry</h1>
+<p>How to patch a <a href="http://code.dlang.org/">DUB</a> library with minimal hassle for users?
+</p>
+<ol>
+<li>Commit your hopefully working fix.
+</li>
+<li>Test it. <code class="prettyprint">dub add-local</code> or <code class="prettyprint">dub test</code> can help to do it without hassle.
+</li>
+<li>Make a git tag. <strong>Please try to respect</strong> <a href="http://semver.org/">SemVer</a> with respect to breaking changes, else you could break an unknown number of already released software.
+</li>
+<li>Push the changes online. I would advise <code class="prettyprint">git push</code> then <code class="prettyprint">git push --tags</code> but to be honest I don't really know why it's better in this order. At this point the fix is online. This is not finished yet!
+</li>
+<li>Login on <a href="http://code.dlang.org">http://code.dlang.org</a> and click on <code class="prettyprint">Trigger manual update</code> button. This will acknowledge the new version and allow downstream to update to the new tag as soon as possible. <strong>Do not skip this step if you want a timely fix.</strong>
+</li>
+<li>If downstream doesn't actually download the latest tag, consider using <code class="prettyprint">dub clean-caches</code> to update the list of available packages.
+</li>
+<li>Your users are now delighted. Enjoy the endorphin rush.
+</li>
+</ol>
+</div><a name="Qualified-switch-using-with"></a><div class="idiom"><a class="permalink" href="#Qualified-switch-using-with">Link
+</a><h1>Qualified switch using "with"</h1>
 <p>Let's say we have an enum:
 </p>
 <pre class="prettyprint"><code>enum MyEnum
@@ -99,14 +137,16 @@ case huge:
 }
 </code></pre><p>This idiom was discovered by deadalnix.
 </p>
-</div><a name="Searching-for-a-substring-position"></a><div class="idiom"><h1>Searching for a substring position</h1>
+</div><a name="Searching-for-a-substring-position"></a><div class="idiom"><a class="permalink" href="#Searching-for-a-substring-position">Link
+</a><h1>Searching for a substring position</h1>
 <p>The <code class="prettyprint">countUntil</code> function in <code class="prettyprint">std.algorithm</code> gives back the index of the first found substring or -1 if missing.
 </p>
 <pre class="prettyprint"><code>import std.algorithm : countUntil;
 assert(countUntil("Hello home sweet home", "home") == 6);
 </code></pre><p>See: <a href="http://dlang.org/phobos/std_algorithm.html#.countUntil">http://dlang.org/phobos/std_algorithm.html#.countUntil</a>
 </p>
-</div><a name="Struct-inheritance-with-alias-this"></a><div class="idiom"><h1>Struct inheritance with alias this</h1>
+</div><a name="Struct-inheritance-with-alias-this"></a><div class="idiom"><a class="permalink" href="#Struct-inheritance-with-alias-this">Link
+</a><h1>Struct inheritance with alias this</h1>
 <p>What if we want to decorate a struct with additional features?
 We can't use virtual dispatch since the parent aggregate is a <code class="prettyprint">struct</code>.
 That means we are on board for extensive manual delegation of method calls to a member.
