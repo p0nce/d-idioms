@@ -8,4 +8,5 @@ D online resources
 - [The D wiki](http://wiki.dlang.org/)
 - [D newsgroup](http://forum.dlang.org/)
 - [DUB registry](http://code.dlang.org/)
+- [Pragmatic D Tutorial](http://qznc.github.io/d-tut/index.html)
 - [D template tutorial by Philippe Sigaud](https://github.com/PhilippeSigaud/D-templates-tutorial/raw/master/D-templates-tutorial.pdf)
