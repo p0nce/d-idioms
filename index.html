@@ -9,7 +9,8 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 <title>d-idioms</title></head><body><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header>D Programming Language idioms
-</header><nav><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
+</header><nav><a href="#D-online-resources">D online resources
+</a><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
 </a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
 </a><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><a href="#Minimum-or-maximum-of-numbers">Minimum or maximum of numbers
@@ -18,7 +19,25 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
 </a><a href="#Struct-inheritance-with-alias-this">Struct inheritance with alias this
-</a></nav><div class="container"><a name="Embed-a-dynamic-library-in-an-executable"></a><div class="idiom"><a class="permalink" href="#Embed-a-dynamic-library-in-an-executable">Link
+</a></nav><div class="container"><a name="D-online-resources"></a><div class="idiom"><a class="permalink" href="#D-online-resources">Link
+</a><h1>D online resources</h1>
+<ul>
+<li><a href="http://wiki.dlang.org/Books">List of available D books</a>
+</li>
+<li><a href="http://rosettacode.org/wiki/Category:D">D page on rosettacode.org</a>
+</li>
+<li><a href="http://dlang.org/phobos/index.html">Phobos documentation</a>
+</li>
+<li><a href="http://wiki.dlang.org/">The D wiki</a>
+</li>
+<li><a href="http://forum.dlang.org/">D newsgroup</a>
+</li>
+<li><a href="http://code.dlang.org/">DUB registry</a>
+</li>
+<li><a href="https://github.com/PhilippeSigaud/D-templates-tutorial/raw/master/D-templates-tutorial.pdf">D template tutorial by Philippe Sigaud</a>
+</li>
+</ul>
+</div><a name="Embed-a-dynamic-library-in-an-executable"></a><div class="idiom"><a class="permalink" href="#Embed-a-dynamic-library-in-an-executable">Link
 </a><h1>Embed a dynamic library in an executable</h1>
 <p>Let's say we want to distribute a stand-alone executable that doesn't need any installation.
 Here we'll see how to embed SDL.dll into an executable.
@@ -37,7 +56,7 @@ void main(string[] args)
     std.file.write(depacked, sdlBytes);                // Writing the dynlib to a temporary file.
     DerelictSDL2.load(depacked);                       // Use the depacked dynlib and load its symbols.
 }
-</code></pre><p>A similar trick can be done for embedding fonts, images, etc... without ever dealing with a resource compiler.
+</code></pre><p>A similar trick can be done for embedding fonts, images, etc... without dealing with a resource compiler.
 </p>
 </div><a name="Ensure-array-access-without-bounds-checking"></a><div class="idiom"><a class="permalink" href="#Ensure-array-access-without-bounds-checking">Link
 </a><h1>Ensure array access without bounds checking</h1>
@@ -159,7 +178,7 @@ assert(indexOf("Hello home sweet home", "home") == 6);
 you want to build an executable.
 </p>
 </div><a name="Struct-inheritance-with-alias-this"></a><div class="idiom"><a class="permalink" href="#Struct-inheritance-with-alias-this">Link
-</a><h1>Struct inheritance with alias this</h1>
+</a><h1>Extending a struct with alias this</h1>
 <p>What if we want to decorate a struct with additional features?
 We can't use virtual dispatch since the parent aggregate is a <code class="prettyprint">struct</code>.
 That means we are on board for extensive manual delegation of method calls to a member.
@@ -170,7 +189,7 @@ That means we are on board for extensive manual delegation of method calls to a 
 </p>
 <pre class="prettyprint"><code>import std.stdio;
 import std.file;
-class HTMLPage
+struct HTMLPage
 {
 public:
     File file;
