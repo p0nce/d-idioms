@@ -16,6 +16,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 </a><a href="#Patching-a-library-available-on-the-DUB-registry">Patching a library available on the DUB registry
 </a><a href="#Qualified-switch-using-with">Qualified switch using with
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
+</a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
 </a><a href="#Struct-inheritance-with-alias-this">Struct inheritance with alias this
 </a></nav><div class="container"><a name="Embed-a-dynamic-library-in-an-executable"></a><div class="idiom"><a class="permalink" href="#Embed-a-dynamic-library-in-an-executable">Link
 </a><h1>Embed a dynamic library in an executable</h1>
@@ -139,11 +140,23 @@ case huge:
 </p>
 </div><a name="Searching-for-a-substring-position"></a><div class="idiom"><a class="permalink" href="#Searching-for-a-substring-position">Link
 </a><h1>Searching for a substring position</h1>
-<p>The <code class="prettyprint">countUntil</code> function in <code class="prettyprint">std.algorithm</code> gives back the index of the first found substring or -1 if missing.
+<p>The <code class="prettyprint">indexOf</code> function in <code class="prettyprint">std.string</code> gives back the index of the first found substring or -1 if missing.
 </p>
-<pre class="prettyprint"><code>import std.algorithm : countUntil;
-assert(countUntil("Hello home sweet home", "home") == 6);
-</code></pre><p>See: <a href="http://dlang.org/phobos/std_algorithm.html#.countUntil">http://dlang.org/phobos/std_algorithm.html#.countUntil</a>
+<pre class="prettyprint"><code>import std.string;
+assert(indexOf("Hello home sweet home", "home") == 6);
+</code></pre><p>See: <a href="http://dlang.org/phobos/std_string.html#.indexOf">http://dlang.org/phobos/std_string.html#.indexOf</a>
+</p>
+</div><a name="Smallest-dub.json-for-an-executable"></a><div class="idiom"><a class="permalink" href="#Smallest-dub.json-for-an-executable">Link
+</a><h1>Smallest dub.json for an executable</h1>
+<p>What DUB options are strictly necessary in a <code class="prettyprint">dub.json</code> file to build an executable?
+</p>
+<p>It turns out only one is necessary:
+</p>
+<pre class="prettyprint"><code>{
+    "name": "program_name"
+}
+</code></pre><p>Place the source code in a <code class="prettyprint">source/main.d</code> file and DUB will find it and guess
+you want to build an executable.
 </p>
 </div><a name="Struct-inheritance-with-alias-this"></a><div class="idiom"><a class="permalink" href="#Struct-inheritance-with-alias-this">Link
 </a><h1>Struct inheritance with alias this</h1>
