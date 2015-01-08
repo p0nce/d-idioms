@@ -17,7 +17,6 @@ As an example, let's write a wrapper around the Phobos `File` struct to write HT
     import std.file;
     struct HTMLPage
     {
-    public:
         File file;
         alias file this; // file's methods are looked at on name lookup.
         this(string path)
