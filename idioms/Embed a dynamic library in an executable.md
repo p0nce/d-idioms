@@ -20,4 +20,5 @@ Here we'll see how to embed SDL.dll into an executable.
         DerelictSDL2.load(depacked);                       // Use the depacked dynlib and load its symbols.
     }
 
-A similar trick can be done for embedding fonts, images, etc... without ever dealing with a resource compiler.
+A similar trick can be done for embedding fonts, images, etc... without dealing with a resource compiler.
+
