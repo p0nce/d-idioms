@@ -1,5 +1,5 @@
 ==================================
-Struct inheritance with alias this
+Extending a struct with alias this
 ==================================
 
 What if we want to decorate a struct with additional features?
@@ -15,7 +15,7 @@ As an example, let's write a wrapper around the Phobos `File` struct to write HT
 
     import std.stdio;
     import std.file;
-    class HTMLPage
+    struct HTMLPage
     {
     public:
         File file;
