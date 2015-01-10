@@ -12,13 +12,16 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 </header><nav><a href="#D-online-resources">D online resources
 </a><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
 </a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
+</a><a href="#Extending-a-struct-with-alias-this">Extending a struct with alias this
 </a><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><a href="#Minimum-or-maximum-of-numbers">Minimum or maximum of numbers
+</a><a href="#Optimal-AA-lookup">Optimal AA lookup
 </a><a href="#Patching-a-library-available-on-the-DUB-registry">Patching a library available on the DUB registry
 </a><a href="#Qualified-switch-using-with">Qualified switch using with
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
-</a><a href="#Struct-inheritance-with-alias-this">Struct inheritance with alias this
+</a><a href="#Static-arrays-are-value-types">Static arrays are value types
+</a><a href="#The-truth-about-shared">The truth about shared
 </a></nav><div class="container"><a name="D-online-resources"></a><div class="idiom"><a class="permalink" href="#D-online-resources">Link
 </a><h1>D online resources</h1>
 <ul>
@@ -33,6 +36,8 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 <li><a href="http://forum.dlang.org/">D newsgroup</a>
 </li>
 <li><a href="http://code.dlang.org/">DUB registry</a>
+</li>
+<li><a href="http://qznc.github.io/d-tut/index.html">Pragmatic D Tutorial</a>
 </li>
 <li><a href="https://github.com/PhilippeSigaud/D-templates-tutorial/raw/master/D-templates-tutorial.pdf">D template tutorial by Philippe Sigaud</a>
 </li>
@@ -66,6 +71,66 @@ void main(string[] args)
 </p>
 <pre class="prettyprint"><code>int[] myArray;
 myArray.ptr[index] = 4; // no bounds check, guaranteed
+</code></pre></div><a name="Extending-a-struct-with-alias-this"></a><div class="idiom"><a class="permalink" href="#Extending-a-struct-with-alias-this">Link
+</a><h1>Extending a struct with alias this</h1>
+<p>What if we want to decorate a struct with additional features?
+We can't use virtual dispatch since the parent aggregate is a <code class="prettyprint">struct</code>.
+That means we are on board for extensive manual delegation of method calls to a member.
+</p>
+<p>Fortunately the <code class="prettyprint">alias this</code> feature comes to the rescue!
+</p>
+<p>As an example, let's write a wrapper around the Phobos <code class="prettyprint">File</code> struct to write HTML page.
+</p>
+<pre class="prettyprint"><code>import std.stdio;
+import std.file;
+struct HTMLPage
+{
+    File file;
+    alias file this; // file's methods are looked at on name lookup.
+    this(string path)
+    {
+        file = File(path, "w"); // akin to calling parent constructor
+    }
+    void writeAnchor(string anchor)
+    {
+        writeln("&lt;" ~ anchor ~ "&gt;"); // will call file.writeln
+    }
+}
+</code></pre><p>When using <code class="prettyprint">HTMLPage</code> you will still have access to every File method. For example, you'll be able to do:
+</p>
+<pre class="prettyprint"><code>htmlPage.writeln("&lt;doctype html&gt;");
+</code></pre><p>This site uses this idiom.
+</p>
+<p><code class="prettyprint">alias this</code> also define an implicit conversion.
+</p>
+<pre class="prettyprint"><code>struct A
+{
+    int a;
+}
+struct B
+{
+    A a;
+    alias a this;
+    string b;
+}
+int f(A a)
+{
+    return a.a+1;
+}
+int g(ref A a)
+{
+    return a.a+1;
+}
+ref A h(ref A a)
+{
+    return a;
+}
+void main(string[]ags)
+{
+    B b;
+    return f(b)  // b implicitely converted to an A
+         + g(b); // b implicitely converted to a ref A
+}
 </code></pre></div><a name="Inheriting-from-Exception"></a><div class="idiom"><a class="permalink" href="#Inheriting-from-Exception">Link
 </a><h1>Inheriting from Exception</h1>
 <p>When in doubt, do it like Phobos!
@@ -97,7 +162,18 @@ assert(max_abc == 10.0);
 </p>
 <p>See: <a href="http://dlang.org/phobos/std_algorithm.html#.min">http://dlang.org/phobos/std_algorithm.html#.min</a>
 </p>
-</div><a name="Patching-a-library-available-on-the-DUB-registry"></a><div class="idiom"><a class="permalink" href="#Patching-a-library-available-on-the-DUB-registry">Link
+</div><a name="Optimal-AA-lookup"></a><div class="idiom"><a class="permalink" href="#Optimal-AA-lookup">Link
+</a><h1>Optimal AA lookup.md</h1>
+<p>When used on an Associative Array, the <code class="prettyprint">in</code> operator returns a pointer to the searched element, or <code class="prettyprint">null</code> if not found.
+</p>
+<p>Instead of:
+</p>
+<pre class="prettyprint"><code>key in aa ? aa[key] : ValueType.init;
+</code></pre><p>which perform 2 AA lookups prefer:
+</p>
+<pre class="prettyprint"><code>auto ptr = key in aa;
+ptr ? *ptr : ValueType.init;
+</code></pre></div><a name="Patching-a-library-available-on-the-DUB-registry"></a><div class="idiom"><a class="permalink" href="#Patching-a-library-available-on-the-DUB-registry">Link
 </a><h1>Patching a library available on the DUB registry</h1>
 <p>How to patch a <a href="http://code.dlang.org/">DUB</a> library with minimal hassle for users?
 </p>
@@ -177,36 +253,36 @@ assert(indexOf("Hello home sweet home", "home") == 6);
 </code></pre><p>Place the source code in a <code class="prettyprint">source/main.d</code> file and DUB will find it and guess
 you want to build an executable.
 </p>
-</div><a name="Struct-inheritance-with-alias-this"></a><div class="idiom"><a class="permalink" href="#Struct-inheritance-with-alias-this">Link
-</a><h1>Extending a struct with alias this</h1>
-<p>What if we want to decorate a struct with additional features?
-We can't use virtual dispatch since the parent aggregate is a <code class="prettyprint">struct</code>.
-That means we are on board for extensive manual delegation of method calls to a member.
+</div><a name="Static-arrays-are-value-types"></a><div class="idiom"><a class="permalink" href="#Static-arrays-are-value-types">Link
+</a><h1>Static arrays are value types</h1>
+<p>It's important to note that static arrays in D are value types.
 </p>
-<p>Fortunately the <code class="prettyprint">alias this</code> feature comes to the rescue!
-</p>
-<p>As an example, let's write a wrapper around the Phobos <code class="prettyprint">File</code> struct to write HTML page.
-</p>
-<pre class="prettyprint"><code>import std.stdio;
-import std.file;
-struct HTMLPage
+<pre class="prettyprint"><code>void addFour(int[16] arr) // The whole of arr is passed on the stack.
 {
-public:
-    File file;
-    alias file this; // file's methods are looked at on name lookup.
-    this(string path)
-    {
-        file = File(path, "w"); // akin to calling parent constructor
-    }
-    void writeAnchor(string anchor)
-    {
-        writeln("&lt;" ~ anchor ~ "&gt;"); // will call file.writeln
-    }
+    arr[] += 4;           // Only the local version is modified.
 }
-</code></pre><p>When using <code class="prettyprint">HTMLPage</code> you will still have access to every File method. For example, you'll be able to do:
+int[16] a;
+f(a);                     // a passed by value on the stack, not by pointer.
+</code></pre><p>That makes such declaration a trap when porting functions from C or C++.
 </p>
-<pre class="prettyprint"><code>htmlPage.writeln("&lt;doctype html&gt;");
-</code></pre><p>This site uses this idiom.
+<p>To pass static arrays by reference, either write a function taking a slice or use ref.
+</p>
+<pre class="prettyprint"><code>void addFive(ref int[16] arr)
+{
+    arr[] += 5;    // Caller parameter modified.
+}
+void addSix(int[] arr)
+{
+    arr[] += 6;    // Caller parameter modified.
+}
+int[16] a;
+f(a);
+g(a);              // Static arrays implicitely convertible to slices.
+</code></pre></div><a name="The-truth-about-shared"></a><div class="idiom"><a class="permalink" href="#The-truth-about-shared">Link
+</a><h1>The truth about shared</h1>
+<p>It's unclear when and how <code class="prettyprint">shared</code> will be implemented.
+</p>
+<p>Virtually noone use <code class="prettyprint">shared</code> currently. You are better off ignoring it at this moment.
 </p>
 </div></div><a href="https://github.com/p0nce/d-idioms/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 </body></html>
