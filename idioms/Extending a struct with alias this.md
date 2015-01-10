@@ -35,3 +35,36 @@ When using `HTMLPage` you will still have access to every File method. For examp
 
 This site uses this idiom.
 
+
+
+`alias this` also define an implicit conversion.
+
+    struct A
+    {
+        int a;
+    }
+    struct B
+    {
+        A a;
+        alias a this;
+        string b;
+    }
+    int f(A a)
+    {
+        return a.a+1;
+    }
+    int g(ref A a)
+    {
+        return a.a+1;
+    }
+    ref A h(ref A a)
+    {
+        return a;
+    }
+    void main(string[]ags)
+    {
+        B b;
+        return f(b)  // b implicitely converted to an A
+             + g(b); // b implicitely converted to a ref A
+    }
+
