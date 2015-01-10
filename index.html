@@ -262,22 +262,22 @@ you want to build an executable.
     arr[] += 4;           // Only the local version is modified.
 }
 int[16] a;
-f(a);                     // a passed by value on the stack, not by pointer.
+addFour(a);               // a passed by value on the stack, not by pointer.
 </code></pre><p>That makes such declaration a trap when porting functions from C or C++.
 </p>
 <p>To pass static arrays by reference, either write a function taking a slice or use ref.
 </p>
 <pre class="prettyprint"><code>void addFive(ref int[16] arr)
 {
-    arr[] += 5;    // Caller parameter modified.
+    arr[] += 5;         // Caller parameter modified.
 }
 void addSix(int[] arr)
 {
-    arr[] += 6;    // Caller parameter modified.
+    arr[] += 6;         // Caller parameter modified.
 }
 int[16] a;
-f(a);
-g(a);              // Static arrays implicitely convertible to slices.
+addFive(a);
+addSix(a);              // Static arrays implicitely convertible to slices.
 </code></pre></div><a name="The-truth-about-shared"></a><div class="idiom"><a class="permalink" href="#The-truth-about-shared">Link
 </a><h1>The truth about shared</h1>
 <p>It's unclear when and how <code class="prettyprint">shared</code> will be implemented.
