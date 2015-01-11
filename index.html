@@ -17,6 +17,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 </a><a href="#Minimum-or-maximum-of-numbers">Minimum or maximum of numbers
 </a><a href="#Optimal-AA-lookup">Optimal AA lookup
 </a><a href="#Patching-a-library-available-on-the-DUB-registry">Patching a library available on the DUB registry
+</a><a href="#Porting-from-C-gotchas">Porting from C gotchas
 </a><a href="#Qualified-switch-using-with">Qualified switch using with
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
@@ -193,6 +194,43 @@ ptr ? *ptr : ValueType.init;
 <li>Your users are now delighted. Enjoy the endorphin rush.
 </li>
 </ol>
+</div><a name="Porting-from-C-gotchas"></a><div class="idiom"><a class="permalink" href="#Porting-from-C-gotchas">Link
+</a><h1>Porting from C gotchas</h1>
+<h2> <code class="prettyprint">long</code> and <code class="prettyprint">unsigned long</code></h2>
+<p>C's <code class="prettyprint">long</code> and <code class="prettyprint">unsigned long</code> have variable size, no builtin type is equivalent in D!
+</p>
+<p>The recommended way is to use <code class="prettyprint">c_long</code> and <code class="prettyprint">c_ulong</code> from module <code class="prettyprint">core.stdc.config</code>.
+</p>
+<pre class="prettyprint"><code>// A C function declaration
+unsigned long countBeans(const long* n)
+</code></pre><pre class="prettyprint"><code>// Equivalent D function declaration
+import core.stdc.config;
+c_ulong countBeans(const(c_long)* n);
+</code></pre><p><code class="prettyprint">c_int</code> and <code class="prettyprint">c_uint</code> also exist to replace <code class="prettyprint">int</code> and <code class="prettyprint">unsigned int</code>, but because they are 32-bits in most architectures, it's usually simply translated with D's <code class="prettyprint">int</code> and <code class="prettyprint">uint</code> instead.
+</p>
+<h2> Multi-dimensional arrays declarations</h2>
+<pre class="prettyprint"><code>// A C array declaration
+int myMatrix[4][2] = { { 1, 2}, { 3, 4}, { 5, 6}, { 7, 8} };
+</code></pre><pre class="prettyprint"><code>// Equivalent D array declaration
+int[2][4] myMatrix = [ [ 1, 2], [ 3, 4], [ 5, 6], [ 7, 8] ];
+</code></pre><h2> Enum values without enum namespace</h2>
+<pre class="prettyprint"><code>// A C enum declaration
+typedef enum
+{
+    STRATEGY_RANDOM,
+    STRATEGY_IMMEDIATE,
+    STRATEGY_SEARCH
+} strategy_t;
+</code></pre><pre class="prettyprint"><code>// Equivalent D enum declaration
+alias strategy_t = int;
+enum : strategy_t
+{
+    STRATEGY_RANDOM,
+    STRATEGY_IMMEDIATE,
+    STRATEGY_SEARCH
+}
+</code></pre><p>This avoids having to write <code class="prettyprint">strategy_t.STRATEGY_IMMEDIATE</code> instead of <code class="prettyprint">STRATEGY_IMMEDIATE</code> when porting C code.
+</p>
 </div><a name="Qualified-switch-using-with"></a><div class="idiom"><a class="permalink" href="#Qualified-switch-using-with">Link
 </a><h1>Qualified switch using "with"</h1>
 <p>Let's say we have an enum:
