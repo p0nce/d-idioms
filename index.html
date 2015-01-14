@@ -9,7 +9,8 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 <title>d-idioms</title></head><body><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header>D Programming Language idioms
-</header><nav><a href="#D-online-resources">D online resources
+</header><nav><a href="#assert(false)-is-special">assert(false) is special
+</a><a href="#D-online-resources">D online resources
 </a><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
 </a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
 </a><a href="#Extending-a-struct-with-alias-this">Extending a struct with alias this
@@ -23,7 +24,24 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
 </a><a href="#Static-arrays-are-value-types">Static arrays are value types
 </a><a href="#The-truth-about-shared">The truth about shared
-</a></nav><div class="container"><a name="D-online-resources"></a><div class="idiom"><a class="permalink" href="#D-online-resources">Link
+</a></nav><div class="container"><a name="assert(false)-is-special"></a><div class="idiom"><a class="permalink" href="#assert(false)-is-special">Link
+</a><h1><code class="prettyprint">assert(false)</code> is special</h1>
+<p><code class="prettyprint">assert(false)</code>, <code class="prettyprint">assert(0)</code>, <code class="prettyprint">assert(null)</code>…… or any other false expression at compile-time do not produce a regular <code class="prettyprint">assert</code>.
+</p>
+<p>Instead it is an instruction to crash the program and is <strong>not</strong> removed in <code class="prettyprint">-release</code> mode.
+</p>
+<pre class="prettyprint"><code>string getStuff()
+{
+    if(expr)
+        return "something";
+    assert(1 &lt; 0); // also possible, but "assert(0)" is typically used
+    // no return needed, since we just crash
+}
+</code></pre><p>An <code class="prettyprint">assert(false)</code> form also mean a branch of a function doesn't need to return something since the program will crash.
+</p>
+<p><strong>It does not mean </strong> <em>unreachable code</em><strong>, and the compiler will never remove it.</strong>
+</p>
+</div><a name="D-online-resources"></a><div class="idiom"><a class="permalink" href="#D-online-resources">Link
 </a><h1>D online resources</h1>
 <ul>
 <li><a href="http://wiki.dlang.org/Books">List of available D books</a>

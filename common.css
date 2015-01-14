@@ -1,6 +1,7 @@
 html
 {
     height: 100%;
+    font-size: 10px;
 }
 
 body
@@ -8,7 +9,6 @@ body
     font-family: "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman", "HelveticaNeue-Roman", "Helvetica Neue Roman", 'TeXGyreHerosRegular', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
     font-weight: 400;
     font-stretch: normal;
-    font-size: 10px;
     display: block;
     color: #bbbbbb;
     background-color: #424040;
@@ -18,10 +18,10 @@ body
 {
     display: block;
     width: 1100px;
-    padding: 0.5em;
+    padding: 0.5rem;
     margin: 0 auto;
     background-color: #bbbbbc;
-    box-shadow: 0.2em 0.4em 1em 0em rgba(32,32,32,0.15);
+    box-shadow: 0.2rem 0.4rem 1rem 0rem rgba(32,32,32,0.15);
 }
 
 .permalink
@@ -34,8 +34,8 @@ body
 header
 {
     width: 1100px;
-    font-size: 2.2em;
-    padding: 0.15em;
+    font-size: 2.2rem;
+    padding: 0.5rem;
     margin: 0 auto;
     height: 4em;
     text-align: center;
@@ -51,8 +51,8 @@ nav
 {
     display: block;
     width: 1100px;
-    font-size: 1.6em;
-    padding: 0.6em;
+    font-size: 1.6rem;
+    padding: 0.5rem;
     margin: 0 auto;
     background-color: #ededef;
     list-style-type: square;
@@ -78,44 +78,49 @@ a:hover
 
 nav a
 {
-    padding: 0.2em;
-    margin: 0.6em 5.0em 0.6em 5.0em;
+    padding: 0.32em;
+    margin: 1rem 8rem 1rem 8rem;
     display: list-item;
 
 }
 
 h1
 {
-    font-size: 1.4em;
-    padding: 0.5em;
-    margin: 0em 0em 1em 0.5em;
+    font-size: 2.38rem;
+    padding: 1.2rem;
+    margin: 0em 0em 2.4rem 1.2rem;
     color: #444;
 }
 
 h2
 {
-    font-size: 1.1em;
-    padding: 0.2em;
-    margin: 1em 0em 0.1em -0.3em;
+    font-size: 1.9rem;
+    padding: 0.34rem;
+    margin: 1.7rem 0rem 0.17rem -0.5rem;
     color: #444;
 }
 
 ol
 {
-    margin: 0.5em;
+    margin: 0.85rem;
 }
 
 li
 {
     display: list-item;
     list-style: square;
-    margin: 0em 0em 0em 2em;
-    padding: 0.2em;
+    margin: 0rem 0rem 0rem 3.4rem;
+    padding: 0.34rem;
 }
 
 strong
 {
     font-weight: 700;
+}
+
+em
+{
+    font-style:italic;
 }
 
 .prettyprint
@@ -127,21 +132,21 @@ strong
 pre
 {
     font-family: "Inconsolata", "Courier New", "Courier", monospace, sans-serif;
-    padding: 0em;
-    margin: 1em;
-    font-size: 0.9em;
-    line-height: 1.1em;
-    box-shadow: inset 0.1em 0.2em 1.0em 0em rgba(0,0,0,0.2);
+    padding: 0rem;
+    margin: 1.7rem;
+    font-size: 1.53rem;
+    line-height: 1.7rem;
+    box-shadow: inset 0.15rem 0.3rem 1.5rem 0rem rgba(0,0,0,0.2);
 }
 .idiom
 {
-    font-size: 1.7em;
+    font-size: 1.7rem;
     color: #222;
     background-color: #ededef;
     display: block;
-    padding: 2.5em;
-    margin: 1.4em;
-    line-height: 1.5em;
-    box-shadow: 0.1em 0.2em 1em 0em rgba(32,32,32,0.15);
+    padding: 4.25rem;
+    margin: 2.4rem;
+    line-height: 2.5rem;
+    box-shadow: 0.17rem 0.34rem 1.7rem 0rem rgba(32,32,32,0.15);
 }
 
