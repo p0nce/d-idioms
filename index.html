@@ -15,6 +15,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 </a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
 </a><a href="#Extending-a-struct-with-alias-this">Extending a struct with alias this
 </a><a href="#Inheriting-from-Exception">Inheriting from Exception
+</a><a href="#Linking-with-C-gotchas">Linking with C gotchas
 </a><a href="#Minimum-or-maximum-of-numbers">Minimum or maximum of numbers
 </a><a href="#Optimal-AA-lookup">Optimal AA lookup
 </a><a href="#Patching-a-library-available-on-the-DUB-registry">Patching a library available on the DUB registry
@@ -170,6 +171,12 @@ void main(string[]ags)
         }
     }
 }
+</code></pre></div><a name="Linking-with-C-gotchas"></a><div class="idiom"><a class="permalink" href="#Linking-with-C-gotchas">Link
+</a><h1>Linking with C gotchas</h1>
+<h2> The little known <code class="prettyprint">pragma(mangle)</code></h2>
+<p><code class="prettyprint">pragma(mangle)</code> is extremely useful when you need to statically link with a C function whose name is a reserved D keyword:
+</p>
+<pre class="prettyprint"><code>pragma(mangle, "version") extern(C) void c_version();
 </code></pre></div><a name="Minimum-or-maximum-of-numbers"></a><div class="idiom"><a class="permalink" href="#Minimum-or-maximum-of-numbers">Link
 </a><h1>Minimum or maximum of numbers</h1>
 <p><code class="prettyprint">min</code> and <code class="prettyprint">max</code> are found in <code class="prettyprint">std.algorithm</code>, not <code class="prettyprint">std.math</code>.
@@ -204,7 +211,7 @@ ptr ? *ptr : ValueType.init;
 </li>
 <li>Test it. <code class="prettyprint">dub add-local</code> or <code class="prettyprint">dub test</code> can help to do it without hassle.
 </li>
-<li>Make a git tag. <strong>Please try to respect</strong> <a href="http://semver.org/">SemVer</a> with respect to breaking changes, else you could break an unknown number of already released software.
+<li>Make a git tag. <strong>Please try to respect</strong> <a href="http://semver.org/">SemVer</a> with respect to breaking changes, else you could break an unknown number of already released software. Also don't name your tag <code class="prettyprint">1.0.0</code> instead of <code class="prettyprint">v1.0.0</code>, else the registry won't take it.
 </li>
 <li>Push the changes online. I would advise <code class="prettyprint">git push</code> then <code class="prettyprint">git push --tags</code> but to be honest I don't really know why it's better in this order. At this point the fix is online. This is not finished yet!
 </li>
@@ -238,7 +245,7 @@ scope(exit) .destroy(obj);
 </p>
 <pre class="prettyprint"><code>// A C global variable
 int my_global_var;
-</code></pre><pre class="prettyprint"><code>// Equivalent D function declaration
+</code></pre><pre class="prettyprint"><code>// Equivalent D global
 __gshared int myGlobalVar;
 </code></pre><h2> <code class="prettyprint">long</code> and <code class="prettyprint">unsigned long</code></h2>
 <p>C's <code class="prettyprint">long</code> and <code class="prettyprint">unsigned long</code> have variable size, no builtin type is equivalent in D!
@@ -276,9 +283,9 @@ enum : strategy_t
 </code></pre><p>This avoids having to write <code class="prettyprint">strategy_t.STRATEGY_IMMEDIATE</code> instead of <code class="prettyprint">STRATEGY_IMMEDIATE</code> when porting C code.
 </p>
 <h2> Anonymous <code class="prettyprint">struct</code> and <code class="prettyprint">union</code></h2>
-<p>Unlike C, D doesn't have anonymouse <code class="prettyprint">struct</code> and <code class="prettyprint">union</code>.
+<p>Unlike C, D doesn't have anonymous <code class="prettyprint">struct</code> and <code class="prettyprint">union</code>.
 </p>
-<pre class="prettyprint"><code>// A C anonymouse struct
+<pre class="prettyprint"><code>// A C anonymous struct
 struct Foo
 {
     struct
@@ -295,9 +302,18 @@ struct Foo
     }
     bar_t bar;
 }
-</code></pre><p>}
+</code></pre><h2> Convert array to pointers explicitely</h2>
+<p>When porting from C you will probably have to spam <code class="prettyprint">.ptr</code> anywhere an array is implicitely converted to a pointer.
 </p>
-</div><a name="Qualified-switch-using-with"></a><div class="idiom"><a class="permalink" href="#Qualified-switch-using-with">Link
+<pre class="prettyprint"><code>// In C
+void sum(const int *array, int n);
+int coeff[16];
+sum(coeff, sizeof(coeff) / sizeof(int));
+</code></pre><pre class="prettyprint"><code>// In D
+void sum(const(int)* array, int n);
+int[16] coeff;
+sum(coeff.ptr, coeff.sizeof / int.sizeof); // array not implicitely convertible to a pointer
+</code></pre></div><a name="Qualified-switch-using-with"></a><div class="idiom"><a class="permalink" href="#Qualified-switch-using-with">Link
 </a><h1>Qualified switch using "with"</h1>
 <p>Let's say we have an enum:
 </p>

@@ -64,9 +64,9 @@ This avoids having to write `strategy_t.STRATEGY_IMMEDIATE` instead of `STRATEGY
 
 ## Anonymous `struct` and `union`
 
-Unlike C, D doesn't have anonymouse `struct` and `union`.
+Unlike C, D doesn't have anonymous `struct` and `union`.
 
-    // A C anonymouse struct
+    // A C anonymous struct
     struct Foo
     {
         struct
@@ -84,4 +84,21 @@ Unlike C, D doesn't have anonymouse `struct` and `union`.
         }
         bar_t bar;
     }
-}
+
+
+## Convert array to pointers explicitely
+
+When porting from C you will probably have to spam `.ptr` anywhere an array is implicitely converted to a pointer.
+
+    // In C
+    void sum(const int *array, int n);
+    int coeff[16];
+    sum(coeff, sizeof(coeff) / sizeof(int));
+
+    // In D
+    void sum(const(int)* array, int n);
+    int[16] coeff;
+    sum(coeff.ptr, coeff.sizeof / int.sizeof); // array not implicitely convertible to a pointer
+
+
+
