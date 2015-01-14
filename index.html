@@ -151,7 +151,9 @@ void main(string[]ags)
     return f(b)  // b implicitely converted to an A
          + g(b); // b implicitely converted to a ref A
 }
-</code></pre></div><a name="Inheriting-from-Exception"></a><div class="idiom"><a class="permalink" href="#Inheriting-from-Exception">Link
+</code></pre><p>As <a href="http://www.amazon.fr/The-Programming-Language-Andrei-Alexandrescu/dp/0321635361">TDPL</a> says it, using <code class="prettyprint">alias this</code> is subtyping.
+</p>
+</div><a name="Inheriting-from-Exception"></a><div class="idiom"><a class="permalink" href="#Inheriting-from-Exception">Link
 </a><h1>Inheriting from Exception</h1>
 <p>When in doubt, do it like Phobos!
 </p>
@@ -231,7 +233,14 @@ scope(exit) .destroy(obj);
 </p>
 </div><a name="Porting-from-C-gotchas"></a><div class="idiom"><a class="permalink" href="#Porting-from-C-gotchas">Link
 </a><h1>Porting from C gotchas</h1>
-<h2> <code class="prettyprint">long</code> and <code class="prettyprint">unsigned long</code></h2>
+<h2> Globals must be marked <code class="prettyprint">__gshared</code></h2>
+<p>Variables at global scope are in Thread Local Storage (TLS) unless qualified with <code class="prettyprint">shared</code> or <code class="prettyprint">__gshared</code>. You are <a href="#The-truth-about-shared">probably</a> wanting to use <code class="prettyprint">__gshared</code>.
+</p>
+<pre class="prettyprint"><code>// A C global variable
+int my_global_var;
+</code></pre><pre class="prettyprint"><code>// Equivalent D function declaration
+__gshared int myGlobalVar;
+</code></pre><h2> <code class="prettyprint">long</code> and <code class="prettyprint">unsigned long</code></h2>
 <p>C's <code class="prettyprint">long</code> and <code class="prettyprint">unsigned long</code> have variable size, no builtin type is equivalent in D!
 </p>
 <p>The recommended way is to use <code class="prettyprint">c_long</code> and <code class="prettyprint">c_ulong</code> from module <code class="prettyprint">core.stdc.config</code>.
@@ -265,6 +274,28 @@ enum : strategy_t
     STRATEGY_SEARCH
 }
 </code></pre><p>This avoids having to write <code class="prettyprint">strategy_t.STRATEGY_IMMEDIATE</code> instead of <code class="prettyprint">STRATEGY_IMMEDIATE</code> when porting C code.
+</p>
+<h2> Anonymous <code class="prettyprint">struct</code> and <code class="prettyprint">union</code></h2>
+<p>Unlike C, D doesn't have anonymouse <code class="prettyprint">struct</code> and <code class="prettyprint">union</code>.
+</p>
+<pre class="prettyprint"><code>// A C anonymouse struct
+struct Foo
+{
+    struct
+    {
+        int x;
+    } bar;
+};
+</code></pre><pre class="prettyprint"><code>// Equivalent D
+struct Foo
+{
+    private struct bar_t
+    {
+        int x;
+    }
+    bar_t bar;
+}
+</code></pre><p>}
 </p>
 </div><a name="Qualified-switch-using-with"></a><div class="idiom"><a class="permalink" href="#Qualified-switch-using-with">Link
 </a><h1>Qualified switch using "with"</h1>

@@ -68,3 +68,4 @@ This site uses this idiom.
              + g(b); // b implicitely converted to a ref A
     }
 
+As [TDPL](http://www.amazon.fr/The-Programming-Language-Andrei-Alexandrescu/dp/0321635361) says it, using `alias this` is subtyping.

@@ -2,6 +2,18 @@
 Porting from C gotchas
 ======================
 
+## Globals must be marked `__gshared`
+
+Variables at global scope are in Thread Local Storage (TLS) unless qualified with `shared` or `__gshared`. You are [probably](#The-truth-about-shared) wanting to use `__gshared`.
+
+
+    // A C global variable
+    int my_global_var;
+
+    // Equivalent D function declaration
+    __gshared int myGlobalVar;
+
+
 ## `long` and `unsigned long`
 
 C's `long` and `unsigned long` have variable size, no builtin type is equivalent in D!
@@ -50,3 +62,26 @@ The recommended way is to use `c_long` and `c_ulong` from module `core.stdc.conf
 This avoids having to write `strategy_t.STRATEGY_IMMEDIATE` instead of `STRATEGY_IMMEDIATE` when porting C code.
 
 
+## Anonymous `struct` and `union`
+
+Unlike C, D doesn't have anonymouse `struct` and `union`.
+
+    // A C anonymouse struct
+    struct Foo
+    {
+        struct
+        {
+            int x;
+        } bar;
+    };
+
+    // Equivalent D
+    struct Foo
+    {
+        private struct bar_t
+        {
+            int x;
+        }
+        bar_t bar;
+    }
+}
