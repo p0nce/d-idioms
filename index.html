@@ -18,6 +18,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 </a><a href="#Minimum-or-maximum-of-numbers">Minimum or maximum of numbers
 </a><a href="#Optimal-AA-lookup">Optimal AA lookup
 </a><a href="#Patching-a-library-available-on-the-DUB-registry">Patching a library available on the DUB registry
+</a><a href="#Placement-new-with-emplace">Placement new with emplace
 </a><a href="#Porting-from-C-gotchas">Porting from C gotchas
 </a><a href="#Qualified-switch-using-with">Qualified switch using with
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
@@ -39,7 +40,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 }
 </code></pre><p>An <code class="prettyprint">assert(false)</code> form also mean a branch of a function doesn't need to return something since the program will crash.
 </p>
-<p><strong>It does not mean </strong> <em>unreachable code</em><strong>, and the compiler will never remove it.</strong>
+<p><strong>It does not mean </strong> <em>unreachable code</em><strong>, it means </strong> <em>crash now</em> <strong> and the compiler will never remove it.</strong>
 </p>
 </div><a name="D-online-resources"></a><div class="idiom"><a class="permalink" href="#D-online-resources">Link
 </a><h1>D online resources</h1>
@@ -212,6 +213,22 @@ ptr ? *ptr : ValueType.init;
 <li>Your users are now delighted. Enjoy the endorphin rush.
 </li>
 </ol>
+</div><a name="Placement-new-with-emplace"></a><div class="idiom"><a class="permalink" href="#Placement-new-with-emplace">Link
+</a><h1>Placement new with <code class="prettyprint">emplace</code></h1>
+<p>C++ has <a href="http://www.drdobbs.com/cpp/calling-constructors-with-placement-new/232901023">"placement new"</a> which is a language construct to construct an object at a given pointer location.
+</p>
+<p>The D equivalent is a Phobos function called <code class="prettyprint">std.conv.emplace</code> (documentation <a href="http://dlang.org/phobos/std_conv.html#.emplace">here</a>).
+</p>
+<p><code class="prettyprint">emplace</code> can be used as an alternative to <code class="prettyprint">new</code> to support custom allocation. For example this perform construction of a class instance on the stack.
+</p>
+<pre class="prettyprint"><code>import std.conv : emplace;
+ubyte[__traits(classInstanceSize, YourClass)] buffer;
+YourClass obj = emplace!YourClass(buffer[], ctor args...);
+// Destroy the object explicitly at scope exit, which will
+// call the destructor deterministically.
+scope(exit) .destroy(obj);
+</code></pre><p>Courtesy of <a href="http://arsdnet.net/">Adam D. Ruppe</a>.
+</p>
 </div><a name="Porting-from-C-gotchas"></a><div class="idiom"><a class="permalink" href="#Porting-from-C-gotchas">Link
 </a><h1>Porting from C gotchas</h1>
 <h2> <code class="prettyprint">long</code> and <code class="prettyprint">unsigned long</code></h2>

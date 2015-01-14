@@ -19,4 +19,4 @@ Instead it is an instruction to crash the program and is **not** removed in `-re
 An `assert(false)` form also mean a branch of a function doesn't need to return something since the program will crash.
 
 
-**It does not mean ** _unreachable code_**, and the compiler will never remove it.**
+**It does not mean ** _unreachable code_**, it means ** _crash now_ ** and the compiler will never remove it.**
