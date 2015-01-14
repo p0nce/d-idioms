@@ -10,7 +10,7 @@ Variables at global scope are in Thread Local Storage (TLS) unless qualified wit
     // A C global variable
     int my_global_var;
 
-    // Equivalent D function declaration
+    // Equivalent D global
     __gshared int myGlobalVar;
 
 
