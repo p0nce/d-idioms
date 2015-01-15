@@ -15,6 +15,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 </a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
 </a><a href="#Enumerate-fields-with-__traits(allMembers)">Enumerate fields with __traits(allMembers)
 </a><a href="#Extending-a-struct-with-alias-this">Extending a struct with alias this
+</a><a href="#if-embedded-declaration">if embedded declaration
 </a><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><a href="#Linking-with-C-gotchas">Linking with C gotchas
 </a><a href="#Minimum-or-maximum-of-numbers">Minimum or maximum of numbers
@@ -185,7 +186,25 @@ void main(string[]ags)
 }
 </code></pre><p>As <a href="http://www.amazon.fr/The-Programming-Language-Andrei-Alexandrescu/dp/0321635361">TDPL</a> says it, using <code class="prettyprint">alias this</code> is subtyping.
 </p>
-</div><a name="Inheriting-from-Exception"></a><div class="idiom"><a class="permalink" href="#Inheriting-from-Exception">Link
+</div><a name="if-embedded-declaration"></a><div class="idiom"><a class="permalink" href="#if-embedded-declaration">Link
+</a><h1><code class="prettyprint">if</code> embedded declaration</h1>
+<p>It's legal to declare a variable inside an <code class="prettyprint">if</code> condition.
+</p>
+<pre class="prettyprint"><code>// AA lookup shortcut
+if (auto found = key in AA)
+{
+    // found only defined in this scope
+    doStuff(*found);
+}
+</code></pre><p>The branch is taken if the right expression evaluates to a truthy value.
+</p>
+<pre class="prettyprint"><code>// Equivalent for Java's instanceof
+if (auto derived = cast(Derived)obj)
+{
+    // derived only defined in this scope
+    doStuff(derived);
+}
+</code></pre></div><a name="Inheriting-from-Exception"></a><div class="idiom"><a class="permalink" href="#Inheriting-from-Exception">Link
 </a><h1>Inheriting from Exception</h1>
 <p>When in doubt, do it like Phobos!
 </p>
