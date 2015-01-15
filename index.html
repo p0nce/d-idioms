@@ -13,6 +13,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 </a><a href="#D-online-resources">D online resources
 </a><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
 </a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
+</a><a href="#Enumerate-fields-with-__traits(allMembers)">Enumerate fields with __traits(allMembers)
 </a><a href="#Extending-a-struct-with-alias-this">Extending a struct with alias this
 </a><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><a href="#Linking-with-C-gotchas">Linking with C gotchas
@@ -92,7 +93,37 @@ void main(string[] args)
 </p>
 <pre class="prettyprint"><code>int[] myArray;
 myArray.ptr[index] = 4; // no bounds check, guaranteed
-</code></pre></div><a name="Extending-a-struct-with-alias-this"></a><div class="idiom"><a class="permalink" href="#Extending-a-struct-with-alias-this">Link
+</code></pre></div><a name="Enumerate-fields-with-__traits(allMembers)"></a><div class="idiom"><a class="permalink" href="#Enumerate-fields-with-__traits(allMembers)">Link
+</a><h1>Enumerate fields with <code class="prettyprint">__traits(allMembers)</code></h1>
+<p>Using <code class="prettyprint">__traits(allMembers, X)</code> allows to iterate on fields of a <code class="prettyprint">struct</code> or <code class="prettyprint">class</code> X.
+</p>
+<p>Some uses:
+</p>
+<ul>
+<li>implement generic serialization/deserialization
+</li>
+<li>implement a generic comparison, <code class="prettyprint">.dup</code>, copy, &hellip; for any aggregate
+</li>
+<li>describe an OpenGL vertex format from the structure
+</li>
+</ul>
+<p>Here is how <a href="https://github.com/D-Programming-Language/dub">DUB</a> implement a <code class="prettyprint">.dup</code> with <code class="prettyprint">__traits(allMembers)</code>:
+</p>
+<pre class="prettyprint"><code>BuildSettings dup() const
+{
+    BuildSettings ret;
+    foreach (m; __traits(allMembers, BuildSettings)) // this foreach is a special "static" foreach
+    {
+        static if (is(typeof(__traits(getMember, ret, m) = __traits(getMember, this, m).dup)))
+            __traits(getMember, ret, m) = __traits(getMember, this, m).dup;
+        else static if (is(typeof(__traits(getMember, ret, m) = __traits(getMember, this, m))))
+            __traits(getMember, ret, m) = __traits(getMember, this, m);
+    }
+    return ret;
+}
+</code></pre><p>Now if new members are added to BuildSettings, this generic <code class="prettyprint">.dup</code> will still duplicate them.
+</p>
+</div><a name="Extending-a-struct-with-alias-this"></a><div class="idiom"><a class="permalink" href="#Extending-a-struct-with-alias-this">Link
 </a><h1>Extending a struct with alias this</h1>
 <p>What if we want to decorate a struct with additional features?
 We can't use virtual dispatch since the parent aggregate is a <code class="prettyprint">struct</code>.
