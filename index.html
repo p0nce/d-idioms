@@ -356,7 +356,7 @@ enum : strategy_t
 </code></pre><p>This avoids having to write <code class="prettyprint">strategy_t.STRATEGY_IMMEDIATE</code> instead of <code class="prettyprint">STRATEGY_IMMEDIATE</code> when porting C code.
 </p>
 <h2> Anonymous <code class="prettyprint">struct</code> and <code class="prettyprint">union</code></h2>
-<p>Unlike C, D doesn't have anonymous <code class="prettyprint">struct</code> and <code class="prettyprint">union</code>.
+<p>D provides a limited form of anonymous nested <code class="prettyprint">struct</code> and <code class="prettyprint">union</code>, but they can't be used to translate this C anonymous struct:
 </p>
 <pre class="prettyprint"><code>// A C anonymous struct
 struct Foo
