@@ -64,7 +64,7 @@ This avoids having to write `strategy_t.STRATEGY_IMMEDIATE` instead of `STRATEGY
 
 ## Anonymous `struct` and `union`
 
-Unlike C, D doesn't have anonymous `struct` and `union`.
+D provides a limited form of anonymous nested `struct` and `union`, but they can't be used to translate this C anonymous struct:
 
     // A C anonymous struct
     struct Foo
