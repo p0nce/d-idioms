@@ -22,6 +22,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 </a><a href="#Minimum-or-maximum-of-numbers">Minimum or maximum of numbers
 </a><a href="#Optimal-AA-lookup">Optimal AA lookup
 </a><a href="#Patching-a-library-available-on-the-DUB-registry">Patching a library available on the DUB registry
+</a><a href="#Phobos-gems">Phobos gems
 </a><a href="#Placement-new-with-emplace">Placement new with emplace
 </a><a href="#Porting-from-C-gotchas">Porting from C gotchas
 </a><a href="#Qualified-switch-using-with">Qualified switch using with
@@ -68,8 +69,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 </ul>
 </div><a name="Embed-a-dynamic-library-in-an-executable"></a><div class="idiom"><a class="permalink" href="#Embed-a-dynamic-library-in-an-executable">Link
 </a><h1>Embed a dynamic library in an executable</h1>
-<p>Let's say we want to distribute a stand-alone executable that doesn't need any installation.
-Here we'll see how to embed SDL.dll into an executable.
+<p>Let's say we want to distribute a stand-alone executable that doesn't need any installation.<br>Here we'll see how to embed SDL.dll into an executable.
 </p>
 <pre class="prettyprint"><code>import std.uuid;
 import std.file;
@@ -127,9 +127,7 @@ myArray.ptr[index] = 4; // no bounds check, guaranteed
 </p>
 </div><a name="Extending-a-struct-with-alias-this"></a><div class="idiom"><a class="permalink" href="#Extending-a-struct-with-alias-this">Link
 </a><h1>Extending a struct with alias this</h1>
-<p>What if we want to decorate a struct with additional features?
-We can't use virtual dispatch since the parent aggregate is a <code class="prettyprint">struct</code>.
-That means we are on board for extensive manual delegation of method calls to a member.
+<p>What if we want to decorate a struct with additional features?<br>We can't use virtual dispatch since the parent aggregate is a <code class="prettyprint">struct</code>.<br>That means we are on board for extensive manual delegation of method calls to a member.
 </p>
 <p>Fortunately the <code class="prettyprint">alias this</code> feature comes to the rescue!
 </p>
@@ -295,6 +293,38 @@ ptr ? *ptr : ValueType.init;
 <li>Your users are now delighted. Enjoy the endorphin rush.
 </li>
 </ol>
+</div><a name="Phobos-gems"></a><div class="idiom"><a class="permalink" href="#Phobos-gems">Link
+</a><h1>Phobos Gems</h1>
+<h2> Allocate a class object on stack with <code class="prettyprint">std.typecons.scoped</code></h2>
+<p><code class="prettyprint">scoped</code> replaces <code class="prettyprint">new</code> and put a <code class="prettyprint">class</code> object on the stack, with the double benefit of avoiding GC and performing deterministic destruction.
+</p>
+<pre class="prettyprint"><code>import std.typecons;
+auto myClass = scoped!MyClass(); // no need for 'new', and automatic destructor call at scope exit.
+</code></pre><p>See: <a href="http://dlang.org/phobos/std_typecons.html#.scoped">http://dlang.org/phobos/std_typecons.html#.scoped</a>
+</p>
+<h2> Remove type qualifiers with <code class="prettyprint">std.traits.Unqual</code></h2>
+<p><code class="prettyprint">Unqual</code> enables to write template and instantiate them with <code class="prettyprint">const(T)</code>, <code class="prettyprint">immutable(T)</code>, <code class="prettyprint">shared(T)</code>&hellip;
+</p>
+<p>See: <a href="http://dlang.org/phobos/std_traits.html#.Unqual">http://dlang.org/phobos/std_traits.html#.Unqual</a>
+</p>
+<h2> Closed sum type with <code class="prettyprint">std.variant.Algebraic</code></h2>
+<p>Never write a tagged union by hand again! <code class="prettyprint">Algebraic</code> solves this nicely.
+</p>
+<pre class="prettyprint"><code>import std.variant, std.typecons;
+alias Symbol = Typedef!string;
+alias Builtin = Atom delegate(Atom[] args);
+alias Atom = Algebraic!(string, double, bool, Symbol, This[]); // an Atom is one of these things
+
+Atom atom;
+if (bool* b = atom.peek!bool()) // is atom a bool?
+{
+    // here *b is a bool
+}
+
+</code></pre><p>Recursive data-types are supported despite the documentation saying it's not.
+</p>
+<p>See: <a href="http://dlang.org/phobos/std_variant.html#.Algebraic">http://dlang.org/phobos/std_variant.html#.Algebraic</a>
+</p>
 </div><a name="Placement-new-with-emplace"></a><div class="idiom"><a class="permalink" href="#Placement-new-with-emplace">Link
 </a><h1>Placement new with <code class="prettyprint">emplace</code></h1>
 <p>C++ has <a href="http://www.drdobbs.com/cpp/calling-constructors-with-placement-new/232901023">"placement new"</a> which is a language construct to construct an object at a given pointer location.
@@ -443,8 +473,7 @@ assert(indexOf("Hello home sweet home", "home") == 6);
 <pre class="prettyprint"><code>{
     "name": "program_name"
 }
-</code></pre><p>Place the source code in a <code class="prettyprint">source/main.d</code> file and DUB will find it and guess
-you want to build an executable.
+</code></pre><p>Place the source code in a <code class="prettyprint">source/main.d</code> file and DUB will find it and guess<br>you want to build an executable.
 </p>
 </div><a name="Static-arrays-are-value-types"></a><div class="idiom"><a class="permalink" href="#Static-arrays-are-value-types">Link
 </a><h1>Static arrays are value types</h1>

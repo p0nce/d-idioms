@@ -52,7 +52,7 @@ public:
         settings.flags = MarkdownFlags.forumDefault;
 
         string text = cast(string) std.file.read(filename);
-        string html = filterMarkdown(text);
+        string html = filterMarkdown(text, settings);
         file.writef("%s", html);
     }
 
