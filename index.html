@@ -3,9 +3,332 @@
 <meta name="description" content="D Programming Language idioms.">
 <style type="text/css"  media="all" >/* Eric Meyer's Reset CSS v2.0 - http://cssreset.com */
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
-</style><link rel="stylesheet" type="text/css" href="common.css">
-<link rel="stylesheet" type="text/css" href="hybrid.css">
-<link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+html
+{
+    height: 100%;
+    font-size: 10px;
+}
+
+body
+{
+    font-family: "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman", "HelveticaNeue-Roman", "Helvetica Neue Roman", 'TeXGyreHerosRegular', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+    font-weight: 400;
+    font-stretch: normal;
+    display: block;
+    color: #bbbbbb;
+    background-color: #424040;
+}
+
+.container
+{
+    display: block;
+    width: 90%;
+    max-width: 1100px;
+    padding: 0.5rem;
+    margin: 0 auto;
+    background-color: #bbbbbc;
+    box-shadow: 0.2rem 0.4rem 1rem 0rem rgba(32,32,32,0.15);
+}
+
+.permalink
+{
+    float: right;
+    display: inline-block;
+    font-size: 0.7em;
+}
+
+header
+{
+    width: 90%;
+    max-width: 1100px;
+    font-size: 2.2rem;
+    padding: 0.5rem;
+    margin: 0 auto;
+    height: 4em;
+    text-align: center;
+    background-color: #744;
+    font-weight: 700;
+    line-height: 4em;
+    vertical-align: middle;
+    box-shadow: 0.2em 0.8em 1em 0em rgba(32,32,32,0.15);
+    z-index: 5;
+    color: #e8e8ef;
+}
+nav
+{
+    display: block;
+    width: 90%;
+    max-width: 1100px;
+    font-size: 1.6rem;
+    padding: 0.5rem;
+    margin: 0 auto;
+    background-color: #ededef;
+    list-style-type: square;
+    box-shadow: 0.2em 0.4em 2.0em 0em rgba(32,32,32,0.1);
+    z-index: 10;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+a
+{
+    color: #5050c0;
+    font-weight: 700;
+}
+
+a:hover
+{
+    color: #5000c0;
+}
+
+nav a
+{
+    padding: 0.32em;
+    margin: 1rem 8rem 1rem 8rem;
+    display: list-item;
+
+}
+
+h1
+{
+    font-size: 2.38rem;
+    padding: 1.2rem;
+    margin: 0em 0em 2.4rem 1.2rem;
+    color: #444;
+}
+
+h2
+{
+    font-size: 1.9rem;
+    padding: 0.34rem;
+    margin: 1.7rem 0rem 0.17rem -0.5rem;
+    color: #444;
+}
+
+ol
+{
+    margin: 0.85rem;
+}
+
+li
+{
+    display: list-item;
+    list-style: square;
+    margin: 0rem 0rem 0rem 3.4rem;
+    padding: 0.34rem;
+}
+
+strong
+{
+    font-weight: 700;
+}
+
+em
+{
+    font-style:italic;
+}
+
+.prettyprint
+{
+    font-family: "Inconsolata", "Courier New", "Courier", monospace, sans-serif;
+    color: #883900;
+}
+
+pre
+{
+    font-family: "Inconsolata", "Courier New", "Courier", monospace, sans-serif;
+    padding: 0rem;
+    margin: 1.7rem;
+    font-size: 1.53rem;
+    line-height: 1.7rem;
+    box-shadow: inset 0.15rem 0.3rem 1.5rem 0rem rgba(0,0,0,0.2);
+}
+.idiom
+{
+    font-size: 1.7rem;
+    color: #222;
+    background-color: #ededef;
+    display: block;
+    padding: 4.25rem;
+    margin: 2.4rem;
+    line-height: 2.5rem;
+    box-shadow: 0.17rem 0.34rem 1.7rem 0rem rgba(32,32,32,0.15);
+}
+
+/*
+
+vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
+
+*/
+
+/*background color*/
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1.0em;
+  background: #1d1f21;
+  -webkit-text-size-adjust: none;
+}
+
+/*selection color*/
+.hljs::selection,
+.hljs span::selection {
+	background: #373b41;
+}
+.hljs::-moz-selection,
+.hljs span::-moz-selection {
+	background: #373b41;
+}
+
+/*foreground color*/
+.hljs,
+.hljs-setting .hljs-value,
+.hljs-expression .hljs-variable,
+.hljs-expression .hljs-begin-block,
+.hljs-expression .hljs-end-block,
+.hljs-class .hljs-params,
+.hljs-function .hljs-params,
+.hljs-at_rule .hljs-preprocessor {
+  color: #c5c8c6;
+}
+
+/*color: fg_yellow*/
+.hljs-title,
+.hljs-function .hljs-title,
+.hljs-keyword .hljs-common,
+.hljs-class .hljs-title,
+.hljs-decorator,
+.hljs-tag .hljs-title,
+.hljs-header,
+.hljs-sub,
+.hljs-function {
+  color: #f0c674;
+}
+
+/*color: fg_comment*/
+.hljs-comment,
+.hljs-javadoc,
+.hljs-output .hljs-value,
+.hljs-pi,
+.hljs-shebang,
+.hljs-doctype {
+  color: #707880;
+}
+
+/*color: fg_red*/
+.hljs-number,
+.hljs-symbol,
+.hljs-literal,
+.hljs-deletion,
+.hljs-link_url,
+.hljs-symbol .hljs-string,
+.hljs-argument,
+.hljs-hexcolor,
+.hljs-input .hljs-prompt,
+.hljs-char {
+ color: #cc6666
+}
+
+/*color: fg_green*/
+.hljs-string,
+.hljs-special,
+.hljs-javadoctag,
+.hljs-addition,
+.hljs-important,
+.hljs-tag .hljs-value,
+.hljs-at.rule .hljs-keyword,
+.hljs-regexp,
+.hljs-attr_selector {
+  color: #b5bd68;
+}
+
+/*color: fg_purple*/
+.hljs-variable,
+.hljs-property,
+.hljs-envar,
+.hljs-code,
+.hljs-expression,
+.hljs-localvars,
+.hljs-id,
+.hljs-variable .hljs-filter,
+.hljs-variable .hljs-filter .hljs-keyword,
+.hljs-template_tag .hljs-filter .hljs-keyword {
+ color: #b294bb;
+}
+
+/*color: fg_blue*/
+.hljs-statement,
+.hljs-label,
+.hljs-keyword,
+.hljs-xmlDocTag,
+.hljs-function .hljs-keyword,
+.hljs-chunk,
+.hljs-cdata,
+.hljs-link_label,
+.hljs-bullet,
+.hljs-class .hljs-keyword,
+.hljs-smartquote,
+.hljs-method,
+.hljs-list .hljs-title,
+.hljs-tag {
+ color: #81a2be;
+}
+
+/*color: fg_aqua*/
+.hljs-pseudo,
+.hljs-exception,
+.hljs-annotation,
+.hljs-subst,
+.hljs-change,
+.hljs-cbracket,
+.hljs-operator,
+.hljs-horizontal_rule,
+.hljs-preprocessor .hljs-keyword,
+.hljs-typedef,
+.hljs-template_tag,
+.hljs-variable,
+.hljs-variable .hljs-filter .hljs-argument,
+.hljs-at_rule,
+.hljs-at_rule .hljs-string,
+.hljs-at_rule .hljs-keyword {
+  color: #8abeb7;
+}
+
+
+/*color: fg_orange*/
+.hljs-type,
+.hljs-typename,
+.hljs-inheritance .hljs-parent,
+.hljs-constant,
+.hljs-built_in,
+.hljs-setting,
+.hljs-structure,
+.hljs-link_reference,
+.hljs-attribute,
+.hljs-blockquote,
+.hljs-quoted,
+.hljs-class,
+.hljs-header {
+  color: #de935f;
+}
+
+.hljs-emphasis
+{
+  font-style: italic;
+}
+
+.hljs-strong
+{
+  font-weight: bold;
+}
+
+
+
+
+</style><link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
 <title>d-idioms</title></head><body><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header>D Programming Language idioms
@@ -295,7 +618,7 @@ ptr ? *ptr : ValueType.init;
 </ol>
 </div><a name="Phobos-gems"></a><div class="idiom"><a class="permalink" href="#Phobos-gems">Link
 </a><h1>Phobos Gems</h1>
-<h2> Check recoverable errors with <code class="prettyprint">enforce</code></h2>
+<h2> Check recoverable errors with <code class="prettyprint">std.exception.enforce</code></h2>
 <p>It is good practice to check for unrecoverable errors with <code class="prettyprint">assert</code>, and recoverable errors with <code class="prettyprint">enforce</code>.<br>Which means you should learn the difference between those two types of errors.
 </p>
 <p>See: <a href="http://dlang.org/phobos/std_exception.html#.enforce">http://dlang.org/phobos/std_exception.html#.enforce</a>

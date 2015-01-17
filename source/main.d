@@ -45,10 +45,9 @@ void main(string[] args)
                     writeln("<meta name=\"description\" content=\"D Programming Language idioms.\">");
                     push("style", "type=\"text/css\"  media=\"all\" ");
                         appendRawFile("reset.css");
+                        appendRawFile("common.css");
+                        appendRawFile("hybrid.css");
                     pop();
-
-                    writeln("<link rel=\"stylesheet\" type=\"text/css\" href=\"common.css\">");
-                    writeln("<link rel=\"stylesheet\" type=\"text/css\" href=\"hybrid.css\">");
                     writeln("<link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>");
 
                     push("title");
