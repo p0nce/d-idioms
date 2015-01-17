@@ -295,6 +295,11 @@ ptr ? *ptr : ValueType.init;
 </ol>
 </div><a name="Phobos-gems"></a><div class="idiom"><a class="permalink" href="#Phobos-gems">Link
 </a><h1>Phobos Gems</h1>
+<h2> Check recoverable errors with <code class="prettyprint">enforce</code></h2>
+<p>It is good practice to check for unrecoverable errors with <code class="prettyprint">assert</code>, and recoverable errors with <code class="prettyprint">enforce</code>.<br>Which means you should learn the difference between those two types of errors.
+</p>
+<p>See: <a href="http://dlang.org/phobos/std_exception.html#.enforce">http://dlang.org/phobos/std_exception.html#.enforce</a>
+</p>
 <h2> Allocate a class object on stack with <code class="prettyprint">std.typecons.scoped</code></h2>
 <p><code class="prettyprint">scoped</code> replaces <code class="prettyprint">new</code> and put a <code class="prettyprint">class</code> object on the stack, with the double benefit of avoiding GC and performing deterministic destruction.
 </p>

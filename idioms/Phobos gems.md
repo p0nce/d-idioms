@@ -2,6 +2,13 @@
 Phobos Gems
 ===========
 
+## Check recoverable errors with `enforce`
+
+It is good practice to check for unrecoverable errors with `assert`, and recoverable errors with `enforce`.
+Which means you should learn the difference between those two types of errors.
+
+See: [http://dlang.org/phobos/std_exception.html#.enforce](http://dlang.org/phobos/std_exception.html#.enforce)
+
 ## Allocate a class object on stack with `std.typecons.scoped`
 
 `scoped` replaces `new` and put a `class` object on the stack, with the double benefit of avoiding GC and performing deterministic destruction.
