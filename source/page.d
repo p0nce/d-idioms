@@ -2,6 +2,7 @@ module page;
 
 import std.stdio;
 import std.file;
+import std.typecons;
 import dmarkdown;
 
 class Page
@@ -47,6 +48,9 @@ public:
     // render and append markdown
     void appendMarkdown(string filename)
     {
+        auto settings = new MarkdownSettings();
+        settings.flags = MarkdownFlags.forumDefault;
+
         string text = cast(string) std.file.read(filename);
         string html = filterMarkdown(text);
         file.writef("%s", html);
