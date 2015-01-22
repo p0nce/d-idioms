@@ -341,6 +341,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Falsey-values">Falsey values
 </a><a href="#Getting-a-method-callbacked-from-C">Getting a method callbacked from C
 </a><a href="#if-embedded-declaration">if embedded declaration
+</a><a href="#Implicit-conversion-for-user-defined-types">Implicit conversion for user-defined types
 </a><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><a href="#Linking-with-C-gotchas">Linking with C gotchas
 </a><a href="#Minimum-or-maximum-of-numbers">Minimum or maximum of numbers
@@ -577,7 +578,37 @@ if (auto derived = cast(Derived)obj)
     // derived only defined in this scope
     doStuff(derived);
 }
-</code></pre></div><a name="Inheriting-from-Exception"></a><div class="idiom"><a class="permalink" href="#Inheriting-from-Exception">Link
+</code></pre></div><a name="Implicit-conversion-for-user-defined-types"></a><div class="idiom"><a class="permalink" href="#Implicit-conversion-for-user-defined-types">Link
+</a><h1>Implicit conversion for user-defined types</h1>
+<p>D officially forbid implicit conversions for user-defined types to avoid the pitfalls associated with them.<br>But defining an implicit conversion is actually possible by abusing <code class="prettyprint">alias this</code>.
+</p>
+<pre class="prettyprint"><code>import std.stdio;
+
+struct NumberAsString
+{
+    private string value;
+    this(string value)
+    {
+        this.value = value;
+    }
+
+    int convHelper()
+    {
+        return to!int(value);
+    }
+    alias convHelper this;
+}
+
+void main(string[] args)
+{
+    auto a = NumberAsString("123");
+    int b = a; // implicit conversion happening here
+    writefln("%d", b);
+}
+
+</code></pre><p>This idiom was discovered by <a href="http://3d.benjamin-thaut.de/?p=90">Benjamin Thaut</a>.
+</p>
+</div><a name="Inheriting-from-Exception"></a><div class="idiom"><a class="permalink" href="#Inheriting-from-Exception">Link
 </a><h1>Inheriting from Exception</h1>
 <p>When in doubt, do it like Phobos!
 </p>
