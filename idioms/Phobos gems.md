@@ -34,8 +34,9 @@ Never write a tagged union by hand again! `Algebraic` solves this nicely.
 ```
 import std.variant, std.typecons;
 alias Symbol = Typedef!string;
-alias Builtin = Atom delegate(Atom[] args);
-alias Atom = Algebraic!(string, double, bool, Symbol, This[]); // an Atom is one of these things
+
+// an Atom is one of these things
+alias Atom = Algebraic!(string, double, bool, Symbol, This[]);
 
 Atom atom;
 if (bool* b = atom.peek!bool()) // is atom a bool?
