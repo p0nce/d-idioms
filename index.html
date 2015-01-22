@@ -339,6 +339,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Enumerate-fields-with-__traits(allMembers)">Enumerate fields with __traits(allMembers)
 </a><a href="#Extending-a-struct-with-alias-this">Extending a struct with alias this
 </a><a href="#Falsey-values">Falsey values
+</a><a href="#Getting-a-method-callbacked-from-C">Getting a method callbacked from C
 </a><a href="#if-embedded-declaration">if embedded declaration
 </a><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><a href="#Linking-with-C-gotchas">Linking with C gotchas
@@ -530,7 +531,35 @@ void main(string[]ags)
 </ul>
 <p>The empty string <code class="prettyprint">""</code> and the empty slice <code class="prettyprint">[]</code> are truthy.
 </p>
-</div><a name="if-embedded-declaration"></a><div class="idiom"><a class="permalink" href="#if-embedded-declaration">Link
+</div><a name="Getting-a-method-callbacked-from-C"></a><div class="idiom"><a class="permalink" href="#Getting-a-method-callbacked-from-C">Link
+</a><h1>Getting a method callbacked from C</h1>
+<p>Most C callbacks allow to specify a "user data" pointer.<br>A common trick is to cast <code class="prettyprint">this</code> into a <code class="prettyprint">void*</code> pointer back and forth, and use it as user data.
+</p>
+<p>Here is an example with SDL2 logging handler:
+</p>
+<pre class="prettyprint"><code>class MyGame
+{
+    this()
+    {
+        // Pass this as user data, since most C callbacks have one.
+        SDL_LogSetOutputFunction(&amp;loggingCallbackSDL, cast(void*)this);
+    }
+
+    // We'd like this method to get called whenever the SDL callback triggers
+    void onMessage(const(char)* message)
+    {
+        // do stuff
+    }
+}
+
+extern(C)  // would be extern(System) depending on the library
+void loggingCallbackSDL(void* userData, int category, SDL_LogPriority priority, const(char)* message)
+{
+    // Get back the object reference here
+    MyGame game = cast(MyGame)userData;
+    game.onMessage(message);
+}
+</code></pre></div><a name="if-embedded-declaration"></a><div class="idiom"><a class="permalink" href="#if-embedded-declaration">Link
 </a><h1><code class="prettyprint">if</code> embedded declaration</h1>
 <p>It's legal to declare a variable inside an <code class="prettyprint">if</code> condition.
 </p>
@@ -640,8 +669,9 @@ auto myClass = scoped!MyClass(); // no need for 'new', and automatic destructor 
 </p>
 <pre class="prettyprint"><code>import std.variant, std.typecons;
 alias Symbol = Typedef!string;
-alias Builtin = Atom delegate(Atom[] args);
-alias Atom = Algebraic!(string, double, bool, Symbol, This[]); // an Atom is one of these things
+
+// an Atom is one of these things
+alias Atom = Algebraic!(string, double, bool, Symbol, This[]);
 
 Atom atom;
 if (bool* b = atom.peek!bool()) // is atom a bool?
