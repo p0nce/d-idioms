@@ -354,6 +354,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
 </a><a href="#Static-arrays-are-value-types">Static arrays are value types
+</a><a href="#The-impossible-real-time-thread">The impossible real-time thread
 </a><a href="#The-truth-about-shared">The truth about shared
 </a></nav><div class="container"><a name="assert(false)-is-special"></a><div class="idiom"><a class="permalink" href="#assert(false)-is-special">Link
 </a><h1><code class="prettyprint">assert(false)</code> is special</h1>
@@ -656,7 +657,7 @@ assert(max_abc == 10.0);
 </p>
 <pre class="prettyprint"><code>auto ptr = key in aa;
 ptr ? *ptr : ValueType.init;
-</code></pre><p>The <code class="prettyprint">.get</code> builtin property can also be used and provides a default value when the key doens't exist.
+</code></pre><p>The <code class="prettyprint">.get</code> builtin property can also be used. It provides a default value when the key doens't exist.
 </p>
 <pre class="prettyprint"><code>aa.get(key, defaultValue);
 </code></pre></div><a name="Patching-a-library-available-on-the-DUB-registry"></a><div class="idiom"><a class="permalink" href="#Patching-a-library-available-on-the-DUB-registry">Link
@@ -892,7 +893,25 @@ void addSix(int[] arr)
 int[16] a;
 addFive(a);
 addSix(a);              // Static arrays implicitely convertible to slices.
-</code></pre></div><a name="The-truth-about-shared"></a><div class="idiom"><a class="permalink" href="#The-truth-about-shared">Link
+</code></pre></div><a name="The-impossible-real-time-thread"></a><div class="idiom"><a class="permalink" href="#The-impossible-real-time-thread">Link
+</a><h1>Real-time thread</h1>
+<p>It is often said on Internet forums that D couldn't possibly do real-time work, since <em>its stop-the-world GC might pause every thread at once</em>.
+</p>
+<p><strong>This is wildly innacurate.</strong> The GC pauses all threads <em>that have been registered</em>.
+</p>
+<p>Real-time threads like audio callbacks are doable since forever. Here is how:
+</p>
+<ul>
+<li><p>Use a thread that isn't registered. Such a thread could be created by an external library, or with <code class="prettyprint">core.thread.Thread</code> and then <a href="http://dlang.org/phobos/core_thread.html#.thread_detachThis">unregistered</a>.
+</p>
+</li>
+<li><p>Make the thread function <code class="prettyprint">@nogc</code>. You can't use the GC from an unregistered thread.
+</p>
+</li>
+</ul>
+<p><strong>Another limitation:</strong> Such a thread must not hold roots to GC objects. What it means is that you can use GC objects from the real-time thread, but these GC objects should be pointed by other threads to avoid them being collected.
+</p>
+</div><a name="The-truth-about-shared"></a><div class="idiom"><a class="permalink" href="#The-truth-about-shared">Link
 </a><h1>The truth about shared</h1>
 <p>It's unclear when and how <code class="prettyprint">shared</code> will be implemented.
 </p>
