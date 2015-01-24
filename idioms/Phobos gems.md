@@ -26,27 +26,3 @@ See: [http://dlang.org/phobos/std_typecons.html#.scoped](http://dlang.org/phobos
 
 See: [http://dlang.org/phobos/std_traits.html#.Unqual](http://dlang.org/phobos/std_traits.html#.Unqual)
 
-
-## Closed sum type with `std.variant.Algebraic`
-
-Never write a tagged union by hand again! `Algebraic` solves this nicely.
-
-```
-import std.variant, std.typecons;
-alias Symbol = Typedef!string;
-
-// an Atom is one of these things
-alias Atom = Algebraic!(string, double, bool, Symbol, This[]);
-
-Atom atom;
-if (bool* b = atom.peek!bool()) // is atom a bool?
-{
-    // here *b is a bool
-}
-
-```
-Recursive data-types are supported despite the documentation saying it's not.
-
-See: [http://dlang.org/phobos/std_variant.html#.Algebraic](http://dlang.org/phobos/std_variant.html#.Algebraic)
-
-

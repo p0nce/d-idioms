@@ -351,6 +351,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Placement-new-with-emplace">Placement new with emplace
 </a><a href="#Porting-from-C-gotchas">Porting from C gotchas
 </a><a href="#Qualified-switch-using-with">Qualified switch using with
+</a><a href="#Recursive-Sum-Type-with-matching">Recursive Sum Type with matching
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
 </a><a href="#Static-arrays-are-value-types">Static arrays are value types
@@ -699,25 +700,6 @@ auto myClass = scoped!MyClass(); // no need for 'new', and automatic destructor 
 </p>
 <p>See: <a href="http://dlang.org/phobos/std_traits.html#.Unqual">http://dlang.org/phobos/std_traits.html#.Unqual</a>
 </p>
-<h2> Closed sum type with <code class="prettyprint">std.variant.Algebraic</code></h2>
-<p>Never write a tagged union by hand again! <code class="prettyprint">Algebraic</code> solves this nicely.
-</p>
-<pre class="prettyprint"><code>import std.variant, std.typecons;
-alias Symbol = Typedef!string;
-
-// an Atom is one of these things
-alias Atom = Algebraic!(string, double, bool, Symbol, This[]);
-
-Atom atom;
-if (bool* b = atom.peek!bool()) // is atom a bool?
-{
-    // here *b is a bool
-}
-
-</code></pre><p>Recursive data-types are supported despite the documentation saying it's not.
-</p>
-<p>See: <a href="http://dlang.org/phobos/std_variant.html#.Algebraic">http://dlang.org/phobos/std_variant.html#.Algebraic</a>
-</p>
 </div><a name="Placement-new-with-emplace"></a><div class="idiom"><a class="permalink" href="#Placement-new-with-emplace">Link
 </a><h1>Placement new with <code class="prettyprint">emplace</code></h1>
 <p>C++ has <a href="http://www.drdobbs.com/cpp/calling-constructors-with-placement-new/232901023">"placement new"</a> which is a language construct to construct an object at a given pointer location.
@@ -848,6 +830,44 @@ case huge:
     break;
 }
 </code></pre><p>This idiom was discovered by deadalnix.
+</p>
+</div><a name="Recursive-Sum-Type-with-matching"></a><div class="idiom"><a class="permalink" href="#Recursive-Sum-Type-with-matching">Link
+</a><h1>Recursive Sum Type with matching</h1>
+<p>Never write a tagged union by hand again! <code class="prettyprint">std.variant.Algebraic</code> solves this nicely.
+</p>
+<p><strong>Recursive data-types are supported</strong> despite the documentation saying it's not.
+</p>
+<pre class="prettyprint"><code>import std.variant, std.typecons;
+alias Symbol = Typedef!string;
+
+// an Atom is either:
+// - a string,
+// - a double,
+// - a bool,
+// - a Symbol,
+// - or Atom[]
+alias Atom = Algebraic!(string, double, bool, Symbol, This[]); // Use 'This' for recursive ADT
+
+Atom atom;
+if (bool* b = atom.peek!bool()) // is atom a bool?
+{
+    // here *b is a bool
+}
+
+</code></pre><p><code class="prettyprint">Algebraic</code> can be used with the <a href="http://dlang.org/phobos/std_variant.html#.visit"><code class="prettyprint">visit</code></a> function to do an exhaustive match.
+</p>
+<pre class="prettyprint"><code>// an exhaustive match with this ADT
+string toString(Atom atom)
+{
+    return atom.visit!(
+        (Symbol sym) =&gt; cast(string)sym,
+        (string s) =&gt; s,
+        (double x) =&gt; to!string(x),
+        (bool b) =&gt; (b ? "#t" : "#f"),
+        (Atom[] atoms) =&gt; "(" ~ map!toString(atoms).joiner(" ").array.to!string ~ ")"
+    );
+}
+</code></pre><p>See: <a href="http://dlang.org/phobos/std_variant.html#.Algebraic">http://dlang.org/phobos/std_variant.html#.Algebraic</a>
 </p>
 </div><a name="Searching-for-a-substring-position"></a><div class="idiom"><a class="permalink" href="#Searching-for-a-substring-position">Link
 </a><h1>Searching for a substring position</h1>
