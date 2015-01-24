@@ -12,7 +12,7 @@ Instead it is an instruction to crash the program and is **not** removed in `-re
         if(expr)
             return "something";
         assert(1 < 0); // also possible, but "assert(0)" is typically used
-        // no return needed, since we just crash
+        // no return needed, since we just crashed
     }
 
 

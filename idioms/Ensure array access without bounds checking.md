@@ -2,7 +2,7 @@
 Ensure array access without bounds checking
 ===========================================
 
-Slice indexing can perform bounds check depending on `-boundscheck` and `@safe`.
+Slice indexing will check bounds depending on `-boundscheck` and `@safe`.
 
 But pointer indexing won't ever check bounds.
 

@@ -12,3 +12,8 @@ which perform 2 AA lookups prefer:
 
     auto ptr = key in aa;
     ptr ? *ptr : ValueType.init;
+
+
+The `.get` builtin property can also be used. It provides a default value when the key doens't exist.
+
+    aa.get(key, defaultValue);

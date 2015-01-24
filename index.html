@@ -366,7 +366,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
     if(expr)
         return "something";
     assert(1 &lt; 0); // also possible, but "assert(0)" is typically used
-    // no return needed, since we just crash
+    // no return needed, since we just crashed
 }
 </code></pre><p>An <code class="prettyprint">assert(false)</code> form also mean a branch of a function doesn't need to return something since the program will crash.
 </p>
@@ -414,7 +414,7 @@ void main(string[] args)
 </p>
 </div><a name="Ensure-array-access-without-bounds-checking"></a><div class="idiom"><a class="permalink" href="#Ensure-array-access-without-bounds-checking">Link
 </a><h1>Ensure array access without bounds checking</h1>
-<p>Slice indexing can perform bounds check depending on <code class="prettyprint">-boundscheck</code> and <code class="prettyprint">@safe</code>.
+<p>Slice indexing will check bounds depending on <code class="prettyprint">-boundscheck</code> and <code class="prettyprint">@safe</code>.
 </p>
 <p>But pointer indexing won't ever check bounds.
 </p>
@@ -656,6 +656,9 @@ assert(max_abc == 10.0);
 </p>
 <pre class="prettyprint"><code>auto ptr = key in aa;
 ptr ? *ptr : ValueType.init;
+</code></pre><p>The <code class="prettyprint">.get</code> builtin property can also be used and provides a default value when the key doens't exist.
+</p>
+<pre class="prettyprint"><code>aa.get(key, defaultValue);
 </code></pre></div><a name="Patching-a-library-available-on-the-DUB-registry"></a><div class="idiom"><a class="permalink" href="#Patching-a-library-available-on-the-DUB-registry">Link
 </a><h1>Patching a library available on the DUB registry</h1>
 <p>How to patch a <a href="http://code.dlang.org/">DUB</a> library with minimal hassle for users?
