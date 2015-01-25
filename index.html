@@ -917,7 +917,7 @@ addSix(a);              // Static arrays implicitely convertible to slices.
 </a><h1>Real-time thread</h1>
 <p>It is often said on Internet forums that D couldn't possibly do real-time work, since <em>its stop-the-world GC might pause every thread at once</em>.
 </p>
-<p><strong>This is wildly innacurate.</strong> The GC pauses all threads <em>that have been registered</em>.
+<p><strong>This is wildly inaccurate.</strong> The GC pauses all threads <em>that have been registered</em>.
 </p>
 <p>Real-time threads like audio callbacks are doable since forever. Here is how:
 </p>
@@ -929,7 +929,7 @@ addSix(a);              // Static arrays implicitely convertible to slices.
 </p>
 </li>
 </ul>
-<p><strong>Another limitation:</strong> Such a thread must not hold roots to GC objects. What it means is that you can use GC objects from the real-time thread, but these GC objects should be pointed by other threads to avoid them being collected.
+<p><strong>Another limitation:</strong> Such a thread must not hold roots to GC objects. What it means is that you can use GC objects from the real-time thread, but these GC objects should be pointed to by other threads to avoid them being collected.
 </p>
 </div><a name="The-truth-about-shared"></a><div class="idiom"><a class="permalink" href="#The-truth-about-shared">Link
 </a><h1>The truth about shared</h1>
