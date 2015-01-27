@@ -51,7 +51,7 @@ void main(string[] args)
                     writeln("<link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>");
 
                     push("title");
-                    write("d-idioms");
+                    write("d-idioms - Idioms for the D programming language");
                     pop;
                 pop;
                 push("body");
@@ -60,7 +60,11 @@ void main(string[] args)
                     writeln("<script>hljs.initHighlightingOnLoad();</script>");
 
                     push("header");
-                        writeln("D Programming Language idioms");
+                        push("img", "id=\"logo\" src=\"d-logo.svg\"");
+                        pop;
+                        push("div", "id=\"title\"");
+                            writeln("Idioms for the D Programming Language");
+                        pop();
                     pop;
 
                     push("nav");

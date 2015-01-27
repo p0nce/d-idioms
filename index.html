@@ -39,12 +39,13 @@ body
 
 header
 {
+    display: block;
     width: 90%;
     max-width: 1100px;
     font-size: 2.2rem;
     padding: 0.5rem;
     margin: 0 auto;
-    height: 4em;
+    height: 13rem;
     text-align: center;
     background-color: #744;
     font-weight: 700;
@@ -158,6 +159,24 @@ pre
     box-shadow: 0.17rem 0.34rem 1.7rem 0rem rgba(32,32,32,0.15);
 }
 
+#logo
+{
+    position: relative;
+    left: -0.5rem;
+    display: inline-block;
+    vertical-align: middle;
+    float: left;
+}
+
+#title
+{
+    display: inline-block;
+    vertical-align: middle;
+    float: left;
+    text-align: center;
+    margin: 2rem 2rem 2rem 4rem;
+    font-size: 2.4rem;
+}
 /*
 
 vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
@@ -329,10 +348,10 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 
 
 </style><link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
-<title>d-idioms</title></head><body><script src="highlight.pack.js"></script>
+<title>d-idioms - Idioms for the D programming language</title></head><body><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<header>D Programming Language idioms
-</header><nav><a href="#assert(false)-is-special">assert(false) is special
+<header><img id="logo" src="d-logo.svg"></img><div id="title">Idioms for the D Programming Language
+</div></header><nav><a href="#assert(false)-is-special">assert(false) is special
 </a><a href="#D-online-resources">D online resources
 </a><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
 </a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
