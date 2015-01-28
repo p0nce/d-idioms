@@ -352,6 +352,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title">Idioms for the D Programming Language
 </div></header><nav><a href="#assert(false)-is-special">assert(false) is special
+</a><a href="#Capturing-with-regular-expressions">Capturing with regular expressions
 </a><a href="#D-online-resources">D online resources
 </a><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
 </a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
@@ -393,6 +394,31 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </code></pre><p>An <code class="prettyprint">assert(false)</code> form also mean a branch of a function doesn't need to return something since the program will crash.
 </p>
 <p><strong>It does not mean </strong> <em>unreachable code</em><strong>, it means </strong> <em>crash now</em> <strong> and the compiler will never remove it.</strong>
+</p>
+</div><a name="Capturing-with-regular-expressions"></a><div class="idiom"><a class="permalink" href="#Capturing-with-regular-expressions">Link
+</a><h1>Capturing with regular expressions</h1>
+<p>Regular expressions are found in the <code class="prettyprint">std.regex</code> Phobos module.
+</p>
+<pre class="prettyprint"><code>import std.regex;
+import std.stdio;
+
+void main(string args[])
+{
+    auto re = regex(`My name is (\w+)\. I work for ([A-Za-z ]+)\.`);
+
+    string input = "My name is Kobayashi. I work for Keyser Soze.";
+
+    if (auto captures = matchFirst(input, re))
+    {
+        // There is a trap there, capture[0] is the whole matched string
+        writefln("First capture = %s", captures[1]);
+        writefln("2nd capture   = %s", captures[2]);
+    }
+}
+</code></pre><p><code class="prettyprint">ctRegex</code> instead of <code class="prettyprint">regex</code> builds the regular expression at compile-time, trading of compile-time speed for runtime speed.
+</p>
+<pre class="prettyprint"><code>auto re = ctRegex!(`My name is (\w+)\. I work for ([A-Za-z ]+)\.`); // automaton built at compile-time
+</code></pre><p>See: <a href="http://dlang.org/phobos/std_regex.html">http://dlang.org/phobos/std_regex.html</a>
 </p>
 </div><a name="D-online-resources"></a><div class="idiom"><a class="permalink" href="#D-online-resources">Link
 </a><h1>D online resources</h1>
