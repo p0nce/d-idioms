@@ -364,6 +364,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><a href="#Linking-with-C-gotchas">Linking with C gotchas
 </a><a href="#Minimum-or-maximum-of-numbers">Minimum or maximum of numbers
+</a><a href="#Never-use-&gt;=-for-dependencies">Never use &gt;= for dependencies
 </a><a href="#Optimal-AA-lookup">Optimal AA lookup
 </a><a href="#Patching-a-library-available-on-the-DUB-registry">Patching a library available on the DUB registry
 </a><a href="#Phobos-gems">Phobos gems
@@ -665,6 +666,28 @@ assert(max_abc == 10.0);
 </code></pre><p>They work with builtin types and any number of arguments.
 </p>
 <p>See: <a href="http://dlang.org/phobos/std_algorithm.html#.min">http://dlang.org/phobos/std_algorithm.html#.min</a>
+</p>
+</div><a name="Never-use-&gt;=-for-dependencies"></a><div class="idiom"><a class="permalink" href="#Never-use-&gt;=-for-dependencies">Link
+</a><h1>Never use &gt;= for dependencies</h1>
+<p>Using DUB and dependencies? Here is a pattern you should avoid:
+</p>
+<pre class="prettyprint"><code>{
+    "name": "my-program",
+
+    "dependencies":
+    {
+        "awesome-lib": "&gt;=1.0.0"
+    }
+}
+
+
+</code></pre><p>Depend on a library using <code class="prettyprint">&gt;=</code> is risky. If <code class="prettyprint">awesome-lib</code> breaks its API then releases a new major tag, your project will break. This is implicit in SemVer and using <code class="prettyprint">&gt;=</code> suscribes for immediate breakage.
+</p>
+<p>Now this can be useful for executables, but this is especially bad for publicly released libraries. Any downstream project might break in the future when using your already released tags. And <em>how will you fix tags that are already in use?</em>
+</p>
+<p><strong>TL;DR Do not depend on APIs that will break in the future. Use `~&gt;` or `==` instead.</strong>
+</p>
+<p>See: <a href="http://code.dlang.org/package-format#version-specs">http://code.dlang.org/package-format#version-specs</a>
 </p>
 </div><a name="Optimal-AA-lookup"></a><div class="idiom"><a class="permalink" href="#Optimal-AA-lookup">Link
 </a><h1>Optimal AA lookup</h1>
