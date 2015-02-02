@@ -377,6 +377,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
 </a><a href="#Static-arrays-are-value-types">Static arrays are value types
 </a><a href="#The-impossible-real-time-thread">The impossible real-time thread
+</a><a href="#The-trouble-with-class-destructors">The trouble with class destructors
 </a><a href="#The-truth-about-shared">The truth about shared
 </a></nav><div class="container"><a name="assert(false)-is-special"></a><div class="idiom"><a class="permalink" href="#assert(false)-is-special">Link
 </a><h1><code class="prettyprint">assert(false)</code> is special</h1>
@@ -726,7 +727,7 @@ assert(max_abc == 10.0);
 </p>
 <pre class="prettyprint"><code>auto ptr = key in aa;
 ptr ? *ptr : ValueType.init;
-</code></pre><p>The <code class="prettyprint">.get</code> builtin property can also be used. It provides a default value when the key doens't exist.
+</code></pre><p>The <code class="prettyprint">.get</code> builtin property can also be used. It provides a default value when the key doesn't exist.
 </p>
 <pre class="prettyprint"><code>aa.get(key, defaultValue);
 </code></pre></div><a name="Patching-a-library-available-on-the-DUB-registry"></a><div class="idiom"><a class="permalink" href="#Patching-a-library-available-on-the-DUB-registry">Link
@@ -998,6 +999,41 @@ addSix(a);              // Static arrays implicitely convertible to slices.
 </li>
 </ul>
 <p><strong>Another limitation:</strong> Such a thread must not hold roots to GC objects. What it means is that you can use GC objects from the real-time thread, but these GC objects should be pointed to by other threads to avoid them being collected.
+</p>
+</div><a name="The-trouble-with-class-destructors"></a><div class="idiom"><a class="permalink" href="#The-trouble-with-class-destructors">Link
+</a><h1>The trouble with class destructors</h1>
+<p>Despite having a GC, resource management in D is one of the most difficult point of the language. 
+</p>
+<p>In particular, class destructors in D enjoy a variety of limitations you should be aware of.
+</p>
+<h2> 1. Don't expect class destructors to be called at all by the GC</h2>
+<p>The garbage collector is not guaranteed to run the destructors for all unreferenced objects.
+</p>
+<h2> 2. Don't expect class destructors to be called timely and by the right thread</h2>
+<p>Class destructors might be called <strong>when a collect is performed</strong> which can be later than you wished and by <strong>any thread</strong> the GC is currently running on.
+</p>
+<h2> 3. Don't expect members to be valid in a class destructor</h2>
+<p>The order in which the garbage collector calls destructors for unreferenced objects is <em>not specified</em>. <strong>Don't use members in class destructors if you expect to be called by the GC.</strong>
+</p>
+<h2> 4. Don't allocate within a destructor called by the GC</h2>
+<p>Using GC allocation is forbidden within a class destructor.
+</p>
+<h2> Conclusion</h2>
+<p>All this is in sharp contrast with the deterministic way C++ deals with destructors. However, all these constraints go away if destructors are called manually using:
+</p>
+<ul>
+<li><code class="prettyprint">std.typecons.scoped</code>
+</li>
+<li><code class="prettyprint">std.typecons.Unique</code>
+</li>
+<li>calling <a href="http://dlang.org/phobos/object.html#.destroy"><code class="prettyprint">destroy</code></a> on an object manually
+</li>
+<li>using <code class="prettyprint">delete</code> or <code class="prettyprint">scope class</code> (deprecated)
+</li>
+</ul>
+<p><strong>TL;DR There is not much that can safely be done in a class destructor if called by the GC. Either call all of them deterministically or don't do anything in destructors. </strong>
+</p>
+<p>See: <a href="http://dlang.org/class.html">http://dlang.org/class.html</a>
 </p>
 </div><a name="The-truth-about-shared"></a><div class="idiom"><a class="permalink" href="#The-truth-about-shared">Link
 </a><h1>The truth about shared</h1>

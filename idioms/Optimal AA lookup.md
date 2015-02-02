@@ -14,6 +14,6 @@ which perform 2 AA lookups prefer:
     ptr ? *ptr : ValueType.init;
 
 
-The `.get` builtin property can also be used. It provides a default value when the key doens't exist.
+The `.get` builtin property can also be used. It provides a default value when the key doesn't exist.
 
     aa.get(key, defaultValue);
