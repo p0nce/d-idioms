@@ -379,6 +379,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#The-impossible-real-time-thread">The impossible real-time thread
 </a><a href="#The-trouble-with-class-destructors">The trouble with class destructors
 </a><a href="#The-truth-about-shared">The truth about shared
+</a><a href="#Unrecoverable-vs-recoverable-errors">Unrecoverable vs recoverable errors
 </a></nav><div class="container"><a name="assert(false)-is-special"></a><div class="idiom"><a class="permalink" href="#assert(false)-is-special">Link
 </a><h1><code class="prettyprint">assert(false)</code> is special</h1>
 <p><code class="prettyprint">assert(false)</code>, <code class="prettyprint">assert(0)</code>, <code class="prettyprint">assert(null)</code>…… or any other false expression at compile-time do not produce a regular <code class="prettyprint">assert</code>.
@@ -737,7 +738,7 @@ ptr ? *ptr : ValueType.init;
 <ol>
 <li>Commit your hopefully working fix.
 </li>
-<li>Test it. <code class="prettyprint">dub add-local</code> or <code class="prettyprint">dub test</code> can help to do it without hassle.
+<li>Test it. <code class="prettyprint">dub add-local</code> or <code class="prettyprint">dub test</code> can help to do it.
 </li>
 <li>Make a git tag. <strong>Please try to respect</strong> <a href="http://semver.org/">SemVer</a> with respect to breaking changes, else you could break an unknown number of already released software. Also don't name your tag <code class="prettyprint">1.0.0</code> instead of <code class="prettyprint">v1.0.0</code>, else the registry won't take it.
 </li>
@@ -753,7 +754,7 @@ ptr ? *ptr : ValueType.init;
 </div><a name="Phobos-gems"></a><div class="idiom"><a class="permalink" href="#Phobos-gems">Link
 </a><h1>Phobos Gems</h1>
 <h2> Check recoverable errors with <code class="prettyprint">std.exception.enforce</code></h2>
-<p>It is good practice to check for unrecoverable errors with <code class="prettyprint">assert</code>, and recoverable errors with <code class="prettyprint">enforce</code>.<br>Which means you should learn the difference between those two types of errors.
+<p>It is good practice to check for unrecoverable errors with <code class="prettyprint">assert</code>, and recoverable errors with <code class="prettyprint">enforce</code>.<br>Which means you should <a href="#Unrecoverable-vs-recoverable-errors">learn the difference</a> between those two types of errors.
 </p>
 <p>See: <a href="http://dlang.org/phobos/std_exception.html#.enforce">http://dlang.org/phobos/std_exception.html#.enforce</a>
 </p>
@@ -1040,6 +1041,70 @@ addSix(a);              // Static arrays implicitely convertible to slices.
 <p>It's unclear when and how <code class="prettyprint">shared</code> will be implemented.
 </p>
 <p>Virtually noone use <code class="prettyprint">shared</code> currently. You are better off ignoring it at this moment.
+</p>
+</div><a name="Unrecoverable-vs-recoverable-errors"></a><div class="idiom"><a class="permalink" href="#Unrecoverable-vs-recoverable-errors">Link
+</a><h1>Unrecoverable vs recoverable errors</h1>
+<p><em>This item is language-agnostic and perhaps the most widely applicable tip on this page.</em>
+</p>
+<h2> Simply said</h2>
+<p>Being a D programmer requires knowing the <strong>two fundamental types of errors</strong> in programs.
+</p>
+<p>Similarly to many languages with exceptions, errors are separated in <strong>logic errors</strong> and <strong>runtime errors</strong>. This is embodied in the two-headed exception hierarchy:
+</p>
+<ul>
+<li>the <code class="prettyprint">Error</code> class is for <em>logic errors</em> also known as <em>unrecoverable errors</em> also known as <em>bugs</em>
+</li>
+<li>the <code class="prettyprint">Exception</code> class is for <em>runtime errors</em> also known as <em>recoverable errors</em>
+</li>
+</ul>
+<h2> Unrecoverable/logic errors</h2>
+<p>Such errors are basically <strong>bugs</strong>. Logic errors includes but are not limited to:
+</p>
+<ul>
+<li>divide by zero
+</li>
+<li>out-of-bounds access
+</li>
+<li>null dereferences
+</li>
+<li>invalid floating point operations like <code class="prettyprint">log(-1)</code> or <code class="prettyprint">arccos(2)</code>
+</li>
+<li>out of memory
+</li>
+<li>failed contract
+</li>
+</ul>
+<p>The recommended way to deal with these is to throw an <code class="prettyprint">Error</code>, for example by using <code class="prettyprint">assert</code>. Indeed <strong>the only reasonable option when encountering a logic error is to crash.</strong> This is how highly reliable system are built: let the OS handle the program crash, let a supervisor restart the faulty process.
+</p>
+<p>If you think you should recover from bugs and keep things running anyway, <strong>you are dangerous</strong>.
+</p>
+<h2> Recoverable/input errors</h2>
+<p>Such errors are basically <strong>not bugs</strong>:
+</p>
+<ul>
+<li>all kinds of errors with invalid input
+</li>
+<li>all kinds of I/O failure (eg: failure to read a file)
+</li>
+<li>failed API calls
+</li>
+</ul>
+<p>The canonical way to deal with these is to throw an <code class="prettyprint">Exception</code>, for example by using <a href="#Phobos-gems"><code class="prettyprint">enforce</code></a>.
+</p>
+<p>Some errors are difficult to classify: what is unrecoverable for a program part might well be recoverable for another. In this case it is recommended to use <code class="prettyprint">Exception</code>.
+</p>
+<h2> More material</h2>
+<p>Walter Bright repeatedly explained this item in the D newsgroup:
+</p>
+<p><em>I believe this is a misunderstanding of what exceptions are for. "File not found" exceptions, and other errors detected in inputs, are routine and routinely recoverable.</em>
+</p>
+<p><em>This discussion has come up repeatedly in the last 30 years. It's root is always the same - conflating handling of input errors, and handling of bugs in the logic of the program.</em>
+</p>
+<p><em>The two are COMPLETELY different and dealing with them follow completely different philosophies, goals, and strategies.</em>
+</p>
+<p><em>Input errors are not bugs, and vice versa. There is no overlap.</em>
+</p>
+<p>See also: <a href="http://forum.dlang.org/post/m07gf1$18jl$1@digitalmars.com">http://forum.dlang.org/post/m07gf1$18jl$1@digitalmars.com</a>
 </p>
 </div></div><a href="https://github.com/p0nce/d-idioms/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 </body></html>

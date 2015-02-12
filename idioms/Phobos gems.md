@@ -5,7 +5,7 @@ Phobos Gems
 ## Check recoverable errors with `std.exception.enforce`
 
 It is good practice to check for unrecoverable errors with `assert`, and recoverable errors with `enforce`.
-Which means you should learn the difference between those two types of errors.
+Which means you should [learn the difference](#Unrecoverable-vs-recoverable-errors) between those two types of errors.
 
 See: [http://dlang.org/phobos/std_exception.html#.enforce](http://dlang.org/phobos/std_exception.html#.enforce)
 
