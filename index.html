@@ -360,6 +360,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Extending-a-struct-with-alias-this">Extending a struct with alias this
 </a><a href="#Falsey-values">Falsey values
 </a><a href="#Getting-a-method-callbacked-from-C">Getting a method callbacked from C
+</a><a href="#How-the-D-Garbage-Collector-works">How the D Garbage Collector works
 </a><a href="#if-embedded-declaration">if embedded declaration
 </a><a href="#Implicit-conversion-for-user-defined-types">Implicit conversion for user-defined types
 </a><a href="#Inheriting-from-Exception">Inheriting from Exception
@@ -610,7 +611,40 @@ void loggingCallbackSDL(void* userData, int category, SDL_LogPriority priority, 
     MyGame game = cast(MyGame)userData;
     game.onMessage(message);
 }
-</code></pre></div><a name="if-embedded-declaration"></a><div class="idiom"><a class="permalink" href="#if-embedded-declaration">Link
+</code></pre></div><a name="How-the-D-Garbage-Collector-works"></a><div class="idiom"><a class="permalink" href="#How-the-D-Garbage-Collector-works">Link
+</a><h1>How the D Garbage Collector works</h1>
+<p>There seems to be a stigma surrounding Garbage Collection when you talk to C++ users. The GC would be an wild memory-hungry beast that can't be tamed, essentially outside the control of the programmer. It would render real-time work <a href="#The-impossible-real-time-thread">impossible</a> by its mere presence.
+</p>
+<p>But the D Garbage Collector is firmly under the application control. Once you learn how it works, it doesn't seem so uncontrollable, and reveal itself as what it really is: a <a href="http://dlang.org/garbage.html">trade-off</a> that most modern languages have choosen.
+</p>
+<h2> How the D GC works:</h2>
+<p>First of all, collections are <strong>not triggered randomly</strong> but when a thread allocates memory.
+</p>
+<ul>
+<li>A thread tries to allocate memory. At this point the GC may decide to collect garbage. If so, the current thread is <em>hijacked</em> for GC work.
+</li>
+<li>Memory ranges, starting from <em>roots</em>, are scanned recursively looking for more pointers into GC-owned memory. Each memory regions use markers to avoid scanning the same block of memory multiple times. <strong>This step can be incredibly slow.</strong>
+</li>
+<li>GC allocated memory that has no active pointers to it and do not need destructors to run is freed.
+</li>
+<li>Conversely, all unreachable memory that needs destructors to run is queued.
+</li>
+<li>All threads are resumed. The GC pause is then finished.
+</li>
+<li>Destructors for all queued memory are run. Unfortunately there is <a href="#The-trouble-with-class-destructors">caveats</a> associated with the GC thread calling destructors.
+</li>
+<li>Remaining unreachable memory is freed.
+</li>
+<li>The current thread returns to whatever work it was doing.
+</li>
+</ul>
+<h2> Tips</h2>
+<p>Intuitively, one can see that memory scanning is a potentially long and expensive process. Keeping a small GC heap makes it faster.<br>What you can do to accelerate scanning is using <code class="prettyprint">malloc</code>/<code class="prettyprint">free</code> instead of <code class="prettyprint">new</code> to allocate big chunks of memory. <br>Anything that reduces the total amount of GC-owned memory will reduce the maximum pause duration.
+</p>
+<h2> More about the GC</h2>
+<p>See: <a href="http://dlang.org/garbage.html">http://dlang.org/garbage.html</a>.
+</p>
+</div><a name="if-embedded-declaration"></a><div class="idiom"><a class="permalink" href="#if-embedded-declaration">Link
 </a><h1><code class="prettyprint">if</code> embedded declaration</h1>
 <p>It's legal to declare a variable inside an <code class="prettyprint">if</code> condition.
 </p>
