@@ -360,6 +360,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Extending-a-struct-with-alias-this">Extending a struct with alias this
 </a><a href="#Falsey-values">Falsey values
 </a><a href="#Getting-a-method-callbacked-from-C">Getting a method callbacked from C
+</a><a href="#if-(__ctfe)">if (__ctfe)
 </a><a href="#if-embedded-declaration">if embedded declaration
 </a><a href="#Implicit-conversion-for-user-defined-types">Implicit conversion for user-defined types
 </a><a href="#Inheriting-from-Exception">Inheriting from Exception
@@ -609,6 +610,27 @@ void loggingCallbackSDL(void* userData, int category, SDL_LogPriority priority, 
     // Get back the object reference here
     MyGame game = cast(MyGame)userData;
     game.onMessage(message);
+}
+</code></pre></div><a name="if-(__ctfe)"></a><div class="idiom"><a class="permalink" href="#if-(__ctfe)">Link
+</a><h1><code class="prettyprint">if (__ctfe)</code></h1>
+<p>D will run a lot of things through Compile-Time Funciton Execution (CTFE) if you ask for it.<br>Sometimes it is useful to branch based on whether the function is executing at compile-time or runtime.
+</p>
+<p>That's what <code class="prettyprint">__ctfe</code> is for.
+</p>
+<pre class="prettyprint"><code>import std.stdio;
+
+string AmIInCTFE()
+{
+    if (__ctfe)
+        return "Hello from CTFE!";
+    else
+        return "Hello from runtime!";
+}
+
+void main(string[] args)
+{
+    writefln(AmIInCTFE());
+    pragma(msg, AmIInCTFE());
 }
 </code></pre></div><a name="if-embedded-declaration"></a><div class="idiom"><a class="permalink" href="#if-embedded-declaration">Link
 </a><h1><code class="prettyprint">if</code> embedded declaration</h1>
@@ -1052,9 +1074,9 @@ addSix(a);              // Static arrays implicitely convertible to slices.
 <p>Similarly to many languages with exceptions, errors are separated in <strong>logic errors</strong> and <strong>runtime errors</strong>. This is embodied in the two-headed exception hierarchy:
 </p>
 <ul>
-<li>the <code class="prettyprint">Error</code> class is for <em>logic errors</em> also known as <em>unrecoverable errors</em> also known as <em>bugs</em>
+<li>the <code class="prettyprint">Error</code> class is for <em>logic errors</em> also known as <em>unrecoverable errors</em> also known as&hellip; <em>bugs</em>
 </li>
-<li>the <code class="prettyprint">Exception</code> class is for <em>runtime errors</em> also known as <em>recoverable errors</em>
+<li>the <code class="prettyprint">Exception</code> class is for <em>runtime errors</em> also known as <em>recoverable errors</em> also known as <em>input errors</em>. But it can also be used for hard-to-classify errors.
 </li>
 </ul>
 <h2> Unrecoverable/logic errors</h2>

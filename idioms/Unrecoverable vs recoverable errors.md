@@ -11,8 +11,8 @@ Being a D programmer requires knowing the **two fundamental types of errors** in
 
 Similarly to many languages with exceptions, errors are separated in **logic errors** and **runtime errors**. This is embodied in the two-headed exception hierarchy:
 
-- the `Error` class is for _logic errors_ also known as _unrecoverable errors_ also known as _bugs_
-- the `Exception` class is for _runtime errors_ also known as _recoverable errors_
+- the `Error` class is for _logic errors_ also known as _unrecoverable errors_ also known as&hellip; _bugs_
+- the `Exception` class is for _runtime errors_ also known as _recoverable errors_ also known as _input errors_. But it can also be used for hard-to-classify errors.
 
 ## Unrecoverable/logic errors
 
