@@ -731,7 +731,7 @@ assert(max_abc == 10.0);
 }
 
 
-</code></pre><p>Depend on a library using <code class="prettyprint">&gt;=</code> is risky. If <code class="prettyprint">awesome-lib</code> breaks its API then releases a new major tag, your project will break. This is implicit in SemVer and using <code class="prettyprint">&gt;=</code> suscribes for immediate breakage.
+</code></pre><p>Depending on a library using <code class="prettyprint">&gt;=</code> is risky. If <code class="prettyprint">awesome-lib</code> breaks its API then releases a new major tag, your project will break. This is implicit in SemVer and using <code class="prettyprint">&gt;=</code> suscribes for immediate breakage.
 </p>
 <p>Now this can be useful for executables, but this is especially bad for publicly released libraries. Any downstream project might break in the future when using your already released tags. And <em>how will you fix tags that are already in use?</em>
 </p>
