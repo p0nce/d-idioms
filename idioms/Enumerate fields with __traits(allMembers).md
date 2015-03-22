@@ -11,7 +11,7 @@ Some uses:
 - describe an OpenGL vertex format from the structure
 
 
-Here is how [DUB](https://github.com/D-Programming-Language/dub) implement a `.dup` with `__traits(allMembers)`:
+Here is how [DUB](https://github.com/D-Programming-Language/dub) implements a `.dup` with `__traits(allMembers)`:
 
     BuildSettings dup() const
     {
