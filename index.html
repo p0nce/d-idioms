@@ -362,6 +362,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Extending-a-struct-with-alias-this">Extending a struct with alias this
 </a><a href="#Falsey-values">Falsey values
 </a><a href="#Getting-a-method-callbacked-from-C">Getting a method callbacked from C
+</a><a href="#Grouping-modules-with-package.d">Grouping modules with package.d
 </a><a href="#How-the-D-Garbage-Collector-works">How the D Garbage Collector works
 </a><a href="#if-(__ctfe)">if (__ctfe)
 </a><a href="#if-embedded-declaration">if embedded declaration
@@ -683,6 +684,28 @@ void loggingCallbackSDL(void* userData, int category, SDL_LogPriority priority, 
     MyGame game = cast(MyGame)userData;
     game.onMessage(message);
 }
+</code></pre></div><a name="Grouping-modules-with-package.d"></a><div class="idiom"><a class="permalink" href="#Grouping-modules-with-package.d">Link
+</a><h1>Grouping modules with package.d</h1>
+<p><code class="prettyprint">package.d</code> is a special filename which is used in import resolution. When reading:
+</p>
+<pre class="prettyprint"><code>import mymodule;
+</code></pre><p>a D compiler will search for either <code class="prettyprint">mymodule.d</code> or <code class="prettyprint">mymodule/package.d</code> (and if both exist, it will complain about the name conflict).
+</p>
+<p>This feature allows to organize modules logically and combined with <code class="prettyprint">public import</code> to split big modules in several parts.
+</p>
+<p>Here is an example:
+</p>
+<pre class="prettyprint"><code>// In file path/mypackage/package.d
+module mypackage;
+public import mypackage.foo;
+public import mypackage.bar;
+</code></pre><pre class="prettyprint"><code>// In file path/mypackage/foo.d
+module mypackage.foo;
+</code></pre><pre class="prettyprint"><code>// In file path/mypackage/bar.d
+module mypackage.bar;
+</code></pre><pre class="prettyprint"><code>// In user code
+// mypackage.foo and mypackage.bar are also imported
+import mypackage;
 </code></pre></div><a name="How-the-D-Garbage-Collector-works"></a><div class="idiom"><a class="permalink" href="#How-the-D-Garbage-Collector-works">Link
 </a><h1>How the D Garbage Collector works</h1>
 <p>There seems to be a stigma surrounding Garbage Collection when you talk to C++ users. The GC would be an wild memory-hungry beast that can't be tamed, essentially outside the control of the programmer. It would render real-time work <a href="#The-impossible-real-time-thread">impossible</a> by its mere presence.
