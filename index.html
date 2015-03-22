@@ -380,6 +380,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Recursive-Sum-Type-with-matching">Recursive Sum Type with matching
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
 </a><a href="#Should-I-use-++pre-increment-or-post-increment++&#x3F;">Should I use ++pre-increment or post-increment++&#x3F;
+</a><a href="#Slices-.capacity,-the-mysterious-property">Slices .capacity, the mysterious property
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
 </a><a href="#Static-arrays-are-value-types">Static arrays are value types
 </a><a href="#The-impossible-real-time-thread">The impossible real-time thread
@@ -1120,6 +1121,27 @@ assert(indexOf("Hello home sweet home", "home") == 6);
         return ++m;
     }
 }
+</code></pre></div><a name="Slices-.capacity,-the-mysterious-property"></a><div class="idiom"><a class="permalink" href="#Slices-.capacity,-the-mysterious-property">Link
+</a><h1>Slices <code class="prettyprint">.capacity</code>, the mysterious property</h1>
+<p>Dynamic arrays aka slices in D have a <code class="prettyprint">.capacity</code> property: the maximum length the slice can reach before needing reallocation.
+</p>
+<pre class="prettyprint"><code>int[] arr = new int[10];
+writeln(arr.capacity);
+assert(arr.capacity &gt;= arr.length);
+</code></pre><p>Since <code class="prettyprint">.capacity</code> is read-only, the <code class="prettyprint">.reserve</code> builtin property also exist to ensure allocation size. This is similar to C++'s <code class="prettyprint">std::vector::reserve(size_t n)</code> and <code class="prettyprint">std::vector::reserve(size_t n)</code>. Handy!
+</p>
+<pre class="prettyprint"><code>T[] arr;
+arr.reserve(N);
+foreach(i ; 0..N)
+  arr ~= expr(i);                        // guaranteed not to allocate in the loop
+</code></pre><p>I hear you saying: <strong>"How is that possible since D slices are only a pointer and a length?"</strong><br>There is a trick, getting that information relies on the GC, and slices pointing to non-GC memory will report a capacity of 0 which means reallocating is mandatory for appending.
+</p>
+<pre class="prettyprint"><code>char[16] hexChars = "0123456789abcdef";
+char[] decChars = hexChars[0..10];
+writeln(decChars.capacity);              // output '0' since decChars points to non-GC memory
+
+decChars = decChars.dup;                 // makes a GC copy of the slice
+writeln(decChars.capacity);              // outputs non-zero value now that decChars points to GC memory
 </code></pre></div><a name="Smallest-dub.json-for-an-executable"></a><div class="idiom"><a class="permalink" href="#Smallest-dub.json-for-an-executable">Link
 </a><h1>Smallest dub.json for an executable</h1>
 <p>What DUB options are strictly necessary in a <code class="prettyprint">dub.json</code> file to build an executable?
