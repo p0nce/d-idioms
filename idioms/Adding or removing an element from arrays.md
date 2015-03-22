@@ -1,6 +1,6 @@
-===========================================
-Adding or removing an element from an array
-===========================================
+=========================================
+Adding or removing an element from arrays
+=========================================
 
 Appending an element to a dynamic array:
 
