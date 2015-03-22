@@ -351,7 +351,8 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <title>d-idioms - Idioms for the D programming language</title></head><body><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title">Idioms for the D Programming Language
-</div></header><nav><a href="#assert(false)-is-special">assert(false) is special
+</div></header><nav><a href="#&#x2F;+-+&#x2F;-nestable-comments-and-version(none)">&#x2F;+ +&#x2F; nestable comments and version(none)
+</a><a href="#assert(false)-is-special">assert(false) is special
 </a><a href="#Capturing-with-regular-expressions">Capturing with regular expressions
 </a><a href="#D-online-resources">D online resources
 </a><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
@@ -382,7 +383,47 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#The-trouble-with-class-destructors">The trouble with class destructors
 </a><a href="#The-truth-about-shared">The truth about shared
 </a><a href="#Unrecoverable-vs-recoverable-errors">Unrecoverable vs recoverable errors
-</a></nav><div class="container"><a name="assert(false)-is-special"></a><div class="idiom"><a class="permalink" href="#assert(false)-is-special">Link
+</a></nav><div class="container"><a name="&#x2F;+-+&#x2F;-nestable-comments-and-version(none)"></a><div class="idiom"><a class="permalink" href="#&#x2F;+-+&#x2F;-nestable-comments-and-version(none)">Link
+</a><h1><code class="prettyprint">/+ +/</code> nestable comments and <code class="prettyprint">version(none)</code></h1>
+<p>In addition to single-line comments <code class="prettyprint">//</code> and block comments <code class="prettyprint">/* */</code>, D supports nestable block comments with <code class="prettyprint">/+ +/</code>.
+</p>
+<pre class="prettyprint"><code>/+
+    This whole block is commented.
+
+    /**
+     * A documented function.
+     */
+    void doStuff()
+    {
+        // blah blah
+    }
+
+    /+
+      Such block comments are nestable.
+    +/
++/
+
+</code></pre><p>They are handy when commenting large swaths of code. It would be the D equivalent to <code class="prettyprint">#if 0</code> / <code class="prettyprint">#endif</code> pairs in C or C++.
+</p>
+<p>If you prefer the commented portion of code to stay valid, prefer using <code class="prettyprint">version(none)</code>.
+</p>
+<pre class="prettyprint"><code>version(none)
+{
+    // This whole block is commented, but still must parse.
+
+    /**
+     * A documented function
+     */
+    void doStuff()
+    {
+        // blah blah
+    }
+}
+
+</code></pre><p>Indeed, <code class="prettyprint">none</code> is a special version identifier that cannot be set.
+</p>
+<pre class="prettyprint"><code>version = none; // Error: version identifier 'none' is reserved and cannot be set
+</code></pre></div><a name="assert(false)-is-special"></a><div class="idiom"><a class="permalink" href="#assert(false)-is-special">Link
 </a><h1><code class="prettyprint">assert(false)</code> is special</h1>
 <p><code class="prettyprint">assert(false)</code>, <code class="prettyprint">assert(0)</code>, <code class="prettyprint">assert(null)</code>…… or any other false expression at compile-time do not produce a regular <code class="prettyprint">assert</code>.
 </p>
