@@ -378,6 +378,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Qualified-switch-using-with">Qualified switch using with
 </a><a href="#Recursive-Sum-Type-with-matching">Recursive Sum Type with matching
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
+</a><a href="#Should-I-use-++pre-increment-or-post-increment++&#x3F;">Should I use ++pre-increment or post-increment++&#x3F;
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
 </a><a href="#Static-arrays-are-value-types">Static arrays are value types
 </a><a href="#The-impossible-real-time-thread">The impossible real-time thread
@@ -1073,7 +1074,25 @@ string toString(Atom atom)
 assert(indexOf("Hello home sweet home", "home") == 6);
 </code></pre><p>See: <a href="http://dlang.org/phobos/std_string.html#.indexOf">http://dlang.org/phobos/std_string.html#.indexOf</a>
 </p>
-</div><a name="Smallest-dub.json-for-an-executable"></a><div class="idiom"><a class="permalink" href="#Smallest-dub.json-for-an-executable">Link
+</div><a name="Should-I-use-++pre-increment-or-post-increment++&#x3F;"></a><div class="idiom"><a class="permalink" href="#Should-I-use-++pre-increment-or-post-increment++&#x3F;">Link
+</a><h1>Should I use ++pre-increment or post-increment++?</h1>
+<p>Either one. It did matter a bit in C++ but doesn't in D. The compiler rewrites internally post-increments to pre-increments if the expression result is unused.
+</p>
+<pre class="prettyprint"><code>  it++; // lowered to ++it since the result isn't used
+  it--; // ditto, lowered to --it
+</code></pre><p>Contrarily to <a href="http://en.cppreference.com/w/cpp/language/operator_incdec">C++</a>, a single operator overload is used to define both pre-increment and post-increment in user-defined types.
+</p>
+<pre class="prettyprint"><code>struct WrappedInt
+{
+    int m;
+
+    // overload both ++pre and post++
+    int opUnary(string op)() if (op == "++")
+    {
+        return ++m;
+    }
+}
+</code></pre></div><a name="Smallest-dub.json-for-an-executable"></a><div class="idiom"><a class="permalink" href="#Smallest-dub.json-for-an-executable">Link
 </a><h1>Smallest dub.json for an executable</h1>
 <p>What DUB options are strictly necessary in a <code class="prettyprint">dub.json</code> file to build an executable?
 </p>
