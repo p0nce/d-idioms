@@ -26,8 +26,8 @@ Using GC allocation is forbidden within a class destructor.
 ## Conclusion
 
 All this is in sharp contrast with the deterministic way C++ deals with destructors. However, all these constraints go away if destructors are called manually using:
-- `std.typecons.scoped`
-- `std.typecons.Unique`
+- `std.typecons.scoped` (documentation [here](http://dlang.org/phobos/std_typecons.html#.scoped))
+- `std.typecons.Unique` (documentation [here](http://dlang.org/phobos/std_typecons.html#.Unique))
 - calling [`destroy`](http://dlang.org/phobos/object.html#.destroy) on an object manually
 - using `delete` or `scope class` (deprecated)
 
