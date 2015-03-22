@@ -352,6 +352,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title">Idioms for the D Programming Language
 </div></header><nav><a href="#&#x2F;+-+&#x2F;-nestable-comments-and-version(none)">&#x2F;+ +&#x2F; nestable comments and version(none)
+</a><a href="#Adding-or-removing-an-element-from-an-array">Adding or removing an element from an array
 </a><a href="#assert(false)-is-special">assert(false) is special
 </a><a href="#Capturing-with-regular-expressions">Capturing with regular expressions
 </a><a href="#D-online-resources">D online resources
@@ -423,6 +424,34 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </code></pre><p>Indeed, <code class="prettyprint">none</code> is a special version identifier that cannot be set.
 </p>
 <pre class="prettyprint"><code>version = none; // Error: version identifier 'none' is reserved and cannot be set
+</code></pre></div><a name="Adding-or-removing-an-element-from-an-array"></a><div class="idiom"><a class="permalink" href="#Adding-or-removing-an-element-from-an-array">Link
+</a><h1>Adding or removing an element from an array</h1>
+<p>Appending an element to a dynamic array:
+</p>
+<pre class="prettyprint"><code>T[] arr;
+arr ~= value;                    // value is pushed at the back of the array
+</code></pre><p>Removing an element from a dynamic array given an index:
+</p>
+<pre class="prettyprint"><code>import std.algorithm : remove;
+T[] arr;
+arr = arr.remove(index);         // index-th element is removed from array
+</code></pre><p>Removing an element from a dynamic array given a value:
+</p>
+<pre class="prettyprint"><code>auto removeElement(R, N)(R haystack, N needle)
+{
+    import std.algorithm : countUntil, remove;
+    auto index = _haystack.countUntil(needle);
+    return (index != -1) ? haystack.remove(index) : haystack;
+}
+int[] arr = [1, 5, 10];
+arr = arr.removeElement(5);
+assert(arr == [1,10]);
+</code></pre><p>Adding an element into an associate array:
+</p>
+<pre class="prettyprint"><code>aa[key] = value;                 // aa[key] is created if not already existing
+</code></pre><p>Removing an element from an associate array given a key:
+</p>
+<pre class="prettyprint"><code>aa.remove(key);                  // there is a builtin property to do that
 </code></pre></div><a name="assert(false)-is-special"></a><div class="idiom"><a class="permalink" href="#assert(false)-is-special">Link
 </a><h1><code class="prettyprint">assert(false)</code> is special</h1>
 <p><code class="prettyprint">assert(false)</code>, <code class="prettyprint">assert(0)</code>, <code class="prettyprint">assert(null)</code>…… or any other false expression at compile-time do not produce a regular <code class="prettyprint">assert</code>.
@@ -527,7 +556,7 @@ myArray.ptr[index] = 4; // no bounds check, guaranteed
 <li>describe an OpenGL vertex format from the structure
 </li>
 </ul>
-<p>Here is how <a href="https://github.com/D-Programming-Language/dub">DUB</a> implement a <code class="prettyprint">.dup</code> with <code class="prettyprint">__traits(allMembers)</code>:
+<p>Here is how <a href="https://github.com/D-Programming-Language/dub">DUB</a> implements a <code class="prettyprint">.dup</code> with <code class="prettyprint">__traits(allMembers)</code>:
 </p>
 <pre class="prettyprint"><code>BuildSettings dup() const
 {
@@ -1120,9 +1149,9 @@ addSix(a);              // Static arrays implicitely convertible to slices.
 <p>All this is in sharp contrast with the deterministic way C++ deals with destructors. However, all these constraints go away if destructors are called manually using:
 </p>
 <ul>
-<li><code class="prettyprint">std.typecons.scoped</code>
+<li><code class="prettyprint">std.typecons.scoped</code> (documentation <a href="http://dlang.org/phobos/std_typecons.html#.scoped">here</a>)
 </li>
-<li><code class="prettyprint">std.typecons.Unique</code>
+<li><code class="prettyprint">std.typecons.Unique</code> (documentation <a href="http://dlang.org/phobos/std_typecons.html#.Unique">here</a>)
 </li>
 <li>calling <a href="http://dlang.org/phobos/object.html#.destroy"><code class="prettyprint">destroy</code></a> on an object manually
 </li>
