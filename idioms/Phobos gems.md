@@ -26,3 +26,8 @@ See: [http://dlang.org/phobos/std_typecons.html#.scoped](http://dlang.org/phobos
 
 See: [http://dlang.org/phobos/std_traits.html#.Unqual](http://dlang.org/phobos/std_traits.html#.Unqual)
 
+## Convert a range to a dynamic array with `std.array.array`
+
+`array` is usually used to convert a range computation to a dynamic array.
+
+See: [http://dlang.org/phobos/std_array.html#.array](http://dlang.org/phobos/std_array.html#.array)
