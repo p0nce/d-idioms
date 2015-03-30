@@ -1128,7 +1128,7 @@ assert(indexOf("Hello home sweet home", "home") == 6);
 <pre class="prettyprint"><code>int[] arr = new int[10];
 writeln(arr.capacity);
 assert(arr.capacity &gt;= arr.length);
-</code></pre><p>Since <code class="prettyprint">.capacity</code> is read-only, the <code class="prettyprint">.reserve</code> builtin property also exist to ensure allocation size. This is similar to C++'s <code class="prettyprint">std::vector::reserve(size_t n)</code> and <code class="prettyprint">std::vector::reserve(size_t n)</code>. Handy!
+</code></pre><p>Since <code class="prettyprint">.capacity</code> is read-only, the <code class="prettyprint">.reserve</code> builtin property also exist to ensure allocation size. This is similar to C++'s <code class="prettyprint">std::vector::capacity()</code> and <code class="prettyprint">std::vector::reserve(size_t n)</code>. Handy!
 </p>
 <pre class="prettyprint"><code>T[] arr;
 arr.reserve(N);

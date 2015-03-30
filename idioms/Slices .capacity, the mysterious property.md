@@ -10,7 +10,7 @@ writeln(arr.capacity);
 assert(arr.capacity >= arr.length);
 ```
 
-Since `.capacity` is read-only, the `.reserve` builtin property also exist to ensure allocation size. This is similar to C++'s `std::vector::reserve(size_t n)` and `std::vector::reserve(size_t n)`. Handy!
+Since `.capacity` is read-only, the `.reserve` builtin property also exist to ensure allocation size. This is similar to C++'s `std::vector::capacity()` and `std::vector::reserve(size_t n)`. Handy!
 
 ```
 T[] arr;
