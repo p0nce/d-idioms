@@ -710,9 +710,13 @@ module mypackage.bar;
 import mypackage;
 </code></pre></div><a name="How-does-D-improve-on-C++17&#63;"></a><div class="idiom"><a class="permalink" href="#How-does-D-improve-on-C++17&#63;">Link
 </a><h1>How does D improve on C++17?</h1>
+<p><strong>Warning: this article is opinionated.</strong>
+</p>
+<p>&nbsp;
+</p>
 <p>With C++ evolving and coming to C++17, <strong>is D still relevant?</strong>
 </p>
-<p>Yes, and very much so. Here's is why.
+<p>I think that yes, and very much so. Here's is why.
 </p>
 <h2> No more preprocessor</h2>
 <p>D has no need for a preprocessor.
@@ -773,6 +777,21 @@ import mypackage;
 <h2> No need for C++ template's heroes</h2>
 <p>The easier and more powerful templates in D allow the <em>average</em> programmer to create meta-programs routinely. Not just one programmer in your team which happen to be comfortable with them.
 </p>
+<p>&nbsp;
+</p>
+<h2> Downsides</h2>
+<p>For balance, here are the downsides <strong>(opinionated again)</strong>:
+</p>
+<ul>
+<li>D has a way smaller (growing) community.
+</li>
+<li>C++ has nice, composable RAII. D has a more complicated story with resources.
+</li>
+<li>D is easy to start using but not that easy to use really well. Hence, this website.
+</li>
+<li>Not every purpose is compatible with a GC.
+</li>
+</ul>
 </div><a name="How-the-D-Garbage-Collector-works"></a><div class="idiom"><a class="permalink" href="#How-the-D-Garbage-Collector-works">Link
 </a><h1>How the D Garbage Collector works</h1>
 <p>There seems to be a stigma surrounding Garbage Collection when you talk to C++ users. The GC would be an wild memory-hungry beast that can't be tamed, essentially outside the control of the programmer. It would render real-time work <a href="#The-impossible-real-time-thread">impossible</a> by its mere presence.

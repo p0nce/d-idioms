@@ -2,9 +2,13 @@
 How does D improve on C++17?
 ============================
 
+**Warning: this article is opinionated.**
+
+&nbsp;
+
 With C++ evolving and coming to C++17, **is D still relevant?**
 
-Yes, and very much so. Here's is why.
+I think that yes, and very much so. Here's is why.
 
 ## No more preprocessor
 
@@ -86,3 +90,16 @@ For the large majority of programs, the GC is a productivity enhancer. For the o
 ## No need for C++ template's heroes
 
 The easier and more powerful templates in D allow the _average_ programmer to create meta-programs routinely. Not just one programmer in your team which happen to be comfortable with them.
+
+
+&nbsp;
+
+## Downsides
+
+For balance, here are the downsides **(opinionated again)**:
+
+- D has a way smaller (growing) community.
+- C++ has nice, composable RAII. D has a more complicated story with resources.
+- D is easy to start using but not that easy to use really well. Hence, this website.
+- Not every purpose is compatible with a GC.
+
