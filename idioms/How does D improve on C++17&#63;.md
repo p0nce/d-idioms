@@ -39,7 +39,7 @@ A name conflict when importing modules with the same identifier triggers a compi
 
 ## Default initialization
 
-Uninitialized variables can create subtle and hard to find bugs in C++ programs. In D all variables and members are initialized by default. And if that happens to be expensive, the `= void` initialization can be used instead.
+Uninitialized variables can create subtle and hard to find bugs in C++ programs. In D all variables and members are initialized by default. If that happens to be expensive, the `= void` initialization can be used instead.
 
 ## DUB
 
