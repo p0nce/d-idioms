@@ -99,7 +99,7 @@ The easier and more powerful templates in D allow the _average_ programmer to cr
 For balance, here are the downsides **(opinionated again)**:
 
 - D has a way smaller (growing) community.
-- C++ has nice, composable RAII. D has a more complicated story with resources.
+- C++ has nice, composable RAII. D has a more complicated [story](#The-trouble-with-class-destructors) with resources.
 - D is easy to start using but not that easy to use really well. Hence, this website.
 - Not every purpose is compatible with a GC.
 
