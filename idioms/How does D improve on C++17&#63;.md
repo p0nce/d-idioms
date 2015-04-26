@@ -16,7 +16,7 @@ D has no need for a preprocessor.
 
 ## No more header files, today
 
-Even in 2025 when C++ compilers get modules and you are finally allowed to use them, headers will still survive alongside modules in third-party libraries and for backward compatibility.
+Even when C++ compilers implement modules and you can finally use them, headers will still survive alongside modules for backward compatibility.
 
 ## No more order of declaration
 
@@ -52,7 +52,7 @@ It didn't make much sense even in C.
 
 ## Ranges simpler to implement than iterators
 
-Ever tried implementing a C++ iterator? I bet it was fun.
+Ever implemented a C++ iterator? It can be a bit tricky.
 
 ## Move and copy semantics radically simplified
 
