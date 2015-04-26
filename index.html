@@ -734,6 +734,9 @@ import mypackage;
 <h2> Name conflict bugs are impossible</h2>
 <p>A name conflict when importing modules with the same identifier trigger a compilation error. It is impossible to use the wrong symbol unknowingly.
 </p>
+<h2> Default initialization</h2>
+<p>Uninitialized variables can create subtle and hard to find bugs in C++ programs. In D every variable and member is initialized by default. If that happen to be expensive, the <code class="prettyprint">= void</code> initialization can be used instead.
+</p>
 <h2> DUB</h2>
 <p>D has a package manager. C++ has none that is popular in its community.<br>Therefore, using a third-party library is many times easier.
 </p>

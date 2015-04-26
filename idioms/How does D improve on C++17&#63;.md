@@ -32,6 +32,10 @@ No need for the semantic pass to separate the language in tokens.
 
 A name conflict when importing modules with the same identifier trigger a compilation error. It is impossible to use the wrong symbol unknowingly.
 
+## Default initialization
+
+Uninitialized variables can create subtle and hard to find bugs in C++ programs. In D every variable and member is initialized by default. If that happen to be expensive, the `= void` initialization can be used instead.
+
 ## DUB
 
 D has a package manager. C++ has none that is popular in its community.
