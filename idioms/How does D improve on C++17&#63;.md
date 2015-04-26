@@ -68,7 +68,7 @@ C++'s STL are somewhat readable, but less so.
 
 ## No more diamond inheritance
 
-C++ having multiple inheritance implies a [complex object model](www.amazon.fr/Inside-Object-Model-Stanley-Lippman/dp/0201834545).
+C++ having multiple inheritance implies a [complex object model](http://www.amazon.fr/Inside-Object-Model-Stanley-Lippman/dp/0201834545).
 With `alias this`, multiple implementation inheritance is pretty much never needed.
 
 ## Saner operator overloading
