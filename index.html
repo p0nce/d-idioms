@@ -732,13 +732,13 @@ import mypackage;
 <p>No need for the semantic pass to separate the language in tokens.
 </p>
 <h2> Name conflict bugs are impossible</h2>
-<p>A name conflict when importing modules with the same identifier trigger a compilation error. It is impossible to use the wrong symbol by mistake.
+<p>A name conflict when importing modules with the same identifier triggers a compilation error. It is thus impossible to use the wrong symbol by mistake.
 </p>
 <h2> Default initialization</h2>
-<p>Uninitialized variables can create subtle and hard to find bugs in C++ programs. In D every variable and member is initialized by default. And if that happen to be expensive, the <code class="prettyprint">= void</code> initialization can be used instead.
+<p>Uninitialized variables can create subtle and hard to find bugs in C++ programs. In D all variables and members are initialized by default. And if that happens to be expensive, the <code class="prettyprint">= void</code> initialization can be used instead.
 </p>
 <h2> DUB</h2>
-<p>D has a package manager. C++ has none that is popular in its community.<br>Therefore, using a third-party library is many times easier.
+<p>D has a package manager. C++ has none that is popular in its community.<br>Therefore, using a <a href="http://code.dlang.org/">third-party library</a> is many times easier.
 </p>
 <h2> No more implicit conversion of arrays to pointers</h2>
 <p>It didn't make much sense even in C.
@@ -768,9 +768,9 @@ import mypackage;
 <p>See how <a href="#Should-I-use-++pre-increment-or-post-increment++?">here</a>.
 </p>
 <h2> GC</h2>
-<p>For the large majority of programs, the GC is a productivity enhancer. For the other programs, it's not that bad.
+<p>For the large majority of programs, the GC is a productivity enhancer. For the other programs, it's <a href="#How-the-D-Garbage-Collector-works">not that bad</a>.
 </p>
-<h2> No need for C++ templates heroes</h2>
+<h2> No need for C++ template's heroes</h2>
 <p>The easier and more powerful templates in D allow the <em>average</em> programmer to create meta-programs routinely. Not just one programmer in your team which happen to be comfortable with them.
 </p>
 </div><a name="How-the-D-Garbage-Collector-works"></a><div class="idiom"><a class="permalink" href="#How-the-D-Garbage-Collector-works">Link

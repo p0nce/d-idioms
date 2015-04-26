@@ -31,16 +31,16 @@ No need for the semantic pass to separate the language in tokens.
 
 ## Name conflict bugs are impossible
 
-A name conflict when importing modules with the same identifier trigger a compilation error. It is impossible to use the wrong symbol by mistake.
+A name conflict when importing modules with the same identifier triggers a compilation error. It is thus impossible to use the wrong symbol by mistake.
 
 ## Default initialization
 
-Uninitialized variables can create subtle and hard to find bugs in C++ programs. In D every variable and member is initialized by default. And if that happen to be expensive, the `= void` initialization can be used instead.
+Uninitialized variables can create subtle and hard to find bugs in C++ programs. In D all variables and members are initialized by default. And if that happens to be expensive, the `= void` initialization can be used instead.
 
 ## DUB
 
 D has a package manager. C++ has none that is popular in its community.
-Therefore, using a third-party library is many times easier.
+Therefore, using a [third-party library](http://code.dlang.org/) is many times easier.
 
 ## No more implicit conversion of arrays to pointers
 
@@ -81,8 +81,8 @@ See how [here](#Should-I-use-++pre-increment-or-post-increment++?).
 
 ## GC
 
-For the large majority of programs, the GC is a productivity enhancer. For the other programs, it's not that bad.
+For the large majority of programs, the GC is a productivity enhancer. For the other programs, it's [not that bad](#How-the-D-Garbage-Collector-works).
 
-## No need for C++ templates heroes
+## No need for C++ template's heroes
 
 The easier and more powerful templates in D allow the _average_ programmer to create meta-programs routinely. Not just one programmer in your team which happen to be comfortable with them.
