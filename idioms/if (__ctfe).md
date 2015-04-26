@@ -2,7 +2,7 @@
 `if (__ctfe)`
 =============
 
-D will run a lot of things through Compile-Time Funciton Execution (CTFE) if you ask for it.
+D will run a lot of things through Compile-Time Function Execution (CTFE) if you ask for it.
 Sometimes it is useful to branch based on whether the function is executing at compile-time or runtime.
 
 
