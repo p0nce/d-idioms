@@ -30,12 +30,12 @@ arr = arr.removeElement(5);
 assert(arr == [1,10]);
 ```
 
-Adding an element into an associate array:
+Adding an element into an associative array:
 ```
 aa[key] = value;                 // aa[key] is created if not already existing
 ```
 
-Removing an element from an associate array given a key:
+Removing an element from an associative array given a key:
 ```
 aa.remove(key);                  // there is a builtin property to do that
 ```
