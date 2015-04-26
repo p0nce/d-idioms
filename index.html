@@ -721,21 +721,21 @@ import mypackage;
 <p>Even in 2025 when C++ compilers get modules and you are finally allowed to use them, headers will still survive alongside modules in third-party libraries and for backward compatibility.
 </p>
 <h2> No more order of declaration</h2>
-<p>Order of declaration is unsignificant in D. There is no need to predeclare or reorder anything.
+<p>Order of declaration is insignificant in D. There is no need to pre-declare or reorder anything.
 </p>
 <h2> Faster compiles</h2>
 <p>C++ has <a href="http://www.drdobbs.com/cpp/c-compilation-speed/228701711">compilation speed problems</a>. For example the preprocessor needs to iterate on source files at least 3 times by design.
 </p>
-<p>What happen in C++ shops is that people spend a significant amount of time <strong>waiting for the compiler</strong>.
+<p>What happens in C++ shops is that programmers spend a significant amount of time waiting for the compiler.
 </p>
 <h2> Lexing stage separated from parsing stage separated from semantics</h2>
 <p>No need for the semantic pass to separate the language in tokens.
 </p>
 <h2> Name conflict bugs are impossible</h2>
-<p>A name conflict when importing modules with the same identifier trigger a compilation error. It is impossible to use the wrong symbol unknowingly.
+<p>A name conflict when importing modules with the same identifier trigger a compilation error. It is impossible to use the wrong symbol by mistake.
 </p>
 <h2> Default initialization</h2>
-<p>Uninitialized variables can create subtle and hard to find bugs in C++ programs. In D every variable and member is initialized by default. If that happen to be expensive, the <code class="prettyprint">= void</code> initialization can be used instead.
+<p>Uninitialized variables can create subtle and hard to find bugs in C++ programs. In D every variable and member is initialized by default. And if that happen to be expensive, the <code class="prettyprint">= void</code> initialization can be used instead.
 </p>
 <h2> DUB</h2>
 <p>D has a package manager. C++ has none that is popular in its community.<br>Therefore, using a third-party library is many times easier.
@@ -744,22 +744,22 @@ import mypackage;
 <p>It didn't make much sense even in C.
 </p>
 <h2> Ranges simpler to implement than iterators</h2>
-<p>Ever tried implementing a C++ iterator? I'd bet it was fun.
+<p>Ever tried implementing a C++ iterator? I bet it was fun.
 </p>
 <h2> Move and copy semantics radically simplified</h2>
 <p>D makes the assumption that structs and classes are copyable by bit copy. It adds some restrictions on internal pointers, but overall it's simpler.
 </p>
 <h2> <code class="prettyprint">unittest</code> blocks</h2>
-<p>Unit-tests have been made a builtin in D to lower the barrier for testing.
+<p>Built-in unit-tests lower the barrier for testing.
 </p>
 <h2> Documentation comments</h2>
-<p>Documentation comments are builtin to avoid the need for an external tool that inevitably nobody uses.
+<p>Built-in documentation comments avoid the need for an external tool that inevitably nobody uses.
 </p>
 <h2> The D STL is actually readable</h2>
 <p>C++'s STL are somewhat readable, but less so.
 </p>
 <h2> No more diamond inheritance</h2>
-<p>C++ having multiple inheritance implies a <a href="www.amazon.fr/Inside-Object-Model-Stanley-Lippman/dp/0201834545">complex object model</a>.<br>With <code class="prettyprint">alias this</code>, multiple implementation inheritance is pretty much unneeded.
+<p>C++ having multiple inheritance implies a <a href="www.amazon.fr/Inside-Object-Model-Stanley-Lippman/dp/0201834545">complex object model</a>.<br>With <code class="prettyprint">alias this</code>, multiple implementation inheritance is pretty much never needed.
 </p>
 <h2> Saner operator overloading</h2>
 <p>Making custom numerical types requires a lot less operator overloads.
@@ -1121,7 +1121,7 @@ case huge:
     writeln("huge");
     break;
 }
-</code></pre><p>This idiom was discovered by deadalnix.
+</code></pre><p>This idiom was discovered by <a href="https://github.com/deadalnix">deadalnix</a>.
 </p>
 </div><a name="Recursive-Sum-Type-with-matching"></a><div class="idiom"><a class="permalink" href="#Recursive-Sum-Type-with-matching">Link
 </a><h1>Recursive Sum Type with matching</h1>

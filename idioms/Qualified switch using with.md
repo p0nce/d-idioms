@@ -44,4 +44,4 @@ We can work-around this by using `with`:
     }
 
 
-This idiom was discovered by deadalnix.
+This idiom was discovered by [deadalnix](https://github.com/deadalnix).
