@@ -64,6 +64,41 @@ nav
     z-index: 10;
 }
 
+footer
+{
+    display: block;
+    width: 90%;
+    max-width: 1100px;
+    font-size: 1.6rem;
+    padding: 0.5rem;
+    margin: 0 auto;
+    background-color: #744;
+    list-style-type: square;
+    box-shadow: 0.2em 0.4em 2.0em 0em rgba(32,32,32,0.1);
+    z-index: 10;
+    color: black;
+}
+
+
+footer h2
+{
+    color: white;
+    padding: 4rem 4.25rem 0rem 4.25rem;
+    margin: 2rem;
+}
+
+footer p
+{
+    padding: 0rem 4.25rem 4rem 4.25rem;
+    margin: 2rem;
+    color: white;
+}
+
+footer a
+{
+    color: #88f;
+}
+
 a
 {
     text-decoration: none;
@@ -100,8 +135,15 @@ h2
 {
     font-size: 1.9rem;
     padding: 0.34rem;
-    margin: 1.7rem 0rem 0.17rem -0.5rem;
+    margin: 4rem 0rem 1rem -0.5rem;
     color: #444;
+}
+
+p
+{
+    padding: 1rem 2rem;
+    padding: 1rem 2rem;
+    max-width: 80rem;
 }
 
 ol
@@ -113,7 +155,7 @@ li
 {
     display: list-item;
     list-style: square;
-    margin: 0rem 0rem 0rem 3.4rem;
+    margin: 0rem 0rem 0rem 6rem;
     padding: 0.34rem;
 }
 
@@ -148,7 +190,7 @@ pre
     color: #222;
     background-color: #ededef;
     display: block;
-    padding: 4.25rem;
+    padding: 8rem 6rem;
     margin: 2.4rem;
     line-height: 2.5rem;
     box-shadow: 0.17rem 0.34rem 1.7rem 0rem rgba(32,32,32,0.15);
