@@ -425,6 +425,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Should-I-use-++pre-increment-or-post-increment++&#x3F;">Should I use ++pre-increment or post-increment++&#x3F;
 </a><a href="#Slices-.capacity,-the-mysterious-property">Slices .capacity, the mysterious property
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
+</a><a href="#So-what-does--release-do,-exactly&#63;">So what does -release do, exactly&#63;
 </a><a href="#Static-arrays-are-value-types">Static arrays are value types
 </a><a href="#The-impossible-real-time-thread">The impossible real-time thread
 </a><a href="#The-trouble-with-class-destructors">The trouble with class destructors
@@ -1281,6 +1282,20 @@ writeln(decChars.capacity);              // outputs non-zero value now that decC
 </code></pre><p>Place the source code in a <code class="prettyprint">source/main.d</code> file and DUB will find it and guess<br>you want to build an executable.
 </p>
 <p>No <code class="prettyprint">main.d</code>? It will guess it's a source library then.
+</p>
+</div><a name="So-what-does--release-do,-exactly&#63;"></a><div class="idiom"><a class="permalink" href="#So-what-does--release-do,-exactly&#63;">Link
+</a><h1>So what does <code class="prettyprint">-release</code> do, exactly?</h1>
+<p>In the DMD compiler, the <code class="prettyprint">-release</code> switch does the following things:
+</p>
+<ul>
+<li>Removing contracts (<code class="prettyprint">in</code> and <code class="prettyprint">out</code> blocks).
+</li>
+<li>Removing bounds checking in all but <code class="prettyprint">@safe</code> code. That means: <code class="prettyprint">@trusted</code>, <code class="prettyprint">@system</code>, and unmarked functions won't have bounds checks. To overide this behaviour, use the <code class="prettyprint">-boundscheck</code> switch.
+</li>
+<li>Removing assertions, except <code class="prettyprint">assert(false)</code> which is <a href="#assert(false)-is-special">special</a>.<br><strong>Failed assertions are considered Undefined Behaviour.</strong> The optimizer can assume that a removed assertion always holds and use this fact for optimization.
+</li>
+</ul>
+<p>See: <a href="http://dlang.org/dmd-windows.html#switch-release">http://dlang.org/dmd-windows.html#switch-release</a>
 </p>
 </div><a name="Static-arrays-are-value-types"></a><div class="idiom"><a class="permalink" href="#Static-arrays-are-value-types">Link
 </a><h1>Static arrays are value types</h1>
