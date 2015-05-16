@@ -423,6 +423,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Recursive-Sum-Type-with-matching">Recursive Sum Type with matching
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
 </a><a href="#Should-I-use-++pre-increment-or-post-increment++&#x3F;">Should I use ++pre-increment or post-increment++&#x3F;
+</a><a href="#Skip-initialization-with-=-void">Skip initialization with = void
 </a><a href="#Slices-.capacity,-the-mysterious-property">Slices .capacity, the mysterious property
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
 </a><a href="#So-what-does--release-do,-exactly&#63;">So what does -release do, exactly&#63;
@@ -1249,7 +1250,21 @@ assert(indexOf("Hello home sweet home", "home") == 6);
         return ++m;
     }
 }
-</code></pre></div><a name="Slices-.capacity,-the-mysterious-property"></a><div class="idiom"><a class="permalink" href="#Slices-.capacity,-the-mysterious-property">Link
+</code></pre></div><a name="Skip-initialization-with-=-void"></a><div class="idiom"><a class="permalink" href="#Skip-initialization-with-=-void">Link
+</a><h1>Skip initialization with <code class="prettyprint">= void</code></h1>
+<p>In D, everything is initialized by default.<br>Because it may have a runtime cost, the syntax <code class="prettyprint">= void</code> allows to skip default assignment for stack variables.
+</p>
+<pre class="prettyprint"><code>void bark()
+{
+    int dog = void; // dog contains garbage
+    if(cond)
+        dog = 1;
+    else
+        dog = 2;
+}
+</code></pre><p><code class="prettyprint">= void</code> is also accepted for <code class="prettyprint">struct</code> or <code class="prettyprint">class</code> members but doesn't do anything useful at the moment. Don't use it there.
+</p>
+</div><a name="Slices-.capacity,-the-mysterious-property"></a><div class="idiom"><a class="permalink" href="#Slices-.capacity,-the-mysterious-property">Link
 </a><h1>Slices <code class="prettyprint">.capacity</code>, the mysterious property</h1>
 <p>Dynamic arrays aka slices in D have a <code class="prettyprint">.capacity</code> property: the maximum length the slice can reach before needing reallocation.
 </p>
