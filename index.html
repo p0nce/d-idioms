@@ -847,7 +847,7 @@ import mypackage;
 <ul>
 <li>A thread tries to allocate memory. At this point the GC may decide to collect garbage. If so, the current thread is <em>hijacked</em> for GC work.
 </li>
-<li>Memory ranges, starting from <em>roots</em>, are scanned recursively looking for more pointers into GC-owned memory. Each memory regions use markers to avoid scanning the same block of memory multiple times. <strong>This step can be incredibly slow.</strong>
+<li>Memory ranges, starting from <em>roots</em>, are scanned recursively looking for more pointers into GC-owned memory. Each memory regions use markers to avoid scanning the same block of memory multiple times. <strong>This step can be slow.</strong> The GC features optimizations to speed-up scanning: heap areas are labelled with types, only areas with pointers are scanned, and pointer tp GC memory have <a href="http://dlang.org/garbage.html">restrictions</a>.
 </li>
 <li>GC allocated memory that has no active pointers to it and do not need destructors to run is freed.
 </li>
@@ -863,7 +863,7 @@ import mypackage;
 </li>
 </ul>
 <h2> Tips</h2>
-<p>Intuitively, one can see that memory scanning is a potentially long and expensive process. Keeping a small GC heap makes it faster.<br>What you can do to accelerate scanning is using <code class="prettyprint">malloc</code>/<code class="prettyprint">free</code> instead of <code class="prettyprint">new</code> to allocate big chunks of memory. <br>Anything that reduces the total amount of GC-owned memory will reduce the maximum pause duration.
+<p>Intuitively, one can see that memory scanning is a potentially long and expensive process. Keeping a small GC heap makes it faster.<br>What you can do to accelerate scanning is using <code class="prettyprint">malloc</code>/<code class="prettyprint">free</code> instead of <code class="prettyprint">new</code> to allocate big chunks of memory.<br>Anything that reduces the total amount of GC-owned memory will reduce the maximum pause duration.
 </p>
 <h2> More about the GC</h2>
 <p>See: <a href="http://dlang.org/garbage.html">http://dlang.org/garbage.html</a>.
