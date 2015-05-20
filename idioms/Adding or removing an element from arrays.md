@@ -22,7 +22,7 @@ Removing an element from a dynamic array given a value:
 auto removeElement(R, N)(R haystack, N needle)
 {
     import std.algorithm : countUntil, remove;
-    auto index = _haystack.countUntil(needle);
+    auto index = haystack.countUntil(needle);
     return (index != -1) ? haystack.remove(index) : haystack;
 }
 int[] arr = [1, 5, 10];
