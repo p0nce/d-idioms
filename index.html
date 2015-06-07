@@ -432,6 +432,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#The-trouble-with-class-destructors">The trouble with class destructors
 </a><a href="#The-truth-about-shared">The truth about shared
 </a><a href="#Unrecoverable-vs-recoverable-errors">Unrecoverable vs recoverable errors
+</a><a href="#Using-a-struct-to-simplify-format()">Using a struct to simplify format()
 </a></nav><div class="container"><a name="&#x2F;+-+&#x2F;-nestable-comments-and-version(none)"></a><div class="idiom"><a class="permalink" href="#&#x2F;+-+&#x2F;-nestable-comments-and-version(none)">Link
 </a><h1><code class="prettyprint">/+ +/</code> nestable comments and <code class="prettyprint">version(none)</code></h1>
 <p>In addition to single-line comments <code class="prettyprint">//</code> and block comments <code class="prettyprint">/* */</code>, D supports nestable block comments with <code class="prettyprint">/+ +/</code>.
@@ -488,7 +489,7 @@ arr = arr.remove(index);         // index-th element is removed from array
 <pre class="prettyprint"><code>auto removeElement(R, N)(R haystack, N needle)
 {
     import std.algorithm : countUntil, remove;
-    auto index = _haystack.countUntil(needle);
+    auto index = haystack.countUntil(needle);
     return (index != -1) ? haystack.remove(index) : haystack;
 }
 int[] arr = [1, 5, 10];
@@ -1460,7 +1461,46 @@ addSix(a);              // Static arrays implicitely convertible to slices.
 </p>
 <p>See also: <a href="http://forum.dlang.org/post/m07gf1$18jl$1@digitalmars.com">http://forum.dlang.org/post/m07gf1$18jl$1@digitalmars.com</a>
 </p>
-</div></div><a href="https://github.com/p0nce/d-idioms/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+</div><a name="Using-a-struct-to-simplify-format()"></a><div class="idiom"><a class="permalink" href="#Using-a-struct-to-simplify-format()">Link
+</a><h1>Using a struct to simplify format()</h1>
+<p>When using <strong>std.conv.to()</strong> or <strong>std.stdio.write()</strong>, the arguments are formated using a predefined format.
+</p>
+<p>Structs are processed differently. By default, all the members of a <strong>struct</strong> are converted <br>but the internal <strong>to()</strong> also checks if a <strong>struct</strong> implements a custom <strong>toString()</strong> function. <br>If so, this function is used and the default formatting of the members doesn't happen.
+</p>
+<p>This can be used as a trick to override the default predefined formats of a basic type.
+</p>
+<p>For example, to display a pointer, with all the hex digits, a prefix and this whatever is the address size,<br>we define a <strong>struct</strong> with a single member of type <strong>void*</strong> and a custom <strong>toString()</strong> function:
+</p>
+<pre class="prettyprint"><code>import std.stdio;
+
+struct FmtPtr
+{
+    void* ptr;
+    string toString()
+    {
+        import std.format;
+        static if (size_t.sizeof == 4)
+            return format("0X%.8X ", cast(size_t)ptr);   
+        static if (size_t.sizeof == 8)
+            return format("0X%.16X ", cast(size_t)ptr);        
+    }    
+}
+
+void main(string[] args)
+{
+    import core.stdc.stdlib;
+    auto a = malloc(8);
+    auto b = malloc(8);
+    auto c = malloc(8);
+    
+    // ugly custom formatting
+    writeln("0X", a, " ", "0X", b, " ", "0X", c);
+    writefln("0X%.8X 0X%.8X 0X%.8X", a, b, c);
+	
+    // clean and clear equivalent using the struct
+    writeln(FmtPtr(a), FmtPtr(b), FmtPtr(c));
+}
+</code></pre></div></div><a href="https://github.com/p0nce/d-idioms/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 <footer><h2>About
 </h2><p>Hi, I'm a <a href="http://github.com/p0nce">software developer</a> currently building <a href="http://www.auburnsounds.com">real-time audio plugins for voice</a>. I hope this site has been useful!
 </p></footer></body></html>
