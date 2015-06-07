@@ -407,6 +407,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </div></header><nav><a href="#&#x2F;+-+&#x2F;-nestable-comments-and-version(none)">&#x2F;+ +&#x2F; nestable comments and version(none)
 </a><a href="#Adding-or-removing-an-element-from-arrays">Adding or removing an element from arrays
 </a><a href="#assert(false)-is-special">assert(false) is special
+</a><a href="#Bypassing-@nogc">Bypassing @nogc
 </a><a href="#Capturing-with-regular-expressions">Capturing with regular expressions
 </a><a href="#D-online-resources">D online resources
 </a><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
@@ -529,7 +530,50 @@ assert(arr == [1,10]);
 </p>
 <p><strong>It does not mean </strong> <em>unreachable code</em><strong>, it means </strong> <em>crash now</em> <strong> and the compiler will never remove it.</strong>
 </p>
-</div><a name="Capturing-with-regular-expressions"></a><div class="idiom"><a class="permalink" href="#Capturing-with-regular-expressions">Link
+</div><a name="Bypassing-@nogc"></a><div class="idiom"><a class="permalink" href="#Bypassing-@nogc">Link
+</a><h1>Bypassing @nogc</h1>
+<p><code class="prettyprint">@nogc</code> is a function attribute which ensures a function never allocates through the GC.
+</p>
+<pre class="prettyprint"><code>void processStuff(double[] data) @nogc
+{
+    double[] tempBuffer;
+
+    // Error: setting 'length' in @nogc function processStuff may cause GC a
+    tempBuffer.length = data.length; 
+
+    ...
+}
+</code></pre><p>Using <code class="prettyprint">@nogc</code> is a must to have a memory-conscious code section or having real-time threads.
+</p>
+<p>However, not all library functions that could be marked <code class="prettyprint">@nogc</code> are. You'll probably want at one point to call functions as if they were <code class="prettyprint">@nogc</code>. Here is how to do it:
+</p>
+<pre class="prettyprint"><code>import std.traits;
+
+// Casts @nogc out of a function or delegate type.
+auto assumeNoGC(T) (T t) if (isFunctionPointer!T || isDelegate!T)
+{
+    enum attrs = functionAttributes!T | FunctionAttribute.nogc;
+    return cast(SetFunctionAttributes!(T, functionLinkage!T, attrs)) t;
+}
+
+// This function can't be marked @nogc but you know with application knowledge it won't use the GC.
+void funcThatMightUseGC(int timeout)
+{
+    if (unlikelyCondition(timeout))
+        throw new Exception("The world actually imploded.");
+
+    doMoreStuff();
+}
+
+void funcThatCantAffortGC() @nogc
+{
+    // using a casted delegate literal to call non-@nogc code
+    assumeNoGC( (int timeout)
+                {
+                    funcThatMightUseGC(timeout);
+                })(10000);
+}
+</code></pre></div><a name="Capturing-with-regular-expressions"></a><div class="idiom"><a class="permalink" href="#Capturing-with-regular-expressions">Link
 </a><h1>Capturing with regular expressions</h1>
 <p>Regular expressions are found in the <code class="prettyprint">std.regex</code> Phobos module.
 </p>
