@@ -1,17 +1,17 @@
-=====================
-Using a struct to simplify format()
-=====================
+=====================================
+Using a struct to simplify `format()`
+=====================================
 
-When using __std.conv.to()__ or __std.stdio.write()__, the arguments are formated using a predefined format.
+When using `std.conv.to()` or `std.stdio.write()`, the arguments are formated using a predefined format.
 
-Structs are processed differently. By default, all the members of a __struct__ are converted 
-but the internal __to()__ also checks if a __struct__ implements a custom __toString()__ function. 
+Structs are processed differently. By default, all the members of a `struct` are converted 
+but the internal `to()` also checks if a `struct` implements a custom `toString()` function. 
 If so, this function is used and the default formatting of the members doesn't happen.
 
 This can be used as a trick to override the default predefined formats of a basic type.
 
 For example, to display a pointer, with all the hex digits, a prefix and this whatever is the address size,
-we define a __struct__ with a single member of type __void*__ and a custom __toString()__ function:
+we define a `struct` with a single member of type `void*` and a custom `toString()` function:
 
 ```D
 import std.stdio;

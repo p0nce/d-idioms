@@ -1517,14 +1517,14 @@ addSix(a);              // Static arrays implicitely convertible to slices.
 <p>See also: <a href="http://forum.dlang.org/post/m07gf1$18jl$1@digitalmars.com">http://forum.dlang.org/post/m07gf1$18jl$1@digitalmars.com</a>
 </p>
 </div><a name="Using-a-struct-to-simplify-format()"></a><div class="idiom"><a class="permalink" href="#Using-a-struct-to-simplify-format()">Link
-</a><h1>Using a struct to simplify format()</h1>
-<p>When using <strong>std.conv.to()</strong> or <strong>std.stdio.write()</strong>, the arguments are formated using a predefined format.
+</a><h1>Using a struct to simplify <code class="prettyprint">format()</code></h1>
+<p>When using <code class="prettyprint">std.conv.to()</code> or <code class="prettyprint">std.stdio.write()</code>, the arguments are formated using a predefined format.
 </p>
-<p>Structs are processed differently. By default, all the members of a <strong>struct</strong> are converted <br>but the internal <strong>to()</strong> also checks if a <strong>struct</strong> implements a custom <strong>toString()</strong> function. <br>If so, this function is used and the default formatting of the members doesn't happen.
+<p>Structs are processed differently. By default, all the members of a <code class="prettyprint">struct</code> are converted <br>but the internal <code class="prettyprint">to()</code> also checks if a <code class="prettyprint">struct</code> implements a custom <code class="prettyprint">toString()</code> function. <br>If so, this function is used and the default formatting of the members doesn't happen.
 </p>
 <p>This can be used as a trick to override the default predefined formats of a basic type.
 </p>
-<p>For example, to display a pointer, with all the hex digits, a prefix and this whatever is the address size,<br>we define a <strong>struct</strong> with a single member of type <strong>void*</strong> and a custom <strong>toString()</strong> function:
+<p>For example, to display a pointer, with all the hex digits, a prefix and this whatever is the address size,<br>we define a <code class="prettyprint">struct</code> with a single member of type <code class="prettyprint">void*</code> and a custom <code class="prettyprint">toString()</code> function:
 </p>
 <pre class="prettyprint"><code>import std.stdio;
 
