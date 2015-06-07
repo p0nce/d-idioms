@@ -101,6 +101,29 @@ void main(string[] args)
                         push("p");
                             writeln(`Hi, I'm a <a href="http://github.com/p0nce">software developer</a> currently building <a href="http://www.auburnsounds.com">real-time audio plugins for voice</a>. I hope this site has been useful!`);
                         pop();
+
+                        struct Contributor
+                        {
+                            string name;
+                            string link;
+                        }
+
+                        auto contributors = [ Contributor("Basile Burg", "https://github.com/BBasile") ];
+
+                        push("h2");
+                            writeln("Other contributors:");
+                        pop;
+
+                        push("ul", `id="contributors"`);
+                            foreach(c; contributors)
+                            {
+                                push("li");
+                                    push("a", format(`href="%s"`, c.link));
+                                        writeln(c.name);
+                                    pop();
+                                pop;
+                            }
+                        pop();
                     pop;
                 pop;
             pop;

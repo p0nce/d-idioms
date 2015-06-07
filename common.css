@@ -87,9 +87,9 @@ footer h2
     margin: 2rem;
 }
 
-footer p
+footer p, footer ul
 {
-    padding: 0rem 4.25rem 4rem 4.25rem;
+    padding: 0rem 4.25rem 0rem 4.25rem;
     margin: 2rem;
     color: white;
 }
@@ -214,3 +214,15 @@ pre
     margin: 2rem 2rem 2rem 4rem;
     font-size: 2.4rem;
 }
+/*
+#contributors ul
+{
+    margin: 0rem 0rem 5rem 5rem;
+    color: white;
+}
+
+#contributors li
+{
+    color: white;
+}
+*/
