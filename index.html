@@ -1494,9 +1494,11 @@ addSix(a);              // Static arrays implicitely convertible to slices.
 </p>
 </div><a name="Throwing-despite-@nogc"></a><div class="idiom"><a class="permalink" href="#Throwing-despite-@nogc">Link
 </a><h1>Throwing despite <code class="prettyprint">@nogc</code></h1>
+<p> <strong>This trick is a dirty Proof of Concept. Just never do it.</strong>
+</p>
 <p>The major limitation of <code class="prettyprint">@nogc</code> is that you can't throw exceptions allocated with <code class="prettyprint">new</code>.
 </p>
-<p>But exceptions can be pre-allocated to be thrown later:
+<p>But if you really want it, exceptions can be pre-allocated to be thrown later:
 </p>
 <pre class="prettyprint"><code>// Statically initialize an exception instance.
 static immutable Exception g_Exception = new Exception("This message won't be helpful");
@@ -1511,15 +1513,24 @@ try
 {
     nogcFunction();
 }
-catch(Exception e)
+catch(const(Exception) e)
 {
     // Message, file and line number won't be given though
     import std.stdio;    
     writefln("Received an exception: %s", e.msg);
 }
-</code></pre><p>Such a pre-allocated exception won't hold any information other than <em>"something went wrong"</em>.
+</code></pre><p>Such a pre-allocated exception won't hold any information other than <em>"something went wrong"</em>. And it breaks the type system badly.
 </p>
-</div><a name="Unrecoverable-vs-recoverable-errors"></a><div class="idiom"><a class="permalink" href="#Unrecoverable-vs-recoverable-errors">Link
+<p>Note from <a href="https://github.com/JakobOvrum">Jakov Ovrum</a>:
+</p>
+<pre class="prettyprint"><code>I really don't think you should promote that hack anywhere.
+Even the druntime internal exception code will mutate it post-allocation regardless of mutability.
+The compiler is even allowed to put the exception in ROM which would of course break everything.
+You can also throw a mutable exception and catch it as immutable(Exception), 
+the whole thing is completely unintegrated with D2's type system.
+Again, it doesn't matter if you catch it or not because the unwinding code will mutate it.
+It's just straight up bad code.
+</code></pre></div><a name="Unrecoverable-vs-recoverable-errors"></a><div class="idiom"><a class="permalink" href="#Unrecoverable-vs-recoverable-errors">Link
 </a><h1>Unrecoverable vs recoverable errors</h1>
 <p><em>This item is language-agnostic and perhaps the most widely applicable tip on this page.</em>
 </p>
