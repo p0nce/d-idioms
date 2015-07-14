@@ -23,7 +23,7 @@ void main(string args[])
 }
 ```
 
-`ctRegex` instead of `regex` builds the regular expression at compile-time, trading of compile-time speed for runtime speed.
+`ctRegex` instead of `regex` builds the regular expression at compile-time, trading off compile-time speed for runtime speed.
 
 ```
 auto re = ctRegex!(`My name is (\w+)\. I work for ([A-Za-z ]+)\.`); // automaton built at compile-time
