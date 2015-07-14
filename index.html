@@ -594,7 +594,7 @@ void main(string args[])
         writefln("2nd capture   = %s", captures[2]);
     }
 }
-</code></pre><p><code class="prettyprint">ctRegex</code> instead of <code class="prettyprint">regex</code> builds the regular expression at compile-time, trading of compile-time speed for runtime speed.
+</code></pre><p><code class="prettyprint">ctRegex</code> instead of <code class="prettyprint">regex</code> builds the regular expression at compile-time, trading off compile-time speed for runtime speed.
 </p>
 <pre class="prettyprint"><code>auto re = ctRegex!(`My name is (\w+)\. I work for ([A-Za-z ]+)\.`); // automaton built at compile-time
 </code></pre><p>See: <a href="http://dlang.org/phobos/std_regex.html">http://dlang.org/phobos/std_regex.html</a>
