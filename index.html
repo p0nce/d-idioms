@@ -1116,11 +1116,11 @@ ptr ? *ptr : ValueType.init;
 </li>
 <li>Test it. <code class="prettyprint">dub add-local</code> or <code class="prettyprint">dub test</code> can help to do it.
 </li>
-<li>Make a git tag. <strong>Please try to respect</strong> <a href="http://semver.org/">SemVer</a> with respect to breaking changes, else you could break an unknown number of already released software. Also don't name your tag <code class="prettyprint">1.0.0</code> instead of <code class="prettyprint">v1.0.0</code>, else the registry won't take it.
+<li>Make a git tag. <strong>Please try to respect</strong> <a href="http://semver.org/">SemVer</a> with respect to breaking changes, else you could break an unknown number of already released software. Also don't name your tag <code class="prettyprint">1.0.0</code> instead of <code class="prettyprint">v1.0.0</code>, else the registry won't take it. Likewise avoid leading zeroes like <code class="prettyprint">v2.3.04</code>.
 </li>
 <li>Push the changes online. I would advise <code class="prettyprint">git push</code> then <code class="prettyprint">git push --tags</code> but to be honest I don't really know why it's better in this order. At this point the fix is online. This is not finished yet!
 </li>
-<li>Login on <a href="http://code.dlang.org">http://code.dlang.org</a> and click on <code class="prettyprint">Trigger manual update</code> button. This will acknowledge the new version and allow downstream to update to the new tag as soon as possible. <strong>Do not skip this step if you want a timely fix.</strong>
+<li>Login on <a href="http://code.dlang.org">http://code.dlang.org</a> and click on <code class="prettyprint">Trigger manual update</code> button. This will acknowledge the new version and allow downstream to update to the new tag as soon as possible. <strong>Do not skip this step if you want a timely fix.</strong> If you don't do the manual update, the new tag will be acknowledged by the registry in less than 30 minutes. 
 </li>
 <li>If downstream doesn't actually download the latest tag, consider using <code class="prettyprint">dub clean-caches</code> to update the list of available packages.
 </li>
