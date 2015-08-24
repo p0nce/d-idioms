@@ -8,7 +8,7 @@ Regular expressions are found in the `std.regex` Phobos module.
 import std.regex;
 import std.stdio;
 
-void main(string args[])
+void main(string[] args)
 {
     auto re = regex(`My name is (\w+)\. I work for ([A-Za-z ]+)\.`);
 
