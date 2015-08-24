@@ -581,7 +581,7 @@ void funcThatCantAffortGC() @nogc
 <pre class="prettyprint"><code>import std.regex;
 import std.stdio;
 
-void main(string args[])
+void main(string[] args)
 {
     auto re = regex(`My name is (\w+)\. I work for ([A-Za-z ]+)\.`);
 
