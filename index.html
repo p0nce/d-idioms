@@ -1390,9 +1390,9 @@ writeln(decChars.capacity);              // outputs non-zero value now that decC
 <pre class="prettyprint"><code>{
     "name": "program_name"
 }
-</code></pre><p>Place the source code in a <code class="prettyprint">source/main.d</code> file and DUB will find it and guess<br>you want to build an executable.
+</code></pre><p>Place the source code in a <code class="prettyprint">source/main.d</code> or <code class="prettyprint">source/app.d</code> file and DUB will find it and guess<br>you want to build an executable.
 </p>
-<p>No <code class="prettyprint">main.d</code>? It will guess it's a source library then.
+<p>No <code class="prettyprint">main.d</code> or <code class="prettyprint">app.d</code>? DUB will guess it's a source library then.
 </p>
 </div><a name="So-what-does--release-do,-exactly&#63;"></a><div class="idiom"><a class="permalink" href="#So-what-does--release-do,-exactly&#63;">Link
 </a><h1>So what does <code class="prettyprint">-release</code> do, exactly?</h1>
