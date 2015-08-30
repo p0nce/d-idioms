@@ -2,7 +2,7 @@
 The trouble with class destructors
 ==================================
 
-Despite having a GC, resource management in D is one of the most difficult point of the language. 
+Despite having a GC, resource management in D is one of the most difficult point of the language.
 
 In particular, class destructors in D enjoy a variety of limitations you should be aware of.
 
@@ -32,6 +32,6 @@ All this is in sharp contrast with the deterministic way C++ deals with destruct
 - using `delete` or `scope class` (deprecated)
 
 
-**TL;DR There is not much that can safely be done in a class destructor if called by the GC. Either call all of them deterministically or don't do anything in destructors. **
+**TL;DR There is not much that can safely be done in a class destructor if called by the GC. A solution to this problem is** [GC-proof resource classes](#GC-proof-resource-class).
 
 See: [http://dlang.org/class.html](http://dlang.org/class.html)

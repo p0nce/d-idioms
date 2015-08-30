@@ -416,6 +416,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Enumerate-fields-with-__traits(allMembers)">Enumerate fields with __traits(allMembers)
 </a><a href="#Extending-a-struct-with-alias-this">Extending a struct with alias this
 </a><a href="#Falsey-values">Falsey values
+</a><a href="#GC-proof-resource-class">GC-proof resource class
 </a><a href="#Getting-a-method-callbacked-from-C">Getting a method callbacked from C
 </a><a href="#Grouping-modules-with-package.d">Grouping modules with package.d
 </a><a href="#How-does-D-improve-on-C++17&#63;">How does D improve on C++17&#63;
@@ -516,7 +517,7 @@ assert(arr == [1,10]);
 <pre class="prettyprint"><code>aa.remove(key);                  // there is a builtin property to do that
 </code></pre></div><a name="assert(false)-is-special"></a><div class="idiom"><a class="permalink" href="#assert(false)-is-special">Link
 </a><h1><code class="prettyprint">assert(false)</code> is special</h1>
-<p><code class="prettyprint">assert(false)</code>, <code class="prettyprint">assert(0)</code>, <code class="prettyprint">assert(null)</code>…… or any other false expression at compile-time do not produce a regular <code class="prettyprint">assert</code>.
+<p><code class="prettyprint">assert(false)</code>, <code class="prettyprint">assert(0)</code>, <code class="prettyprint">assert(null)</code>…… or any other false expression at compile-time does not produce a regular <code class="prettyprint">assert</code>.
 </p>
 <p>Instead it is an instruction to crash the program and is <strong>not</strong> removed in <code class="prettyprint">-release</code> mode.
 </p>
@@ -797,6 +798,75 @@ void main(string[]ags)
 </li>
 </ul>
 <p>The empty string <code class="prettyprint">""</code> and the empty slice <code class="prettyprint">[]</code> are truthy.
+</p>
+</div><a name="GC-proof-resource-class"></a><div class="idiom"><a class="permalink" href="#GC-proof-resource-class">Link
+</a><h1>GC-proof resource class</h1>
+<p>Class destructors have painful <a href="#The-trouble-with-class-destructors">limitations</a> when called by the GC.
+</p>
+<p>But there is a way to make a class holding a resource that:
+</p>
+<ul>
+<li>works with scoped ownership (<code class="prettyprint">std.typecons.RefCounted</code>, <code class="prettyprint">std.typecons.Unique</code>, <code class="prettyprint">std.typecons.scoped</code>)
+</li>
+<li>works with manual release (<code class="prettyprint">std.object.destroy</code>)
+</li>
+<li>warns when the GC call the destructor and then release the resource, which is <em>coincidental correctness</em> and dangerous to rely on.
+</li>
+</ul>
+<p>The general idea is to check why the destructor is called and act accordingly.
+</p>
+<pre class="prettyprint"><code>class MyGCProofResource
+{
+    void* handle;
+
+    this()
+    {
+        // acquire resource
+        handle = create_handle();
+    }
+
+    ~this()
+    {
+        // Such a destructor must support repeated calls for
+        // the case when it is first called by destroy() and
+        // then called by the GC later
+        if (handle != null)
+        {
+            // Important bit.
+            // Here we verify that the GC isn't responsible
+            // for releasing the resource
+            debug ensureNotInGC("MyResource");
+
+            // release resource
+            free_handle(handle);
+            handle = null;
+        }
+    }
+}
+</code></pre><p>The <code class="prettyprint">ensureNotInGC()</code> function can be implemented like this:
+</p>
+<pre class="prettyprint"><code>void ensureNotInGC(string resourceName) nothrow
+{
+    import core.exception;
+    try
+    {
+        // This will throw InvalidMemoryOperationError when
+        // called from within the GC since you can't use GC
+        // allocation.
+        import core.memory;
+        GC.malloc(1);
+        return;
+    }
+    catch(InvalidMemoryOperationError e)
+    {
+        import core.stdc.stdio;
+        fprintf(stderr, "Error: clean-up of %s incorrectly"
+                        " depends on destructors called by the GC.\n",
+                        resourceName.ptr);
+        assert(false); // crash
+    }
+}
+</code></pre><p>This idiom was first introduced in the <a href="https://github.com/d-gamedev-team/gfm">GFM</a> library.
 </p>
 </div><a name="Getting-a-method-callbacked-from-C"></a><div class="idiom"><a class="permalink" href="#Getting-a-method-callbacked-from-C">Link
 </a><h1>Getting a method callbacked from C</h1>
@@ -1396,7 +1466,7 @@ writeln(decChars.capacity);              // outputs non-zero value now that decC
 </p>
 </div><a name="So-what-does--release-do,-exactly&#63;"></a><div class="idiom"><a class="permalink" href="#So-what-does--release-do,-exactly&#63;">Link
 </a><h1>So what does <code class="prettyprint">-release</code> do, exactly?</h1>
-<p>In the DMD compiler, the <code class="prettyprint">-release</code> switch does the following things:
+<p>In D compilers, the <code class="prettyprint">-release</code> switch does the following things:
 </p>
 <ul>
 <li>Removing contracts (<code class="prettyprint">in</code> and <code class="prettyprint">out</code> blocks).
@@ -1453,7 +1523,7 @@ addSix(a);              // Static arrays implicitely convertible to slices.
 </p>
 </div><a name="The-trouble-with-class-destructors"></a><div class="idiom"><a class="permalink" href="#The-trouble-with-class-destructors">Link
 </a><h1>The trouble with class destructors</h1>
-<p>Despite having a GC, resource management in D is one of the most difficult point of the language. 
+<p>Despite having a GC, resource management in D is one of the most difficult point of the language.
 </p>
 <p>In particular, class destructors in D enjoy a variety of limitations you should be aware of.
 </p>
@@ -1482,7 +1552,7 @@ addSix(a);              // Static arrays implicitely convertible to slices.
 <li>using <code class="prettyprint">delete</code> or <code class="prettyprint">scope class</code> (deprecated)
 </li>
 </ul>
-<p><strong>TL;DR There is not much that can safely be done in a class destructor if called by the GC. Either call all of them deterministically or don't do anything in destructors. </strong>
+<p><strong>TL;DR There is not much that can safely be done in a class destructor if called by the GC. A solution to this problem is</strong> <a href="#GC-proof-resource-class">GC-proof resource classes</a>.
 </p>
 <p>See: <a href="http://dlang.org/class.html">http://dlang.org/class.html</a>
 </p>

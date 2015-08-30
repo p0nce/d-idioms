@@ -2,7 +2,7 @@
 `assert(false)` is special
 ==========================
 
-`assert(false)`, `assert(0)`, `assert(null)`…… or any other false expression at compile-time do not produce a regular `assert`.
+`assert(false)`, `assert(0)`, `assert(null)`…… or any other false expression at compile-time does not produce a regular `assert`.
 
 Instead it is an instruction to crash the program and is **not** removed in `-release` mode.
 
