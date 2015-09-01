@@ -2,6 +2,7 @@
 D online resources
 ==================
 
+- [Awesome D](https://github.com/zhaopuming/awesome-d) - A curated list of awesome D documents, frameworks, libraries and software.
 - [List of available D books](http://wiki.dlang.org/Books)
 - [D page on rosettacode.org](http://rosettacode.org/wiki/Category:D)
 - [Phobos documentation](http://dlang.org/phobos/index.html)
