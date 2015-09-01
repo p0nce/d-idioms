@@ -1,0 +1,5 @@
+dub.selections.json
+.dub/
+d-idioms
+*.sublime-project
+*.sublime-workspace
