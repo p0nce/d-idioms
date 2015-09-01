@@ -850,11 +850,11 @@ void main(string[]ags)
     import core.exception;
     try
     {
-        // This will throw InvalidMemoryOperationError when
-        // called from within the GC since you can't use GC
-        // allocation.
+        // Functions that modify the GC state throw InvalidMemoryOperationError
+        // when called during a collection.
+        // Freeing memory not owned by the GC is otherwise ignored.
         import core.memory;
-        GC.malloc(1);
+        GC.free(cast(void*)1);
         return;
     }
     catch(InvalidMemoryOperationError e)
