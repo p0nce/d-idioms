@@ -416,6 +416,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Enumerate-fields-with-__traits(allMembers)">Enumerate fields with __traits(allMembers)
 </a><a href="#Extending-a-struct-with-alias-this">Extending a struct with alias this
 </a><a href="#Falsey-values">Falsey values
+</a><a href="#Friends-don't-let-friends-use-the-default-struct-postblit">Friends don't let friends use the default struct postblit
 </a><a href="#GC-proof-resource-class">GC-proof resource class
 </a><a href="#Getting-a-method-callbacked-from-C">Getting a method callbacked from C
 </a><a href="#Grouping-modules-with-package.d">Grouping modules with package.d
@@ -800,6 +801,54 @@ void main(string[]ags)
 </li>
 </ul>
 <p>The empty string <code class="prettyprint">""</code> and the empty slice <code class="prettyprint">[]</code> are truthy.
+</p>
+</div><a name="Friends-don't-let-friends-use-the-default-struct-postblit"></a><div class="idiom"><a class="permalink" href="#Friends-don't-let-friends-use-the-default-struct-postblit">Link
+</a><h1>Friend don't let friends use the default struct postblit</h1>
+<p>By default D structs are copyable and that copy is just a <code class="prettyprint">.dup</code> verbatim bit copy.<br>Indeed the default struct <a href="http://dlang.org/struct.html">postblit</a> does nothing.
+</p>
+<pre class="prettyprint"><code>struct MyStruct
+{
+    int field;
+}
+
+MyStruct a;
+MyStruct b;
+
+a = b; // Bit copy here.
+</code></pre><p>The trouble happens with structs that hold a resource: whenever copied, the struct destructor would be called twice, and twice the resource would be freed.
+</p>
+<p>That doesn't look like the beginning of a success story. To solve this, follow the Rule of Two.
+</p>
+<h2> Rule of Two</h2>
+<p><strong>If a struct has a non-trivial destructor, then:</strong><br><strong>- either disable the default postblit with `@disable this(this)`</strong>,<br><strong>- or implement the postblit.</strong><br><strong>Don't let the default one.</strong>
+</p>
+<h2> Example</h2>
+<pre class="prettyprint"><code>struct MyResource
+{
+    this()
+    {
+        acquireResource();
+    }
+
+    ~this()
+    {
+        releaseResource();
+    }
+
+    // Disabling the postblit to avoid the destructor being
+    // called twice after an accidental copy.
+    @disable this(this);
+
+    /*
+        // Alternatively, duplicate the resource
+        this(this)
+        {
+            duplicateResource();
+        }
+    */
+}
+
+</code></pre><p>See: <a href="http://dlang.org/struct.html">http://dlang.org/struct.html</a>
 </p>
 </div><a name="GC-proof-resource-class"></a><div class="idiom"><a class="permalink" href="#GC-proof-resource-class">Link
 </a><h1>GC-proof resource class</h1>
