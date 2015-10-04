@@ -10,6 +10,15 @@ Falsey value in D are:
 - the `null` pointer / `null` delegate / `null` class reference
 - the boolean `false`
 - enum members equal to 0
-- slices containing a `null` pointer, ie. when `(slice is null)` returns `true`
+- slices with both length 0 and a null data pointer
 
-The empty string `""` and the empty slice `[]` are truthy.
+Thus, the empty string `""` points to a single `\0` char (string literals are zero-terminated for C compatibility reasons), and is **truthy** despite having length 0.
+
+
+```
+
+ubyte* p = cast(ubyte*)("".ptr);
+assert(p != null);
+assert(*p == 0);
+
+```

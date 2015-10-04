@@ -798,12 +798,17 @@ void main(string[]ags)
 </li>
 <li>enum members equal to 0
 </li>
-<li>slices containing a <code class="prettyprint">null</code> pointer, ie. when <code class="prettyprint">(slice is null)</code> returns <code class="prettyprint">true</code>
+<li>slices with both length 0 and a null data pointer
 </li>
 </ul>
-<p>The empty string <code class="prettyprint">""</code> and the empty slice <code class="prettyprint">[]</code> are truthy.
+<p>Thus, the empty string <code class="prettyprint">""</code> points to a single <code class="prettyprint">\0</code> char (string literals are zero-terminated for C compatibility reasons), and is <strong>truthy</strong> despite having length 0.
 </p>
-</div><a name="Friends-don't-let-friends-use-the-default-struct-postblit"></a><div class="idiom"><a class="permalink" href="#Friends-don't-let-friends-use-the-default-struct-postblit">Link
+<pre class="prettyprint"><code>
+ubyte* p = cast(ubyte*)("".ptr);
+assert(p != null);
+assert(*p == 0);
+
+</code></pre></div><a name="Friends-don't-let-friends-use-the-default-struct-postblit"></a><div class="idiom"><a class="permalink" href="#Friends-don't-let-friends-use-the-default-struct-postblit">Link
 </a><h1>Friend don't let friends use the default struct postblit</h1>
 <p>By default D structs are copyable and that copy is just a <code class="prettyprint">.dup</code> verbatim bit copy.<br>Indeed the default struct <a href="http://dlang.org/struct.html">postblit</a> does nothing.
 </p>
