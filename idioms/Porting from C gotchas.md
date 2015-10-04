@@ -22,13 +22,27 @@ The recommended way is to use `c_long` and `c_ulong` from module `core.stdc.conf
 
 
     // A C function declaration
-    unsigned long countBeans(const long* n)
+    unsigned long countBeans(const long *n)
 
     // Equivalent D function declaration
     import core.stdc.config;
     c_ulong countBeans(const(c_long)* n);
 
 `c_int` and `c_uint` also exist to replace `int` and `unsigned int`, but because they are 32-bits in most architectures, it's usually simply translated with D's `int` and `uint` instead.
+
+
+## `char`
+
+In C, the `char` type can refer to either `signed char` or `unsigned char`, depending on the implementation.
+
+In D, `char` is always an unsigned integer (0 to 255). If you need the equivalent of `signed char`, use `byte`.
+
+
+    // A C function declaration
+    unsigned char * computeBlurb(signed char *data);
+
+    // Equivalent D function declaration
+    char* computeBlurb(byte* data);
 
 
 ## Multi-dimensional arrays declarations
@@ -99,6 +113,5 @@ When porting from C you will probably have to spam `.ptr` anywhere an array is i
     void sum(const(int)* array, int n);
     int[16] coeff;
     sum(coeff.ptr, coeff.sizeof / int.sizeof); // array not implicitely convertible to a pointer
-
 
 
