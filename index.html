@@ -1256,6 +1256,11 @@ ptr ? *ptr : ValueType.init;
 </p>
 <p>See: <a href="http://dlang.org/phobos/std_exception.html#.enforce">http://dlang.org/phobos/std_exception.html#.enforce</a>
 </p>
+<h2> Explicit destructor call with <code class="prettyprint">object.destroy()</code></h2>
+<p>Whenever you want to destroy an object manually, <code class="prettyprint">destroy()</code> is probably what you want.<br>As a part of `object.d, it is always available.
+</p>
+<p>See: <a href="http://dlang.org/phobos/object.html#.destroy">http://dlang.org/phobos/object.html#.destroy</a>
+</p>
 <h2> Allocate a class object on stack with <code class="prettyprint">std.typecons.scoped</code></h2>
 <p><code class="prettyprint">scoped</code> replaces <code class="prettyprint">new</code> and put a <code class="prettyprint">class</code> object on the stack, with the double benefit of avoiding GC and performing deterministic destruction.
 </p>
@@ -1273,6 +1278,15 @@ auto myClass = scoped!MyClass(); // no need for 'new', and automatic destructor 
 </p>
 <p>See: <a href="http://dlang.org/phobos/std_array.html#.array">http://dlang.org/phobos/std_array.html#.array</a>
 </p>
+<h2> More Phobos gems</h2>
+<ul>
+<li><p><a href="http://nomad.so/2014/08/hidden-treasure-in-the-d-standard-library/">Hidden treasure in the D standard library</a>
+</p>
+</li>
+<li><p><a href="http://nomad.so/2015/08/more-hidden-treasure-in-the-d-standard-library/">http://nomad.so/2015/08/more-hidden-treasure-in-the-d-standard-library/</a>
+</p>
+</li>
+</ul>
 </div><a name="Placement-new-with-emplace"></a><div class="idiom"><a class="permalink" href="#Placement-new-with-emplace">Link
 </a><h1>Placement new with <code class="prettyprint">emplace</code></h1>
 <p>C++ has <a href="http://www.drdobbs.com/cpp/calling-constructors-with-placement-new/232901023">"placement new"</a> which is a language construct to construct an object at a given pointer location.
