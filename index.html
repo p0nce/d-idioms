@@ -414,6 +414,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
 </a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
 </a><a href="#Enumerate-fields-with-__traits(allMembers)">Enumerate fields with __traits(allMembers)
+</a><a href="#Eponymous-Templates">Eponymous Templates
 </a><a href="#Extending-a-struct-with-alias-this">Extending a struct with alias this
 </a><a href="#Falsey-values">Falsey values
 </a><a href="#Friends-don't-let-friends-use-the-default-struct-postblit">Friends don't let friends use the default struct postblit
@@ -720,6 +721,23 @@ myArray.ptr[index] = 4; // no bounds check, guaranteed
     return ret;
 }
 </code></pre><p>Now if new members are added to BuildSettings, this generic <code class="prettyprint">.dup</code> will still duplicate them.
+</p>
+</div><a name="Eponymous-Templates"></a><div class="idiom"><a class="permalink" href="#Eponymous-Templates">Link
+</a><h1>Eponymous templates</h1>
+<p>The term <strong>eponymous templates</strong> refers to a symbol with the same as its enclosing <code class="prettyprint">template</code> block.
+</p>
+<pre class="prettyprint"><code>template HasUniqueElements(int[] arr)
+{
+    import std.algorithm : sort, uniq;
+    import std.array : array;
+    enum bool HasUniqueElements = arr.sort().uniq.array.length == arr.length;
+}
+
+static assert(HasUniqueElements!( [5, 2, 4] ));
+static assert(!HasUniqueElements!( [1, 2, 3, 2] ));
+</code></pre><p>In symbol resolution, the template instantiation is replaced by the enclosed declaration with the same name. In a way, like <a href="#Extending-a-struct-with-alias-this"><code class="prettyprint">alias this</code></a>, but for templates.
+</p>
+<p>Bill Baxter came up with the eponymous name in <a href="http://forum.dlang.org/post/gpb2vd$18uf$1@digitalmars.com">this thread</a>.
 </p>
 </div><a name="Extending-a-struct-with-alias-this"></a><div class="idiom"><a class="permalink" href="#Extending-a-struct-with-alias-this">Link
 </a><h1>Extending a struct with alias this</h1>
