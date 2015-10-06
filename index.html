@@ -435,6 +435,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Phobos-gems">Phobos gems
 </a><a href="#Placement-new-with-emplace">Placement new with emplace
 </a><a href="#Porting-from-C-gotchas">Porting from C gotchas
+</a><a href="#Precise-timestamps-in-milliseconds">Precise timestamps in milliseconds
 </a><a href="#Qualified-switch-using-with">Qualified switch using with
 </a><a href="#Recursive-Sum-Type-with-matching">Recursive Sum Type with matching
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
@@ -1089,7 +1090,7 @@ import mypackage;
 <ul>
 <li>A thread tries to allocate memory. At this point the GC may decide to collect garbage. If so, the current thread is <em>hijacked</em> for GC work.
 </li>
-<li>Memory ranges, starting from <em>roots</em>, are scanned recursively looking for more pointers into GC-owned memory. Each memory regions use markers to avoid scanning the same block of memory multiple times. <strong>This step can be slow.</strong> The GC features optimizations to speed-up scanning: heap areas are labelled with types, only areas with pointers are scanned, and pointer tp GC memory have <a href="http://dlang.org/garbage.html">restrictions</a>.
+<li>Memory ranges, starting from <em>roots</em>, are scanned recursively looking for more pointers into GC-owned memory. Each memory regions use markers to avoid scanning the same block of memory multiple times. <strong>This step can be slow.</strong> The GC features optimizations to speed-up scanning: heap areas are labelled with types, only areas with pointers are scanned, and pointer to GC memory have <a href="http://dlang.org/garbage.html">restrictions</a>.
 </li>
 <li>GC allocated memory that has no active pointers to it and do not need destructors to run is freed.
 </li>
@@ -1410,6 +1411,17 @@ sum(coeff, sizeof(coeff) / sizeof(int));
 void sum(const(int)* array, int n);
 int[16] coeff;
 sum(coeff.ptr, coeff.sizeof / int.sizeof); // array not implicitely convertible to a pointer
+</code></pre></div><a name="Precise-timestamps-in-milliseconds"></a><div class="idiom"><a class="permalink" href="#Precise-timestamps-in-milliseconds">Link
+</a><h1>Precise timestamps in milliseconds</h1>
+<p><code class="prettyprint">core.time.MonoTime.currTime()</code> returns the most precise (as opposed to <em>accurate</em>) available clock.
+</p>
+<pre class="prettyprint"><code>/// Returns: Most precise clock ticks, in milliseconds.
+long getTickMs() nothrow @nogc
+{
+    import core.time;
+    return convClockFreq(MonoTime.currTime.ticks, MonoTime.ticksPerSecond, 1_000);
+}
+
 </code></pre></div><a name="Qualified-switch-using-with"></a><div class="idiom"><a class="permalink" href="#Qualified-switch-using-with">Link
 </a><h1>Qualified switch using "with"</h1>
 <p>Let's say we have an enum:
