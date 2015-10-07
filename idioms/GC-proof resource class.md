@@ -5,8 +5,8 @@ GC-proof resource class
 Class destructors have painful [limitations](#The-trouble-with-class-destructors) when called by the GC.
 
 But there is a way to make a class holding a resource that:
-- works with scoped ownership (`std.typecons.RefCounted`, `std.typecons.Unique`, `std.typecons.scoped`)
-- works with manual release (`std.object.destroy`)
+- works with scoped ownership (`std.typecons.RefCounted`, `std.typecons.Unique`, `std.typecons.Scoped`)
+- works with manual release (`object.destroy`)
 - warns when the GC call the destructor and then release the resource, which is _coincidental correctness_ and dangerous to rely on.
 
 The general idea is to check why the destructor is called and act accordingly.

@@ -882,9 +882,9 @@ a = b; // Bit copy here.
 <p>But there is a way to make a class holding a resource that:
 </p>
 <ul>
-<li>works with scoped ownership (<code class="prettyprint">std.typecons.RefCounted</code>, <code class="prettyprint">std.typecons.Unique</code>, <code class="prettyprint">std.typecons.scoped</code>)
+<li>works with scoped ownership (<code class="prettyprint">std.typecons.RefCounted</code>, <code class="prettyprint">std.typecons.Unique</code>, <code class="prettyprint">std.typecons.Scoped</code>)
 </li>
-<li>works with manual release (<code class="prettyprint">std.object.destroy</code>)
+<li>works with manual release (<code class="prettyprint">object.destroy</code>)
 </li>
 <li>warns when the GC call the destructor and then release the resource, which is <em>coincidental correctness</em> and dangerous to rely on.
 </li>
