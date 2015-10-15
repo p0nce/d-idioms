@@ -99,7 +99,7 @@ void main(string[] args)
                         pop;
 
                         push("p");
-                            writeln(`Hi, I'm a <a href="http://github.com/p0nce">software developer</a> currently building <a href="http://www.auburnsounds.com">real-time audio plugins for voice</a>. I hope this site has been useful!`);
+                            writeln(`Hi, I'm Guillaume Piolat a <a href="http://github.com/p0nce">software developer</a> currently <a href="http://www.auburnsounds.com">real-time audio effects for voice</a>. I hope this site has as useful for you as it is for me!`);
                         pop();
 
                         struct Contributor
@@ -108,7 +108,10 @@ void main(string[] args)
                             string link;
                         }
 
-                        auto contributors = [ Contributor("Basile Burg", "https://github.com/BBasile") ];
+                        auto contributors = [ 
+                            Contributor("Basile Burg", "https://github.com/BBasile"), 
+                            Contributor("Dmitry Bubnenkov", "https://github.com/bubnenkoff"), 
+                        ];
 
                         push("h2");
                             writeln("Other contributors:");

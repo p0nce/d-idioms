@@ -427,6 +427,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#if-embedded-declaration">if embedded declaration
 </a><a href="#Implicit-conversion-for-user-defined-types">Implicit conversion for user-defined types
 </a><a href="#Inheriting-from-Exception">Inheriting from Exception
+</a><a href="#Is-a-specific-program-available-in-PATH&#63;">Is a specific program available in PATH&#63;
 </a><a href="#Linking-with-C-gotchas">Linking with C gotchas
 </a><a href="#Minimum-or-maximum-of-numbers">Minimum or maximum of numbers
 </a><a href="#Never-use-&gt;=-for-dependencies">Never use &gt;= for dependencies
@@ -1197,6 +1198,30 @@ void main(string[] args)
         }
     }
 }
+</code></pre></div><a name="Is-a-specific-program-available-in-PATH&#63;"></a><div class="idiom"><a class="permalink" href="#Is-a-specific-program-available-in-PATH&#63;">Link
+</a><h1>Is a specific program available in PATH?</h1>
+<p>This functions checks the <code class="prettyprint">PATH</code> environment variable, looking for a specific program.
+</p>
+<pre class="prettyprint"><code>// Similar to unix tool "which", that shows the full path of an executable
+string which(string executableName) 
+{
+    import std.process: environment;
+    import std.path: pathSeparator, buildPath;
+    import std.file: exists;
+    import std.algorithm: splitter;
+
+    // pathSeparator: Windows uses ";" separator, POSIX uses ":"
+    foreach (dir; splitter(environment["PATH"], pathSeparator)) 
+    {
+        auto path = buildPath(dir, executableName);
+        if (exists(path))
+            return path;
+    }
+    return null;
+}
+</code></pre><p>If the command isn't available, this function returns null.
+</p>
+<pre class="prettyprint"><code>which("wget").writeln; // output: /usr/bin/wget
 </code></pre></div><a name="Linking-with-C-gotchas"></a><div class="idiom"><a class="permalink" href="#Linking-with-C-gotchas">Link
 </a><h1>Linking with C gotchas</h1>
 <h2> The little known <code class="prettyprint">pragma(mangle)</code></h2>
@@ -1780,7 +1805,8 @@ It's just straight up bad code.
 </p>
 </div></div><a href="https://github.com/p0nce/d-idioms/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 <footer><h2>About
-</h2><p>Hi, I'm a <a href="http://github.com/p0nce">software developer</a> currently building <a href="http://www.auburnsounds.com">real-time audio plugins for voice</a>. I hope this site has been useful!
+</h2><p>Hi, I'm Guillaume Piolat a <a href="http://github.com/p0nce">software developer</a> currently <a href="http://www.auburnsounds.com">real-time audio effects for voice</a>. I hope this site has as useful for you as it is for me!
 </p><h2>Other contributors:
 </h2><ul id="contributors"><li><a href="https://github.com/BBasile">Basile Burg
+</a></li><li><a href="https://github.com/bubnenkoff">Dmitry Bubnenkov
 </a></li></ul></footer></body></html>
