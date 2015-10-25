@@ -414,7 +414,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
 </a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
 </a><a href="#Enumerate-fields-with-__traits(allMembers)">Enumerate fields with __traits(allMembers)
-</a><a href="#Eponymous-Templates">Eponymous Templates
+</a><a href="#Eponymous-templates">Eponymous templates
 </a><a href="#Extending-a-struct-with-alias-this">Extending a struct with alias this
 </a><a href="#Falsey-values">Falsey values
 </a><a href="#Friends-don't-let-friends-use-the-default-struct-postblit">Friends don't let friends use the default struct postblit
@@ -724,7 +724,7 @@ myArray.ptr[index] = 4; // no bounds check, guaranteed
 }
 </code></pre><p>Now if new members are added to BuildSettings, this generic <code class="prettyprint">.dup</code> will still duplicate them.
 </p>
-</div><a name="Eponymous-Templates"></a><div class="idiom"><a class="permalink" href="#Eponymous-Templates">Link
+</div><a name="Eponymous-templates"></a><div class="idiom"><a class="permalink" href="#Eponymous-templates">Link
 </a><h1>Eponymous templates</h1>
 <p>The term <strong>eponymous templates</strong> refers to a symbol with the same as its enclosing <code class="prettyprint">template</code> block.
 </p>
@@ -1242,7 +1242,19 @@ assert(max_abc == 10.0);
 </p>
 <p>See: <a href="http://dlang.org/phobos/std_algorithm.html#.min">http://dlang.org/phobos/std_algorithm.html#.min</a>
 </p>
-</div><a name="Never-use-&gt;=-for-dependencies"></a><div class="idiom"><a class="permalink" href="#Never-use-&gt;=-for-dependencies">Link
+<h2> Minimum or maximum of a slice</h2>
+<p>There is no standard function to get the minimum and maximum element of a slice.<br>But you can use <code class="prettyprint">std.algorithm.reduce()</code>.
+</p>
+<pre class="prettyprint"><code>import std.algorithm : min, max, reduce;
+
+double[] slice = [3.0, 4.0, -2.0];
+
+double minimum = reduce!min(slice);
+double maximum = reduce!max(slice);
+
+assert(minimum == -2.0);
+assert(maximum == 4.0);
+</code></pre></div><a name="Never-use-&gt;=-for-dependencies"></a><div class="idiom"><a class="permalink" href="#Never-use-&gt;=-for-dependencies">Link
 </a><h1>Never use &gt;= for dependencies</h1>
 <p>Using DUB and dependencies? Here is a pattern you should avoid:
 </p>

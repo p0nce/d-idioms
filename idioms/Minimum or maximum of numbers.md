@@ -14,3 +14,22 @@ Minimum or maximum of numbers
 They work with builtin types and any number of arguments.
 
 See: [http://dlang.org/phobos/std_algorithm.html#.min](http://dlang.org/phobos/std_algorithm.html#.min)
+
+
+## Minimum or maximum of a slice
+
+
+There is no standard function to get the minimum and maximum element of a slice.
+But you can use `std.algorithm.reduce()`.
+
+```
+import std.algorithm : min, max, reduce;
+
+double[] slice = [3.0, 4.0, -2.0];
+
+double minimum = reduce!min(slice);
+double maximum = reduce!max(slice);
+
+assert(minimum == -2.0);
+assert(maximum == 4.0);
+```
