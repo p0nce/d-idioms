@@ -1,5 +1,5 @@
 ========================================================
-Friend don't let friends use the default struct postblit
+Friends don't let friends use the default struct postblit
 ========================================================
 
 By default D structs are copyable and that copy is just a `.dup` verbatim bit copy.
