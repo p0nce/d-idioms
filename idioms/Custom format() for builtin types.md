@@ -10,8 +10,7 @@ If so, this function is used and the default formatting of the members doesn't h
 
 This can be used as a trick to override the default predefined formats of a basic type.
 
-For example, to display a pointer, with all the hex digits, a prefix and this whatever is the address size,
-we define a `struct` with a single member of type `void*` and a custom `toString()` function:
+For example, to display a pointer as a hexadecimal address prefixed with `0x`, we can define a `struct` with a single member of type `void*` and a custom `toString()` function:
 
 ```D
 import std.stdio;
@@ -23,9 +22,9 @@ struct FmtPtr
     {
         import std.format;
         static if (size_t.sizeof == 4)
-            return format("0X%.8X ", cast(size_t)ptr);
+            return format("0x%.8X ", cast(size_t)ptr);
         static if (size_t.sizeof == 8)
-            return format("0X%.16X ", cast(size_t)ptr);
+            return format("0x%.16X ", cast(size_t)ptr);
     }
 }
 
