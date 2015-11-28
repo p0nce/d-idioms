@@ -1,6 +1,6 @@
-==================================
-Extending a struct with alias this
-==================================
+=================================
+Extend a struct with `alias this`
+=================================
 
 What if we want to decorate a struct with additional features?
 We can't use virtual dispatch since the parent aggregate is a `struct`.
