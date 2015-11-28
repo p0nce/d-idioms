@@ -16,10 +16,10 @@ void processStuff(double[] data) @nogc
 }
 ```
 
-Using `@nogc` is a must to have a memory-conscious code section or having real-time threads.
+Using `@nogc` is a must for memory-conscious code sections or for real-time threads.
 
 
-However, not all library functions that could be marked `@nogc` are. You'll probably want at one point to call functions as if they were `@nogc`. Here is how to do it:
+However, not all library functions that could be marked `@nogc` are. At one point, you'll probably want to call functions as if they were `@nogc`. Here's how to do it:
 
 ```
 import std.traits;

@@ -2,16 +2,16 @@
 Enumerate fields with `__traits(allMembers)`
 ============================================
 
-Using `__traits(allMembers, X)` allows to iterate on fields of a `struct` or `class` X.
+Using `__traits(allMembers, X)` allows us to iterate on the fields of a `struct` or `class`.
 
 
-Some uses:
-- implement generic serialization/deserialization
-- implement a generic comparison, `.dup`, copy, &hellip; for any aggregate
-- describe an OpenGL vertex format from the structure
+This can be useful when:
+- implementing generic serialization/deserialization
+- implementing a generic comparison, `.dup`, copy, &hellip; for any aggregate
+- describing an OpenGL vertex format from the structure
+- ...
 
-
-Here is how [DUB](https://github.com/D-Programming-Language/dub) implements a `.dup` with `__traits(allMembers)`:
+Here's how [DUB](https://github.com/D-Programming-Language/dub) implements a `.dup` with `__traits(allMembers)`:
 
     BuildSettings dup() const
     {
@@ -26,4 +26,4 @@ Here is how [DUB](https://github.com/D-Programming-Language/dub) implements a `.
         return ret;
     }
 
-Now if new members are added to BuildSettings, this generic `.dup` will still duplicate them.
+When new members are added to BuildSettings, this generic `.dup` will still duplicate them.
