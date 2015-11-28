@@ -10,7 +10,7 @@ That means we are on board for extensive manual delegation of method calls to a 
 Fortunately the `alias this` feature comes to the rescue!
 
 
-As an example, let's write a wrapper around the Phobos `File` struct to write HTML page.
+As an example, let's write a wrapper around the Phobos `File` struct for writing an HTML page.
 
 
     import std.stdio;
@@ -29,7 +29,7 @@ As an example, let's write a wrapper around the Phobos `File` struct to write HT
         }
     }
 
-When using `HTMLPage` you will still have access to every File method. For example, you'll be able to do:
+When using `HTMLPage` you will still have access to every method in `File`. For example, you'll be able to do:
 
     htmlPage.writeln("<doctype html>");
 
@@ -37,7 +37,7 @@ This site uses this idiom.
 
 
 
-`alias this` also define an implicit conversion.
+`alias this` can also define an implicit conversion.
 
     struct A
     {
