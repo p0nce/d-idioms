@@ -20,3 +20,15 @@ Instead it is an instruction to crash the program, and is **not** removed in `-r
 
 
 **It does not mean ** _unreachable code_**, it means ** _crash now_ ** and the compiler will never remove it.**
+
+
+## Always-on assertion
+
+Since `assert(false)` never get removed, it can be used to create persistent regular assertions.
+
+```
+    if (!cond)
+        assert(false); // will never be removed by the compiler in -release builds
+
+```
+

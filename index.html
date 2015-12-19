@@ -537,7 +537,13 @@ assert(arr == [1,10]);
 </p>
 <p><strong>It does not mean </strong> <em>unreachable code</em><strong>, it means </strong> <em>crash now</em> <strong> and the compiler will never remove it.</strong>
 </p>
-</div><a name="Bypassing-@nogc"></a><div class="idiom"><a class="permalink" href="#Bypassing-@nogc">Link
+<h2> Always-on assertion</h2>
+<p>Since <code class="prettyprint">assert(false)</code> never get removed, it can be used to create persistent regular assertions.
+</p>
+<pre class="prettyprint"><code>    if (!cond)
+        assert(false); // will never be removed by the compiler in -release builds
+
+</code></pre></div><a name="Bypassing-@nogc"></a><div class="idiom"><a class="permalink" href="#Bypassing-@nogc">Link
 </a><h1>Bypassing @nogc</h1>
 <p><code class="prettyprint">@nogc</code> is a function attribute which ensures a function never allocates through the GC.
 </p>
@@ -742,7 +748,7 @@ myArray.ptr[index] = 4; // no bounds check, guaranteed
 
 static assert(HasUniqueElements!( [5, 2, 4] ));
 static assert(!HasUniqueElements!( [1, 2, 3, 2] ));
-</code></pre><p>In symbol resolution, the template instantiation is replaced by the enclosed declaration with the same name. In a way, like <a href="#Extending-a-struct-with-alias-this"><code class="prettyprint">alias this</code></a>, but for templates.
+</code></pre><p>In symbol resolution, the template instantiation is replaced by the enclosed declaration with the same name. In a way, this is like <a href="#Extending-a-struct-with-alias-this"><code class="prettyprint">alias this</code></a>, but for templates.
 </p>
 <p>Bill Baxter came up with the eponymous name in <a href="http://forum.dlang.org/post/gpb2vd$18uf$1@digitalmars.com">this thread</a>.
 </p>
