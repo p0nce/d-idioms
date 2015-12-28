@@ -25,7 +25,7 @@ That doesn't look like the beginning of a success story. To solve this, follow t
 ## Rule of Two
 
 **If a struct has a non-trivial destructor, then:**
-**- either disable the default postblit with `@disable this(this)`**,
+**- either disable the default postblit with** `@disable this(this)`,
 **- or implement the postblit.**
 **Don't let the default one.**
 

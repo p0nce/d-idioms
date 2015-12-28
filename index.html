@@ -859,7 +859,7 @@ a = b; // Bit copy here.
 <p>That doesn't look like the beginning of a success story. To solve this, follow the Rule of Two.
 </p>
 <h2> Rule of Two</h2>
-<p><strong>If a struct has a non-trivial destructor, then:</strong><br><strong>- either disable the default postblit with `@disable this(this)`</strong>,<br><strong>- or implement the postblit.</strong><br><strong>Don't let the default one.</strong>
+<p><strong>If a struct has a non-trivial destructor, then:</strong><br><strong>- either disable the default postblit with</strong> <code class="prettyprint">@disable this(this)</code>,<br><strong>- or implement the postblit.</strong><br><strong>Don't let the default one.</strong>
 </p>
 <h2> Example</h2>
 <pre class="prettyprint"><code>struct MyResource
