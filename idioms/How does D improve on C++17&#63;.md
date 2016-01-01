@@ -13,12 +13,7 @@ I think that yes, and very much so. Here's is why.
 ## DUB
 
 D has a package manager. C++ has none that is popular in its community.
-Using a [third-party library](http://code.dlang.org/) becomes many times easier, and cross-plaform builds are kept simple.
-
-## Large language, but very approachable
-
-Learning to use D well is very tricky, but you can use a subset from the get-go.
-Learning C++ pushes a lot of complexity on you right away, and there still years of learning after that and there will be things that will stay impossible.
+Using a [third-party library](http://code.dlang.org/) becomes many times easier.
 
 ## No more preprocessor
 
@@ -90,6 +85,10 @@ For the large majority of programs, the GC is a productivity enhancer. For the o
 ## No need for C++ templates heroes
 
 The easier and more powerful templates of D allow _any_  programmer to create meta-programs routinely. Not just one programmer in your team which happen to be comfortable with them.
+
+## Large language, but approachable
+
+Learning to use D well is tricky, but you can use a subset from the get-go.
 
 
 &nbsp;
