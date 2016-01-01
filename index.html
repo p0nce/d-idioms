@@ -1020,6 +1020,12 @@ import mypackage;
 </p>
 <p>I think that yes, and very much so. Here's is why.
 </p>
+<h2> DUB</h2>
+<p>D has a package manager. C++ has none that is popular in its community.<br>Using a <a href="http://code.dlang.org/">third-party library</a> becomes many times easier, and cross-plaform builds are kept simple.
+</p>
+<h2> Large language, but very approachable</h2>
+<p>Learning to use D well is very tricky, but you can use a subset from the get-go.<br>Learning C++ pushes a lot of complexity on you right away, and there still years of learning after that and there will be things that will stay impossible.
+</p>
 <h2> No more preprocessor</h2>
 <p>D has no need for a preprocessor.
 </p>
@@ -1032,25 +1038,19 @@ import mypackage;
 <h2> Faster compiles</h2>
 <p>C++ has <a href="http://www.drdobbs.com/cpp/c-compilation-speed/228701711">compilation speed problems</a>. For example the preprocessor needs to iterate on source files at least 3 times by design.
 </p>
-<p>What happens in C++ shops is that programmers spend a significant amount of time waiting for the compiler.
-</p>
-<h2> Lexing stage separated from parsing stage separated from semantics</h2>
-<p>No need for the semantic pass to separate the language in tokens.
-</p>
-<h2> Name conflict bugs are impossible</h2>
-<p>A name conflict when importing modules with the same identifier triggers a compilation error. It is thus impossible to use the wrong symbol by mistake.
+<p>In C++ development, significant amounts of time can be spent waiting for the compiler.
 </p>
 <h2> Default initialization</h2>
 <p>Uninitialized variables can create subtle and hard to find bugs in C++ programs. In D all variables and members are initialized by default. If that happens to be expensive, the <code class="prettyprint">= void</code> initialization can be used instead.
 </p>
-<h2> DUB</h2>
-<p>D has a package manager. C++ has none that is popular in its community.<br>Therefore, using a <a href="http://code.dlang.org/">third-party library</a> is many times easier.
+<h2> Name conflict bugs are impossible</h2>
+<p>A name conflict when importing modules with the same identifier triggers a compilation error. It is thus impossible to use the wrong symbol by mistake.
 </p>
 <h2> No more implicit conversion of arrays to pointers</h2>
-<p>It didn't make much sense even in C.
+<p>This is a long-standing problem with C and C++.
 </p>
-<h2> Ranges simpler to implement than iterators</h2>
-<p>Ever implemented a C++ iterator? It can be a bit tricky.
+<h2> Ranges vs Iterators</h2>
+<p>Ranges provides a number of <a href="http://accu.org/content/conf2009/AndreiAlexandrescu_iterators-must-go.pdf">advantages</a> over iterators, being essentially a better tool for iteration.
 </p>
 <h2> Move and copy semantics radically simplified</h2>
 <p>D makes the assumption that structs and classes are copyable by bit copy. It adds some restrictions on internal pointers, but overall it's simpler.
@@ -1059,25 +1059,25 @@ import mypackage;
 <p>Built-in unit-tests lower the barrier for testing.
 </p>
 <h2> Documentation comments</h2>
-<p>Built-in documentation comments avoid the need for an external tool that inevitably nobody uses.
+<p>Similarly built-in documentation comments lower the barrier for writing documentation comments.
 </p>
 <h2> The D STL is actually readable</h2>
-<p>C++'s STL are somewhat readable, but less so.
+<p>Reading Phobos source code is easy and often enlightening.
 </p>
-<h2> No more diamond inheritance</h2>
+<h2> Simpler object model</h2>
 <p>C++ having multiple inheritance implies a <a href="http://www.amazon.fr/Inside-Object-Model-Stanley-Lippman/dp/0201834545">complex object model</a>.<br>With <code class="prettyprint">alias this</code>, multiple implementation inheritance is pretty much never needed.
 </p>
-<h2> Saner operator overloading</h2>
+<h2> Streamlined operator overloading</h2>
 <p>Making custom numerical types requires a lot less operator overloads.
 </p>
 <h2> ++pre and post-increment++ have been fixed</h2>
 <p>See how <a href="#Should-I-use-++pre-increment-or-post-increment++?">here</a>.
 </p>
 <h2> GC</h2>
-<p>For the large majority of programs, the GC is a productivity enhancer. For the other programs, it's <a href="#How-the-D-Garbage-Collector-works">not that bad</a>.
+<p>For the large majority of programs, the GC is a productivity enhancer. For the other programs, it's <a href="#How-the-D-Garbage-Collector-works">not that bad</a> and can be work-arounded.
 </p>
-<h2> No need for C++ template's heroes</h2>
-<p>The easier and more powerful templates in D allow the <em>average</em> programmer to create meta-programs routinely. Not just one programmer in your team which happen to be comfortable with them.
+<h2> No need for C++ templates heroes</h2>
+<p>The easier and more powerful templates of D allow <em>any</em>  programmer to create meta-programs routinely. Not just one programmer in your team which happen to be comfortable with them.
 </p>
 <p>&nbsp;
 </p>
@@ -1085,7 +1085,7 @@ import mypackage;
 <p>For balance, here are the downsides <strong>(opinionated again)</strong>:
 </p>
 <ul>
-<li>D has a way smaller (growing) community.
+<li>D has a smaller (growing) community.
 </li>
 <li>C++ has nice, composable RAII. D has a more complicated <a href="#The-trouble-with-class-destructors">story</a> with resources.
 </li>
