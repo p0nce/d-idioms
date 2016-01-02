@@ -14,7 +14,7 @@ Try the [D Cookbook](https://www.packtpub.com/application-development/d-cookbook
 
 Try [The D Programming Language (TDPL)](http://erdani.com/index.php/books/tdpl/) by Andrei Alexandrescu.
 
-** "I want to learn how to program with D."**
+** "I want to learn how to program, with D."**
 
 Try [Programming In D](http://ddili.org/ders/d.en/]http://ddili.org/ders/d.en/) by Ali Cehreli.
 
