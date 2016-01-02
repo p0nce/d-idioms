@@ -2,7 +2,7 @@
 How does D improve on C++17?
 ============================
 
-**Warning: this article is opinionated.**
+**Warning: this post is opinionated.**
 
 &nbsp;
 
