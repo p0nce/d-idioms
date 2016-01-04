@@ -451,6 +451,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#The-truth-about-shared">The truth about shared
 </a><a href="#Throwing-despite-@nogc">Throwing despite @nogc
 </a><a href="#Unrecoverable-vs-recoverable-errors">Unrecoverable vs recoverable errors
+</a><a href="#What-is-the difference-between-out-and-ref-parameters&#x3F">What is the difference between out and ref parameters&#x3F
 </a><a href="#Which-book-should-I-read?">Which book should I read?
 </a><a href="#Working-with-associative-arrays">Working with associative arrays
 </a><a href="#Working-with-files">Working with files
@@ -1635,7 +1636,7 @@ writeln(decChars.capacity);              // outputs non-zero value now that decC
 </li>
 <li>Removing bounds checking in all but <code class="prettyprint">@safe</code> code. That means: <code class="prettyprint">@trusted</code>, <code class="prettyprint">@system</code>, and unmarked functions won't have bounds checks. To overide this behaviour, use the <code class="prettyprint">-boundscheck</code> switch.
 </li>
-<li>Removing assertions, except <code class="prettyprint">assert(false)</code> which is <a href="#assert(false)-is-special">special</a>.<br><strong>Failed assertions are considered Undefined Behaviour.</strong> The optimizer can assume that a removed assertion always holds and use this fact for optimization.
+<li>Removing assertions, except <code class="prettyprint">assert(false)</code> which is <a href="#assert(false)-is-special">special</a>.<br><strong>Failed assertions are considered Undefined Behaviour.</strong> The optimizer can assume that a removed assertion always holds and uses this fact for optimization.
 </li>
 </ul>
 <p>See: <a href="http://dlang.org/dmd-windows.html#switch-release">http://dlang.org/dmd-windows.html#switch-release</a>
@@ -1726,7 +1727,7 @@ addSix(a);              // Static arrays implicitely convertible to slices.
 </p>
 </div><a name="Throwing-despite-@nogc"></a><div class="idiom"><a class="permalink" href="#Throwing-despite-@nogc">Link
 </a><h1>Throwing despite <code class="prettyprint">@nogc</code></h1>
-<p> <strong>This trick is a dirty Proof of Concept. Just never do it.</strong>
+<p> <strong>This trick is a dirty Proof Of Concept. Just never do it.</strong>
 </p>
 <p>The major limitation of <code class="prettyprint">@nogc</code> is that you can't throw exceptions allocated with <code class="prettyprint">new</code>.
 </p>
@@ -1825,6 +1826,43 @@ It's just straight up bad code.
 <p><em>Input errors are not bugs, and vice versa. There is no overlap.</em>
 </p>
 <p>See also: <a href="http://forum.dlang.org/post/m07gf1$18jl$1@digitalmars.com">http://forum.dlang.org/post/m07gf1$18jl$1@digitalmars.com</a>
+</p>
+</div><a name="What-is-the difference-between-out-and-ref-parameters&#x3F"></a><div class="idiom"><a class="permalink" href="#What-is-the difference-between-out-and-ref-parameters&#x3F">Link
+</a><h1>What is the difference between <code class="prettyprint">out</code> and <code class="prettyprint">ref</code> parameters?</h1>
+<p>Both pass parameters by reference. But <code class="prettyprint">out</code> parameters are initialized with <code class="prettyprint">.init</code> at function startup, while <code class="prettyprint">ref</code> parameters aren't.
+</p>
+<pre class="prettyprint"><code>import std.stdio;
+import std.math;
+
+void functionUsingRef(ref float refParam)
+{
+    writeln(refParam);
+}
+
+void functionUsingOut(out float outParam)
+in
+{
+    // Initialization for out parameters happens
+    // before function pre-conditions.
+    assert(isNaN(outParam));
+}
+body
+{
+    writeln(outParam);
+    // Nothing actually forces you to write outParam
+    // but that's what you should normally do.
+    // You can also read it's value.
+}
+
+void main()
+{
+    float x = 2.5f;
+    functionUsingRef(x); // Output: 2.5
+    functionUsingOut(x); // Output: nan
+    writeln(x);          // Output: nan
+}
+
+</code></pre><p><code class="prettyprint">ref</code> and <code class="prettyprint">out</code> are <strong>storage classes</strong>, not <strong>type qualifiers</strong>. They don't belong to the parameter's type.
 </p>
 </div><a name="Which-book-should-I-read?"></a><div class="idiom"><a class="permalink" href="#Which-book-should-I-read?">Link
 </a><h1>Which book should I read?</h1>

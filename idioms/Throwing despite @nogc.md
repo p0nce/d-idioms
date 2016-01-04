@@ -2,7 +2,7 @@
 Throwing despite `@nogc`
 ========================
 
- **This trick is a dirty Proof of Concept. Just never do it.**
+ **This trick is a dirty Proof Of Concept. Just never do it.**
 
 The major limitation of `@nogc` is that you can't throw exceptions allocated with `new`.
 
