@@ -428,6 +428,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Implicit-conversion-for-user-defined-types">Implicit conversion for user-defined types
 </a><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><a href="#Is-a-specific-program-available-in-PATH&#63;">Is a specific program available in PATH&#63;
+</a><a href="#Knowing-inout-inside-out">Knowing inout inside out
 </a><a href="#Linking-with-C-gotchas">Linking with C gotchas
 </a><a href="#Minimum-or-maximum-of-numbers">Minimum or maximum of numbers
 </a><a href="#Never-use-&gt;=-for-dependencies">Never use &gt;= for dependencies
@@ -1219,7 +1220,7 @@ void main(string[] args)
 <p>This functions checks the <code class="prettyprint">PATH</code> environment variable, looking for a specific program.
 </p>
 <pre class="prettyprint"><code>// Similar to unix tool "which", that shows the full path of an executable
-string which(string executableName) 
+string which(string executableName)
 {
     import std.process: environment;
     import std.path: pathSeparator, buildPath;
@@ -1227,17 +1228,78 @@ string which(string executableName)
     import std.algorithm: splitter;
 
     // pathSeparator: Windows uses ";" separator, POSIX uses ":"
-    foreach (dir; splitter(environment["PATH"], pathSeparator)) 
+    foreach (dir; splitter(environment["PATH"], pathSeparator))
     {
         auto path = buildPath(dir, executableName);
         if (exists(path))
             return path;
     }
-    return null;
+    throw Exception("Couldn't find " ~ executableName);
 }
-</code></pre><p>If the command isn't available, this function returns null.
+</code></pre><p>If the command isn't available, this function will throw an <code class="prettyprint">Exception</code>.
 </p>
 <pre class="prettyprint"><code>which("wget").writeln; // output: /usr/bin/wget
+</code></pre></div><a name="Knowing-inout-inside-out"></a><div class="idiom"><a class="permalink" href="#Knowing-inout-inside-out">Link
+</a><h1>Knowing <code class="prettyprint">inout</code> inside out</h1>
+<p><code class="prettyprint">inout</code> <strong>is a good-looking storage class. When should it be used?</strong>
+</p>
+<h2> Firstly, <code class="prettyprint">inout</code> is great for <strong>writing getters returning references</strong>.</h2>
+<pre class="prettyprint"><code>struct MyBuffer(T)
+{
+    private T* data;
+
+    // This getter needs inout to fit MyBuffer,
+    // const(MyBuffer) or immutable(MyBuffer) as caller
+    inout(T)* getData() inout // &lt;= 2nd inout applies to "this"
+    {
+        return data;
+    }
+}
+</code></pre><p>It avoids to write the longer equivalent:
+</p>
+<pre class="prettyprint"><code>// Longer struct without inout
+struct MyBuffer(T)
+{
+    private T* data;
+
+    T* getData()
+    {
+        return data;
+    }
+
+    const(T)* getData() const
+    {
+        return data;
+    }
+
+    immutable(T)* getData() immutable
+    {
+        return data;
+    }
+}
+</code></pre><h2> Secondly, <code class="prettyprint">inout</code> is also useful for free functions walking reference types:</h2>
+<pre class="prettyprint"><code>// An example of a useful free function using inout
+inout(char)[] chomp(inout(char)[] str)
+{
+    if (str.length &amp;&amp; str[$-1] == '\n')
+        return str[0..$-1];
+    else
+        return str;
+}
+</code></pre><h2> It is allowed to use <code class="prettyprint">inout</code> variables inside of an <code class="prettyprint">inout</code>-enabled function:</h2>
+<pre class="prettyprint"><code>// Useless example to demonstrate inout local variables
+inout(int)[] lastItems(inout(int)[] arr, size_t pivot)
+{
+    // Local inout variables are allowed
+    inout(int)[] lasts = arr[nth+1..$];
+    return lasts;
+}
+</code></pre><p>But <code class="prettyprint">inout</code> member variables are <strong>not</strong> allowed, because <code class="prettyprint">inout</code> doesn't mean anything outside the context of a function.
+</p>
+<pre class="prettyprint"><code>struct InoutMember
+{
+    inout(int) member; // Wrong, won't compile
+}
 </code></pre></div><a name="Linking-with-C-gotchas"></a><div class="idiom"><a class="permalink" href="#Linking-with-C-gotchas">Link
 </a><h1>Linking with C gotchas</h1>
 <h2> The little known <code class="prettyprint">pragma(mangle)</code></h2>
@@ -1328,6 +1390,8 @@ ptr ? *ptr : ValueType.init;
 </ol>
 </div><a name="Phobos-gems"></a><div class="idiom"><a class="permalink" href="#Phobos-gems">Link
 </a><h1>Phobos Gems</h1>
+<p>There is no shortage of useful and surprising things in the D standard library.<br>Here is some of the most useful stuff.
+</p>
 <h2> Check recoverable errors with <code class="prettyprint">std.exception.enforce</code></h2>
 <p>It is good practice to check for unrecoverable errors with <code class="prettyprint">assert</code>, and recoverable errors with <code class="prettyprint">enforce</code>.<br>Which means you should <a href="#Unrecoverable-vs-recoverable-errors">learn the difference</a> between those two types of errors.
 </p>

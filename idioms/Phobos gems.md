@@ -2,6 +2,9 @@
 Phobos Gems
 ===========
 
+There is no shortage of useful and surprising things in the D standard library.
+Here is some of the most useful stuff.
+
 ## Check recoverable errors with `std.exception.enforce`
 
 It is good practice to check for unrecoverable errors with `assert`, and recoverable errors with `enforce`.
