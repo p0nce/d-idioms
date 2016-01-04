@@ -22,7 +22,7 @@ Depending on a library using `>=` is risky. If `awesome-lib` breaks its API then
 Now this can be useful for executables, but this is especially bad for publicly released libraries. Any downstream project might break in the future when using your already released tags. And _how will you fix tags that are already in use?_
 
 
-**TL;DR Do not depend on APIs that will break in the future. Use `~>` or `==` instead.**
+**TL;DR Do not depend on APIs that will break in the future. Use** `~>` **or** `==` **instead.**
 
 
 See: [http://code.dlang.org/package-format#version-specs](http://code.dlang.org/package-format#version-specs)
