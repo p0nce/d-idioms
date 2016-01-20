@@ -1724,23 +1724,33 @@ writeln(decChars.capacity);              // outputs non-zero value now that decC
 {
     arr[] += 4;           // Only the local version is modified.
 }
-int[16] a;
-addFour(a);               // a passed by value on the stack, not by pointer.
+
+void main()
+{
+    int[16] a;
+    addFour(a);               // a passed by value on the stack, not by pointer.
+}
 </code></pre><p>That makes such declaration a trap when porting functions from C or C++.
 </p>
+<h2> Static arrays convert implicitely into slices!</h2>
 <p>To pass static arrays by reference, either write a function taking a slice or use ref.
 </p>
 <pre class="prettyprint"><code>void addFive(ref int[16] arr)
 {
     arr[] += 5;         // Caller parameter modified.
 }
+
 void addSix(int[] arr)
 {
     arr[] += 6;         // Caller parameter modified.
 }
-int[16] a;
-addFive(a);
-addSix(a);              // Static arrays implicitely convertible to slices.
+
+void main()
+{
+    int[16] a;
+    addFive(a);         // Works, a is passed by reference
+    addSix(a);          // Works, a is converted into a slice referencing the same data
+}
 </code></pre></div><a name="String-interpolation-as-a-library"></a><div class="idiom"><a class="permalink" href="#String-interpolation-as-a-library">Link
 </a><h1>String interpolation as a library</h1>
 <p>D doesn't have <a href="https://en.wikipedia.org/wiki/String_interpolation">string interpolation</a> built in the language like PHP, Perl or Python.<br>Yet you can get a similar feature using the <code class="prettyprint">scriptlike</code> library from Nick Sabalausky.
