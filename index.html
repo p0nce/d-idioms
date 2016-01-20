@@ -543,12 +543,16 @@ assert(arr == [1,10]);
 <p><strong>It does not mean </strong> <em>unreachable code</em><strong>, it means </strong> <em>crash now</em> <strong> and the compiler will never remove it.</strong>
 </p>
 <h2> Always-on assertion</h2>
-<p>Since <code class="prettyprint">assert(false)</code> never get removed, it can be used to create persistent regular assertions.
+<p>Since <code class="prettyprint">assert(false)</code> never get removed, it can be used to create a persistent assertion.
 </p>
 <pre class="prettyprint"><code>    if (!cond)
         assert(false); // will never be removed by the compiler in -release builds
 
-</code></pre></div><a name="Bypassing-@nogc"></a><div class="idiom"><a class="permalink" href="#Bypassing-@nogc">Link
+</code></pre><p><code class="prettyprint">assert(false)</code> is fit for finding bugs, <a href="#Unrecoverable-vs-recoverable-errors">but not for input errors</a>. In this case, prefer the use of <code class="prettyprint">std.exception.enforce</code>.
+</p>
+<p>See: <a href="http://dlang.org/phobos/std_exception.html#.enforce">http://dlang.org/phobos/std_exception.html#.enforce</a>
+</p>
+</div><a name="Bypassing-@nogc"></a><div class="idiom"><a class="permalink" href="#Bypassing-@nogc">Link
 </a><h1>Bypassing @nogc</h1>
 <p><code class="prettyprint">@nogc</code> is a function attribute which ensures a function never allocates through the GC.
 </p>
