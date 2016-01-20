@@ -1743,12 +1743,15 @@ addFive(a);
 addSix(a);              // Static arrays implicitely convertible to slices.
 </code></pre></div><a name="String-interpolation-as-a-library"></a><div class="idiom"><a class="permalink" href="#String-interpolation-as-a-library">Link
 </a><h1>String interpolation as a library</h1>
-<p>D doesn't have <a href="https://en.wikipedia.org/wiki/String_interpolation">string interpolation</a> built in the language.<br>But you can get a similar feature using the <code class="prettyprint">scriptlike</code> library from Nick Sabalausky.
+<p>D doesn't have <a href="https://en.wikipedia.org/wiki/String_interpolation">string interpolation</a> built in the language like PHP, Perl or Python.<br>Yet you can get a similar feature using the <code class="prettyprint">scriptlike</code> library from Nick Sabalausky.
 </p>
 <pre class="prettyprint"><code>import scriptlike;
 int num = 21;
 writeln( mixin(interp!"The number ${num} doubled is ${num * 2}.") ); // Output: The number 21 doubled is 42.
-</code></pre><p><code class="prettyprint">scriptlike</code> also provides many more useful features for quick programs.<br>Homepage: <a href="https://github.com/Abscissa/scriptlike">https://github.com/Abscissa/scriptlike</a>
+</code></pre><h2> Is <code class="prettyprint">interp</code> difficult to implement?</h2>
+<p>It turns out <code class="prettyprint">interp</code> is a <a href="https://github.com/Abscissa/scriptlike/blob/4350eb745531720764861c82e0c4e689861bb17e/src/scriptlike/core.d#L114">pretty simple function</a>, forced to execute at compile-time through CTFE by the use of <code class="prettyprint">mixin</code>.
+</p>
+<p><code class="prettyprint">scriptlike</code> also provides many more useful features for quick programs.<br>Homepage: <a href="https://github.com/Abscissa/scriptlike">https://github.com/Abscissa/scriptlike</a>
 </p>
 </div><a name="The-impossible-real-time-thread"></a><div class="idiom"><a class="permalink" href="#The-impossible-real-time-thread">Link
 </a><h1>Real-time thread</h1>
