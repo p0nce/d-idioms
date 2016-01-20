@@ -1373,7 +1373,12 @@ ptr ? *ptr : ValueType.init;
 </code></pre><p>The <code class="prettyprint">.get</code> builtin property can also be used. It provides a default value when the key doesn't exist.
 </p>
 <pre class="prettyprint"><code>aa.get(key, defaultValue);
-</code></pre></div><a name="Patching-a-library-available-on-the-DUB-registry"></a><div class="idiom"><a class="permalink" href="#Patching-a-library-available-on-the-DUB-registry">Link
+</code></pre><h2> Reminder: AAs are hashmaps, not balanced trees!</h2>
+<p>Associative arrays in D are akin to C++'s <code class="prettyprint">std::unordered_map</code>, <strong>not</strong> <code class="prettyprint">std::map</code>.
+</p>
+<p>See: <a href="https://dlang.org/spec/hash-map.html">https://dlang.org/spec/hash-map.html</a>
+</p>
+</div><a name="Patching-a-library-available-on-the-DUB-registry"></a><div class="idiom"><a class="permalink" href="#Patching-a-library-available-on-the-DUB-registry">Link
 </a><h1>Patching a library available on the DUB registry</h1>
 <p>How to patch a <a href="http://code.dlang.org/">DUB</a> library with minimal hassle for users?
 </p>
