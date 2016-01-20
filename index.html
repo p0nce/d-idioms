@@ -447,6 +447,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
 </a><a href="#So-what-does--release-do,-exactly&#63;">So what does -release do, exactly&#63;
 </a><a href="#Static-arrays-are-value-types">Static arrays are value types
+</a><a href="#String-interpolation-as-a-library">String interpolation as a library
 </a><a href="#The-impossible-real-time-thread">The impossible real-time thread
 </a><a href="#The-trouble-with-class-destructors">The trouble with class destructors
 </a><a href="#The-truth-about-shared">The truth about shared
@@ -1740,7 +1741,16 @@ void addSix(int[] arr)
 int[16] a;
 addFive(a);
 addSix(a);              // Static arrays implicitely convertible to slices.
-</code></pre></div><a name="The-impossible-real-time-thread"></a><div class="idiom"><a class="permalink" href="#The-impossible-real-time-thread">Link
+</code></pre></div><a name="String-interpolation-as-a-library"></a><div class="idiom"><a class="permalink" href="#String-interpolation-as-a-library">Link
+</a><h1>String interpolation as a library</h1>
+<p>D doesn't have <a href="https://en.wikipedia.org/wiki/String_interpolation">string interpolation</a> built in the language.<br>But you can get a similar feature using the <code class="prettyprint">scriptlike</code> library from Nick Sabalausky.
+</p>
+<pre class="prettyprint"><code>import scriptlike;
+int num = 21;
+writeln( mixin(interp!"The number ${num} doubled is ${num * 2}.") ); // Output: The number 21 doubled is 42.
+</code></pre><p><code class="prettyprint">scriptlike</code> also provides many more useful features for quick programs.<br>Homepage: <a href="https://github.com/Abscissa/scriptlike">https://github.com/Abscissa/scriptlike</a>
+</p>
+</div><a name="The-impossible-real-time-thread"></a><div class="idiom"><a class="permalink" href="#The-impossible-real-time-thread">Link
 </a><h1>Real-time thread</h1>
 <p>It is often said on Internet forums that D couldn't possibly do real-time work, since <em>its stop-the-world GC might pause every thread at once</em>.
 </p>
