@@ -7,19 +7,21 @@ Functions calls with boolean arguments are often hard to read and don't provide 
 ```
 void doSomething(bool frob);
 
-...
+[...]
 
 doSomething(false);         // false what?
 ```
 
-Fortunately `std.typecons.Flag`can help you turn `bool` arguments into readable flags at no cost.
+Fortunately `std.typecons.Flag` can help you turn `bool` arguments into readable flags at no cost.
 Buy it now! At your local standard library dealer.
 
 
 ```
+import std.typecons;
+
 void doSomething(Flag!"frob" frob);
 
-...
+[...]
 
 doSomething(No.frob);       // ok, no frob. Got it
 ```

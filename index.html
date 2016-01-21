@@ -1931,14 +1931,16 @@ It's just straight up bad code.
 </p>
 <pre class="prettyprint"><code>void doSomething(bool frob);
 
-...
+[...]
 
 doSomething(false);         // false what?
-</code></pre><p>Fortunately <code class="prettyprint">std.typecons.Flag</code>can help you turn <code class="prettyprint">bool</code> arguments into readable flags at no cost.<br>Buy it now! At your local standard library dealer.
+</code></pre><p>Fortunately <code class="prettyprint">std.typecons.Flag</code> can help you turn <code class="prettyprint">bool</code> arguments into readable flags at no cost.<br>Buy it now! At your local standard library dealer.
 </p>
-<pre class="prettyprint"><code>void doSomething(Flag!"frob" frob);
+<pre class="prettyprint"><code>import std.typecons;
 
-...
+void doSomething(Flag!"frob" frob);
+
+[...]
 
 doSomething(No.frob);       // ok, no frob. Got it
 </code></pre><h2> Here are the guidelines straight from Andrei Alexandrescu:</h2>
