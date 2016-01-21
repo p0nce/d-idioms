@@ -453,6 +453,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#The-truth-about-shared">The truth about shared
 </a><a href="#Throwing-despite-@nogc">Throwing despite @nogc
 </a><a href="#Unrecoverable-vs-recoverable-errors">Unrecoverable vs recoverable errors
+</a><a href="#Using-std.typecons.Flag-like-a-pro">Using std.typecons.Flag like a pro
 </a><a href="#Voldemort-types">Voldemort types
 </a><a href="#What-is-the-difference-between-out-and-ref-parameters&#x3F">What is the difference between out and ref parameters&#x3F
 </a><a href="#Which-book-should-I-read&#63;">Which book should I read&#63;
@@ -1923,6 +1924,36 @@ It's just straight up bad code.
 <p><em>Input errors are not bugs, and vice versa. There is no overlap.</em>
 </p>
 <p>See also: <a href="http://forum.dlang.org/post/m07gf1$18jl$1@digitalmars.com">http://forum.dlang.org/post/m07gf1$18jl$1@digitalmars.com</a>
+</p>
+</div><a name="Using-std.typecons.Flag-like-a-pro"></a><div class="idiom"><a class="permalink" href="#Using-std.typecons.Flag-like-a-pro">Link
+</a><h1>Using <code class="prettyprint">std.typecons.Flag</code> like a pro</h1>
+<p>Functions calls with boolean arguments are often hard to read and don't provide meaning.
+</p>
+<pre class="prettyprint"><code>void doSomething(bool frob);
+
+...
+
+doSomething(false);         // false what?
+</code></pre><p>Fortunately <code class="prettyprint">std.typecons.Flag</code>can help you turn <code class="prettyprint">bool</code> arguments into readable flags at no cost.<br>Buy it now! At your local standard library dealer.
+</p>
+<pre class="prettyprint"><code>void doSomething(Flag!"frob" frob);
+
+...
+
+doSomething(No.frob);       // ok, no frob. Got it
+</code></pre><h2> Here are the guidelines straight from Andrei Alexandrescu:</h2>
+<ul>
+<li><p>Use the name <code class="prettyprint">Flag!"frob"</code> for the type of the flag
+</p>
+</li>
+<li><p>Use <code class="prettyprint">Yes.frob</code> and <code class="prettyprint">No.frob</code> for the flag values
+</p>
+</li>
+<li><p><strong>Do not alias</strong> <code class="prettyprint">Flag!"frob"</code> <strong>to a new name.</strong>
+</p>
+</li>
+</ul>
+<p>For more documentation: <a href="https://dlang.org/phobos/std_typecons.html#.Flag">https://dlang.org/phobos/std_typecons.html#.Flag</a>
 </p>
 </div><a name="Voldemort-types"></a><div class="idiom"><a class="permalink" href="#Voldemort-types">Link
 </a><h1>Voldemort types</h1>
