@@ -411,6 +411,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Capturing-with-regular-expressions">Capturing with regular expressions
 </a><a href="#Custom-format()-for-builtin-types">Custom format() for builtin types
 </a><a href="#D-online-resources">D online resources
+</a><a href="#Design-by-Introspection">Design by Introspection
 </a><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
 </a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
 </a><a href="#Enumerate-fields-with-__traits(allMembers)">Enumerate fields with __traits(allMembers)
@@ -683,6 +684,29 @@ void main(string[] args)
 <li><a href="https://github.com/PhilippeSigaud/D-templates-tutorial/raw/master/D-templates-tutorial.pdf">D template tutorial by Philippe Sigaud</a>
 </li>
 </ul>
+</div><a name="Design-by-Introspection"></a><div class="idiom"><a class="permalink" href="#Design-by-Introspection">Link
+</a><h1>Design by Introspection</h1>
+<h2> What is Design by Introspection?</h2>
+<p>Coined and promoted by Andrei Alexandrescu, <strong>Design by Introspection</strong> (also known as "DbI") means something pretty specific: instead of multiplying the number of named concepts in generic code, let's <strong>inspect types at compile-time for capabilities</strong>.
+</p>
+<p>An example is Phobos' input ranges that can be <a href="http://dlang.org/phobos/std_range_primitives.html#.isInfinite">infinite</a> regardless of the particular compile-time concept they follow.
+</p>
+<p>In the D language, such duck-typing at compile-time seems to unlock most interesting designs.
+</p>
+<h2> Code examples</h2>
+<ul>
+<li><p><code class="prettyprint">std.range.primitives</code>: <a href="http://dlang.org/phobos/std_range_primitives.html">http://dlang.org/phobos/std<em>range</em>primitives.html</a>
+</p>
+</li>
+<li><p><code class="prettyprint">std.experimental.allocator</code>: <a href="http://dlang.org/phobos/std_experimental_allocator.html">http://dlang.org/phobos/std<em>experimental</em>allocator.html</a>
+</p>
+</li>
+</ul>
+<h2> Where do I start?</h2>
+<p>There is currently not much written on this programming technique.
+</p>
+<p>The best resource on the topic is probably this talk by Alexandrescu: <a href="https://www.youtube.com/watch?v=LIb3L4vKZ7U">std::allocator Is to Allocation what std::vector is to Vexation</a>.
+</p>
 </div><a name="Embed-a-dynamic-library-in-an-executable"></a><div class="idiom"><a class="permalink" href="#Embed-a-dynamic-library-in-an-executable">Link
 </a><h1>Embed a dynamic library in an executable</h1>
 <p>Let's say we want to distribute a standalone executable that doesn't need any installation.<br>Here we'll see how to embed SDL.dll into an executable.
