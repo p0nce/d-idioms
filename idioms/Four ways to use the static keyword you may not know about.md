@@ -37,7 +37,7 @@ void main()
 This is perhaps the strangest `static` abuse. At top-level, `static` does **nothing** for variables and function declarations.
 
 
-Here, a TLS variable:
+Here, a TLS (Thread Local Storage) variable:
 ```
 // At top-level
 static int numEngines = 4;          // Accepted. Does nothing.
@@ -52,7 +52,7 @@ int numEngines = 4;                 // The normal way to declare a TLS variable.
 Similarly for functions:
 
 ```
-static int add(int a, int b)        // You can leave "static" out. It does nothing.
+static int add(int a, int b)        // You can leave out "static". It does nothing.
 {
     return a + b;
 }
@@ -62,7 +62,7 @@ As the D specification [says](http://dlang.org/spec/attribute.html#static):
 
 _"Static does not have the additional C meaning of being local to a file. Use the private attribute in D to achieve that."_
 
-**Leave your C++ knowledge about** `static inline` **functions and** `static` **top-level variables at the door: doesn't apply here.**
+**Leave your C++ knowledge about** `static inline` **functions and** `static` **top-level variables at the door: it doesn't apply here.**
 
 
 ## 3. Nested `static struct`, nested `static class`, and nested `static` functions
@@ -116,3 +116,33 @@ void main()
 A nested `static` function:
   * Cannot access the parent context because it has no context pointer to the upper frame,
   * Can fit in a simple `function` pointer instead of a `delegate` for this reason.
+
+
+## 4. Global constructors and global destructors
+
+Arguably the most important `static` use out of the four we've listed.
+
+
+### _Thread-local_ global constructors `static this()`:
+
+Called when a thread is registered to the D runtime. **Typically used to initialize TLS variables.**
+
+
+### _Thread-local_ global destructor `static ~this()`:
+
+Called when a thread is unregistered to the D runtime. **Typically used to finalize TLS variables.**
+
+
+### Global constructors `shared static this()`:
+
+Called when the D runtime is initialized. **Typically used to initialize** `shared` **or** `__gshared` **variables**, for example in [Derelict](https://github.com/DerelictOrg).
+
+
+### Global destructor `shared static ~this()`:
+
+Called when the D runtime is finalized. **Typically used to finalize** `shared` **or** `__gshared` **variables.**
+
+Important: global constructors and global destructors can be placed within a `struct` or a `class`, where they will be able to initialize `shared`, `__gshared` or `static` _members_.
+
+
+**Beware:** It's a typical mistake to write `static this()` instead of `shared static this()`. **Don't be a TLS victim.**

@@ -906,7 +906,7 @@ void main()
 </code></pre><h2> 2. Top-level <code class="prettyprint">static</code> variables and functions</h2>
 <p>This is perhaps the strangest <code class="prettyprint">static</code> abuse. At top-level, <code class="prettyprint">static</code> does <strong>nothing</strong> for variables and function declarations.
 </p>
-<p>Here, a TLS variable:
+<p>Here, a TLS (Thread Local Storage) variable:
 </p>
 <pre class="prettyprint"><code>// At top-level
 static int numEngines = 4;          // Accepted. Does nothing.
@@ -916,7 +916,7 @@ static int numEngines = 4;          // Accepted. Does nothing.
 int numEngines = 4;                 // The normal way to declare a TLS variable.
 </code></pre><p>Similarly for functions:
 </p>
-<pre class="prettyprint"><code>static int add(int a, int b)        // You can leave "static" out. It does nothing.
+<pre class="prettyprint"><code>static int add(int a, int b)        // You can leave out "static". It does nothing.
 {
     return a + b;
 }
@@ -924,7 +924,7 @@ int numEngines = 4;                 // The normal way to declare a TLS variable.
 </p>
 <p><em>"Static does not have the additional C meaning of being local to a file. Use the private attribute in D to achieve that."</em>
 </p>
-<p><strong>Leave your C++ knowledge about</strong> <code class="prettyprint">static inline</code> <strong>functions and</strong> <code class="prettyprint">static</code> <strong>top-level variables at the door: doesn't apply here.</strong>
+<p><strong>Leave your C++ knowledge about</strong> <code class="prettyprint">static inline</code> <strong>functions and</strong> <code class="prettyprint">static</code> <strong>top-level variables at the door: it doesn't apply here.</strong>
 </p>
 <h2> 3. Nested <code class="prettyprint">static struct</code>, nested <code class="prettyprint">static class</code>, and nested <code class="prettyprint">static</code> functions</h2>
 <p><code class="prettyprint">static</code> can be put before nested <code class="prettyprint">struct</code>, <code class="prettyprint">class</code> or functions.
@@ -982,6 +982,25 @@ void main()
 <li>Can fit in a simple <code class="prettyprint">function</code> pointer instead of a <code class="prettyprint">delegate</code> for this reason.
 </li>
 </ul>
+<h2> 4. Global constructors and global destructors</h2>
+<p>Arguably the most important <code class="prettyprint">static</code> use out of the four we've listed.
+</p>
+<h3> <em>Thread-local</em> global constructors <code class="prettyprint">static this()</code>:</h3>
+<p>Called when a thread is registered to the D runtime. <strong>Typically used to initialize TLS variables.</strong>
+</p>
+<h3> <em>Thread-local</em> global destructor <code class="prettyprint">static ~this()</code>:</h3>
+<p>Called when a thread is unregistered to the D runtime. <strong>Typically used to finalize TLS variables.</strong>
+</p>
+<h3> Global constructors <code class="prettyprint">shared static this()</code>:</h3>
+<p>Called when the D runtime is initialized. <strong>Typically used to initialize</strong> <code class="prettyprint">shared</code> <strong>or</strong> <code class="prettyprint">__gshared</code> <strong>variables</strong>, for example in <a href="https://github.com/DerelictOrg">Derelict</a>.
+</p>
+<h3> Global destructor <code class="prettyprint">shared static ~this()</code>:</h3>
+<p>Called when the D runtime is finalized. <strong>Typically used to finalize</strong> <code class="prettyprint">shared</code> <strong>or</strong> <code class="prettyprint">__gshared</code> <strong>variables.</strong>
+</p>
+<p>Important: global constructors and global destructors can be placed within a <code class="prettyprint">struct</code> or a <code class="prettyprint">class</code>, where they will be able to initialize <code class="prettyprint">shared</code>, <code class="prettyprint">__gshared</code> or <code class="prettyprint">static</code> <em>members</em>.
+</p>
+<p><strong>Beware:</strong> It's a typical mistake to write <code class="prettyprint">static this()</code> instead of <code class="prettyprint">shared static this()</code>. <strong>Don't be a TLS victim.</strong>
+</p>
 </div><a name="Friends-don't-let-friends-use-the-default-struct-postblit"></a><div class="idiom"><a class="permalink" href="#Friends-don't-let-friends-use-the-default-struct-postblit">Link
 </a><h1>Friends don't let friends use the default struct postblit</h1>
 <p>By default D structs are copyable and that copy is just a <code class="prettyprint">.dup</code> verbatim bit copy.<br>Indeed the default struct <a href="http://dlang.org/struct.html">postblit</a> does nothing.
