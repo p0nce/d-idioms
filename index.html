@@ -418,6 +418,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Eponymous-templates">Eponymous templates
 </a><a href="#Extend-a-struct-with-alias-this">Extend a struct with alias this
 </a><a href="#Falsey-values">Falsey values
+</a><a href="#Four-ways-to-use-the-static-keyword-you-may-not-know-about">Four ways to use the static keyword you may not know about
 </a><a href="#Friends-don't-let-friends-use-the-default-struct-postblit">Friends don't let friends use the default struct postblit
 </a><a href="#GC-proof-resource-class">GC-proof resource class
 </a><a href="#Getting-a-method-callbacked-from-C">Getting a method callbacked from C
@@ -876,6 +877,111 @@ assert(*p == 0);
 
 </code></pre><p><a href="http://minas-mina.com/2015/11/17/if-statement/">See this article for more...</a>
 </p>
+</div><a name="Four-ways-to-use-the-static-keyword-you-may-not-know-about"></a><div class="idiom"><a class="permalink" href="#Four-ways-to-use-the-static-keyword-you-may-not-know-about">Link
+</a><h1>Four ways to use the static keyword you may not know about</h1>
+<p>The <code class="prettyprint">static</code> keyword is heavily re-used in the D language. With this uniquely detailed article, you'll learn to recognize the different species of <code class="prettyprint">static</code> in the wild.
+</p>
+<h2> 1. Most obvious: <code class="prettyprint">static</code> member functions and <code class="prettyprint">static</code> data members</h2>
+<p><strong>Like in Java and C++</strong>, you can declare <code class="prettyprint">static</code> data and functions members in a <code class="prettyprint">struct</code> or a <code class="prettyprint">class</code>.<br>They won't be associated with a particular object.
+</p>
+<pre class="prettyprint"><code>class MyClass
+{
+    // A static member variable =&gt; only one exist for all MyClass instances
+    static int instanceCount = 0;
+
+    // A static member function =&gt; does not receive "this"
+    static void incrementCount()
+    {
+        // Can't use "this" here
+        instanceCount += 1;
+    }
+}
+
+void main()
+{
+    import std.stdio;
+    MyClass.incrementCount();
+    writeln(MyClass.instanceCount); // Prints: "1"
+}
+</code></pre><h2> 2. Top-level <code class="prettyprint">static</code> variables and functions</h2>
+<p>This is perhaps the strangest <code class="prettyprint">static</code> abuse. At top-level, <code class="prettyprint">static</code> does <strong>nothing</strong> for variables and function declarations.
+</p>
+<p>Here, a TLS variable:
+</p>
+<pre class="prettyprint"><code>// At top-level
+static int numEngines = 4;          // Accepted. Does nothing.
+</code></pre><p>This is 100% equivalent to:
+</p>
+<pre class="prettyprint"><code>// At top-level.
+int numEngines = 4;                 // The normal way to declare a TLS variable.
+</code></pre><p>Similarly for functions:
+</p>
+<pre class="prettyprint"><code>static int add(int a, int b)        // You can leave "static" out. It does nothing.
+{
+    return a + b;
+}
+</code></pre><p>As the D specification <a href="http://dlang.org/spec/attribute.html#static">says</a>:
+</p>
+<p><em>"Static does not have the additional C meaning of being local to a file. Use the private attribute in D to achieve that."</em>
+</p>
+<p><strong>Leave your C++ knowledge about</strong> <code class="prettyprint">static inline</code> <strong>functions and</strong> <code class="prettyprint">static</code> <strong>top-level variables at the door: doesn't apply here.</strong>
+</p>
+<h2> 3. Nested <code class="prettyprint">static struct</code>, nested <code class="prettyprint">static class</code>, and nested <code class="prettyprint">static</code> functions</h2>
+<p><code class="prettyprint">static</code> can be put before nested <code class="prettyprint">struct</code>, <code class="prettyprint">class</code> or functions.
+</p>
+<p><strong>It means "I don't have a pointer to the outer context"</strong>.
+</p>
+<pre class="prettyprint"><code>import std.stdio;
+
+void main()
+{
+    float contextData;
+
+    struct InternalA
+    {
+        void uglyStuff()
+        {
+            // can access contextData here, and use this.outer
+        }
+    }
+
+    static struct InternalB
+    {
+        void uglyStuff()
+        {
+            // cannot access contextData here, cannot use this.outer
+        }
+    }
+
+    void subFunA()
+    {
+        // can access contextData here
+    }
+
+    static void subFunB()
+    {
+        // cannot access contextData here
+    }
+
+    writeln(typeof(&amp;subFunA).stringof); // Prints: "void delegate()"
+    writeln(typeof(&amp;subFunB).stringof); // Prints: "void function()"
+}
+</code></pre><p><strong>To sum up</strong>, a nested <code class="prettyprint">static struct</code> or <code class="prettyprint">static class</code>:
+</p>
+<ul>
+<li>Cannot access the parent context because it has no <code class="prettyprint">this.outer</code> property,
+</li>
+<li>Might be a bit smaller in memory because <code class="prettyprint">this.outer</code> is a hidden field.
+</li>
+</ul>
+<p>A nested <code class="prettyprint">static</code> function:
+</p>
+<ul>
+<li>Cannot access the parent context because it has no context pointer to the upper frame,
+</li>
+<li>Can fit in a simple <code class="prettyprint">function</code> pointer instead of a <code class="prettyprint">delegate</code> for this reason.
+</li>
+</ul>
 </div><a name="Friends-don't-let-friends-use-the-default-struct-postblit"></a><div class="idiom"><a class="permalink" href="#Friends-don't-let-friends-use-the-default-struct-postblit">Link
 </a><h1>Friends don't let friends use the default struct postblit</h1>
 <p>By default D structs are copyable and that copy is just a <code class="prettyprint">.dup</code> verbatim bit copy.<br>Indeed the default struct <a href="http://dlang.org/struct.html">postblit</a> does nothing.
