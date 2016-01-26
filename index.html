@@ -440,6 +440,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Placement-new-with-emplace">Placement new with emplace
 </a><a href="#Porting-from-C-gotchas">Porting from C gotchas
 </a><a href="#Precise-timestamps-in-milliseconds">Precise timestamps in milliseconds
+</a><a href="#Precomputed-tables-at-compile-time-through-CTFE">Precomputed tables at compile-time through CTFE
 </a><a href="#Qualified-switch-using-with">Qualified switch using with
 </a><a href="#Recursive-Sum-Type-with-matching">Recursive Sum Type with matching
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
@@ -903,7 +904,29 @@ void main()
     MyClass.incrementCount();
     writeln(MyClass.instanceCount); // Prints: "1"
 }
-</code></pre><h2> 2. Top-level <code class="prettyprint">static</code> variables and functions</h2>
+</code></pre><p><strong>Additionally</strong>, <code class="prettyprint">static immutable</code> can be used instead of <code class="prettyprint">enum</code> to force compile-time evaluation of a constant, <strong>while keeping an address.</strong>
+</p>
+<pre class="prettyprint"><code>// This example highlights the difference between "enum" and "static immutable" for constants.
+import std.stdio;
+
+bool amIInCTFE()
+{
+    return __ctfe;
+}
+
+void main()
+{
+    bool                  a = amIInCTFE(); // regular runtime initialization
+    enum bool             b = amIInCTFE(); // forces compile-time evaluation with enum
+    static immutable bool c = amIInCTFE(); // forces compile-time evaluation with static immutable
+
+    writeln(a, " ", &amp;a);   // Prints: "false &lt;address of a&gt;"
+    //writeln(b, " ", &amp;b); // Error: enum declarations have no address
+    writeln(c, " ", &amp;c);   // Prints: "true &lt;address of c&gt;"
+}
+</code></pre><p>This is especially useful for <a href="#Precomputed-tables-at-compile-time-through-CTFE">arrays computed at compile-time</a>: making them <code class="prettyprint">static immutable</code> will create only one "instance" of the array, instead of duplicating them across translation units.
+</p>
+<h2> 2. Top-level <code class="prettyprint">static</code> variables and functions</h2>
 <p>This is perhaps the strangest <code class="prettyprint">static</code> abuse. At top-level, <code class="prettyprint">static</code> does <strong>nothing</strong> for variables and function declarations.
 </p>
 <p>Here, a TLS (Thread Local Storage) variable:
@@ -999,7 +1022,7 @@ void main()
 </p>
 <p>Important: global constructors and global destructors can be placed within a <code class="prettyprint">struct</code> or a <code class="prettyprint">class</code>, where they will be able to initialize <code class="prettyprint">shared</code>, <code class="prettyprint">__gshared</code> or <code class="prettyprint">static</code> <em>members</em>.
 </p>
-<p><strong>Beware:</strong> It's a typical mistake to write <code class="prettyprint">static this()</code> instead of <code class="prettyprint">shared static this()</code>. <strong>Don't be a TLS victim.</strong>
+<p><strong>Beware:</strong> It's a common mistake to write <code class="prettyprint">static this()</code> instead of <code class="prettyprint">shared static this()</code>. <strong>Don't be a TLS victim.</strong>
 </p>
 </div><a name="Friends-don't-let-friends-use-the-default-struct-postblit"></a><div class="idiom"><a class="permalink" href="#Friends-don't-let-friends-use-the-default-struct-postblit">Link
 </a><h1>Friends don't let friends use the default struct postblit</h1>
@@ -1700,7 +1723,35 @@ long getTickMs() nothrow @nogc
     return convClockFreq(MonoTime.currTime.ticks, MonoTime.ticksPerSecond, 1_000);
 }
 
-</code></pre></div><a name="Qualified-switch-using-with"></a><div class="idiom"><a class="permalink" href="#Qualified-switch-using-with">Link
+</code></pre></div><a name="Precomputed-tables-at-compile-time-through-CTFE"></a><div class="idiom"><a class="permalink" href="#Precomputed-tables-at-compile-time-through-CTFE">Link
+</a><h1>Precomputed tables at compile-time through CTFE</h1>
+<p>D compilers provides extensive <a href="https://en.wikipedia.org/wiki/Compile_time_function_execution">Compile-Time Function Execution</a>.<br>This feature allows to easily compute tables at compile-time, without using an external program.
+</p>
+<p>Here is an example from the <a href="https://github.com/d-gamedev-team/gfm">GFM</a> library.
+</p>
+<pre class="prettyprint"><code>static immutable ushort[64] offsettable =
+    (){
+        ushort[64] t;
+        t[] = 1024;        // Fills the table with 1024
+        t[0] = t[32] = 0;
+        return t;
+    }();
+</code></pre><p><strong>What is happening there?</strong>
+</p>
+<ul>
+<li><p><code class="prettyprint">(){   /* body */   }</code> is short syntax for a <code class="prettyprint">delegate</code> literal returning <code class="prettyprint">auto</code> with no argument.
+</p>
+</li>
+<li><p>So, <code class="prettyprint">(){   /* body */   }()</code> means that we call that <code class="prettyprint">delegate</code> immediately.
+</p>
+</li>
+<li><p>the literal is executed at compile-time, as forced by <code class="prettyprint">static immutable</code>.
+</p>
+</li>
+</ul>
+<p>It's important <code class="prettyprint">static immutable</code> is used here instead of just <code class="prettyprint">enum</code>.<br>See the article on the <code class="prettyprint">static</code> keyword for <a href="#Four-ways-to-use-the-static-keyword-you-may-not-know-about">more details</a>.
+</p>
+</div><a name="Qualified-switch-using-with"></a><div class="idiom"><a class="permalink" href="#Qualified-switch-using-with">Link
 </a><h1>Qualified switch using "with"</h1>
 <p>Let's say we have an enum:
 </p>
