@@ -1120,7 +1120,9 @@ a = b; // Bit copy here.
 </p>
 </div><a name="Getting-a-method-callbacked-from-C"></a><div class="idiom"><a class="permalink" href="#Getting-a-method-callbacked-from-C">Link
 </a><h1>Getting a method callbacked from C</h1>
-<p>Most C callbacks allow to specify a "user data" pointer.<br>A common trick is to cast <code class="prettyprint">this</code> into a <code class="prettyprint">void*</code> pointer back and forth, and use it as user data.
+<p><strong>How to get a class method callbacked from C?</strong>
+</p>
+<p>What is needed is a way to pass the <code class="prettyprint">this</code> pointer. Most C callbacks allow to specify a "user data" pointer.<br>A common trick is to cast <code class="prettyprint">this</code> into a <code class="prettyprint">void*</code> pointer back and forth, and use it as user data.
 </p>
 <p>Here is an example with SDL2 logging handler:
 </p>
