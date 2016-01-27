@@ -1068,7 +1068,7 @@ a = b; // Bit copy here.
 <li>warns when the GC call the destructor and then release the resource, which is <em>coincidental correctness</em> and dangerous to rely on.
 </li>
 </ul>
-<p>The general idea is to check why the destructor is called and act accordingly.
+<p>The general idea behind the <strong>GC-proof resource class</strong> is to check why the destructor was called and act accordingly.
 </p>
 <pre class="prettyprint"><code>class MyGCProofResource
 {
@@ -1082,20 +1082,13 @@ a = b; // Bit copy here.
 
     ~this()
     {
-        // Such a destructor must support repeated calls for
-        // the case when it is first called by destroy() and
-        // then called by the GC later
-        if (handle != null)
-        {
-            // Important bit.
-            // Here we verify that the GC isn't responsible
-            // for releasing the resource
-            debug ensureNotInGC("MyResource");
+        // Important bit.
+        // Here we verify that the GC isn't responsible
+        // for releasing the resource, which is dangerous.
+        debug ensureNotInGC("MyResource");
 
-            // release resource
-            free_handle(handle);
-            handle = null;
-        }
+        // release resource
+        free_handle(handle);
     }
 }
 </code></pre><p>The <code class="prettyprint">ensureNotInGC()</code> function can be implemented like this:
@@ -1121,7 +1114,9 @@ a = b; // Bit copy here.
         assert(false); // crash
     }
 }
-</code></pre><p>This idiom was first introduced in the <a href="https://github.com/d-gamedev-team/gfm">GFM</a> library.
+</code></pre><p>You'll get a clear message whenever you rely on the GC to release resources.
+</p>
+<p>This idiom was first introduced in the <a href="https://github.com/d-gamedev-team/gfm">GFM</a> library.
 </p>
 </div><a name="Getting-a-method-callbacked-from-C"></a><div class="idiom"><a class="permalink" href="#Getting-a-method-callbacked-from-C">Link
 </a><h1>Getting a method callbacked from C</h1>

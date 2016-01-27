@@ -9,7 +9,7 @@ But there is a way to make a class holding a resource that:
 - works with manual release (`object.destroy`)
 - warns when the GC call the destructor and then release the resource, which is _coincidental correctness_ and dangerous to rely on.
 
-The general idea is to check why the destructor is called and act accordingly.
+The general idea behind the **GC-proof resource class** is to check why the destructor was called and act accordingly.
 
 ```
 class MyGCProofResource
@@ -24,20 +24,13 @@ class MyGCProofResource
 
     ~this()
     {
-        // Such a destructor must support repeated calls for
-        // the case when it is first called by destroy() and
-        // then called by the GC later
-        if (handle != null)
-        {
-            // Important bit.
-            // Here we verify that the GC isn't responsible
-            // for releasing the resource
-            debug ensureNotInGC("MyResource");
+        // Important bit.
+        // Here we verify that the GC isn't responsible
+        // for releasing the resource, which is dangerous.
+        debug ensureNotInGC("MyResource");
 
-            // release resource
-            free_handle(handle);
-            handle = null;
-        }
+        // release resource
+        free_handle(handle);
     }
 }
 ```
@@ -67,6 +60,8 @@ void ensureNotInGC(string resourceName) nothrow
     }
 }
 ```
+
+You'll get a clear message whenever you rely on the GC to release resources.
 
 This idiom was first introduced in the [GFM](https://github.com/d-gamedev-team/gfm) library.
 
