@@ -34,28 +34,8 @@ void main()
 
 **Additionally**, `static immutable` can be used instead of `enum` to force compile-time evaluation of a constant, **while keeping an address.**
 
-```
-// This example highlights the difference between "enum" and "static immutable" for constants.
-import std.stdio;
+This is especially useful for [arrays computed at compile-time](#Precomputed-tables-at-compile-time-through-CTFE).
 
-bool amIInCTFE()
-{
-    return __ctfe;
-}
-
-void main()
-{
-    bool                  a = amIInCTFE(); // regular runtime initialization
-    enum bool             b = amIInCTFE(); // forces compile-time evaluation with enum
-    static immutable bool c = amIInCTFE(); // forces compile-time evaluation with static immutable
-
-    writeln(a, " ", &a);   // Prints: "false <address of a>"
-    //writeln(b, " ", &b); // Error: enum declarations have no address
-    writeln(c, " ", &c);   // Prints: "true <address of c>"
-}
-```
-
-This is especially useful for [arrays computed at compile-time](#Precomputed-tables-at-compile-time-through-CTFE): making them `static immutable` will create only one "instance" of the array, instead of duplicating them across translation units.
 
 ## 2. Top-level `static` variables and functions
 

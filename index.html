@@ -906,25 +906,7 @@ void main()
 }
 </code></pre><p><strong>Additionally</strong>, <code class="prettyprint">static immutable</code> can be used instead of <code class="prettyprint">enum</code> to force compile-time evaluation of a constant, <strong>while keeping an address.</strong>
 </p>
-<pre class="prettyprint"><code>// This example highlights the difference between "enum" and "static immutable" for constants.
-import std.stdio;
-
-bool amIInCTFE()
-{
-    return __ctfe;
-}
-
-void main()
-{
-    bool                  a = amIInCTFE(); // regular runtime initialization
-    enum bool             b = amIInCTFE(); // forces compile-time evaluation with enum
-    static immutable bool c = amIInCTFE(); // forces compile-time evaluation with static immutable
-
-    writeln(a, " ", &amp;a);   // Prints: "false &lt;address of a&gt;"
-    //writeln(b, " ", &amp;b); // Error: enum declarations have no address
-    writeln(c, " ", &amp;c);   // Prints: "true &lt;address of c&gt;"
-}
-</code></pre><p>This is especially useful for <a href="#Precomputed-tables-at-compile-time-through-CTFE">arrays computed at compile-time</a>: making them <code class="prettyprint">static immutable</code> will create only one "instance" of the array, instead of duplicating them across translation units.
+<p>This is especially useful for <a href="#Precomputed-tables-at-compile-time-through-CTFE">arrays computed at compile-time</a>.
 </p>
 <h2> 2. Top-level <code class="prettyprint">static</code> variables and functions</h2>
 <p>This is perhaps the strangest <code class="prettyprint">static</code> abuse. At top-level, <code class="prettyprint">static</code> does <strong>nothing</strong> for variables and function declarations.
@@ -1725,9 +1707,9 @@ long getTickMs() nothrow @nogc
 
 </code></pre></div><a name="Precomputed-tables-at-compile-time-through-CTFE"></a><div class="idiom"><a class="permalink" href="#Precomputed-tables-at-compile-time-through-CTFE">Link
 </a><h1>Precomputed tables at compile-time through CTFE</h1>
-<p>D compilers provides extensive <a href="https://en.wikipedia.org/wiki/Compile_time_function_execution">Compile-Time Function Execution</a>.<br>This feature allows to easily compute tables at compile-time, without using an external program.
+<p>D compilers provides extensive <a href="https://en.wikipedia.org/wiki/Compile_time_function_execution">Compile-Time Function Execution</a>.<br>This feature allows to easily compute almost anything at compile-time, without using an external program.
 </p>
-<p>Here is an example from the <a href="https://github.com/d-gamedev-team/gfm">GFM</a> library.
+<p>Here is an example of a precomputed array from the <a href="https://github.com/d-gamedev-team/gfm">GFM</a> library.
 </p>
 <pre class="prettyprint"><code>static immutable ushort[64] offsettable =
     (){
@@ -1745,11 +1727,61 @@ long getTickMs() nothrow @nogc
 <li><p>So, <code class="prettyprint">(){   /* body */   }()</code> means that we call that <code class="prettyprint">delegate</code> immediately.
 </p>
 </li>
-<li><p>the literal is executed at compile-time, as forced by <code class="prettyprint">static immutable</code>.
+<li><p>the literal is executed at compile-time, as enforced by <code class="prettyprint">static immutable</code>.
 </p>
 </li>
 </ul>
-<p>It's important <code class="prettyprint">static immutable</code> is used here instead of just <code class="prettyprint">enum</code>.<br>See the article on the <code class="prettyprint">static</code> keyword for <a href="#Four-ways-to-use-the-static-keyword-you-may-not-know-about">more details</a>.
+<p>But why not use <code class="prettyprint">enum</code> for this purpose?
+</p>
+<h2> If you must remember one rule from this article</h2>
+<p><strong>For large constants, prefer using</strong> <code class="prettyprint">static immutable</code> <strong>over</strong> <code class="prettyprint">enum</code><strong>.</strong>
+</p>
+<p>It's important that <code class="prettyprint">static immutable</code> is used in the previous example instead of just <code class="prettyprint">enum</code>. This will create a constant with an address.
+</p>
+<p><code class="prettyprint">enum</code> <strong> creates a compile-time only construct.</strong><br><code class="prettyprint">static immutable</code> <strong> actually puts it in the static data segment.</strong>
+</p>
+<pre class="prettyprint"><code>// This example highlights the difference between "enum" and "static immutable" for constants.
+import std.stdio;
+
+bool amIInCTFE()
+{
+    return __ctfe;
+}
+
+void main()
+{
+    bool                  a = amIInCTFE(); // regular runtime initialization
+    enum bool             b = amIInCTFE(); // forces compile-time evaluation with enum
+    static immutable bool c = amIInCTFE(); // forces compile-time evaluation with static immutable
+
+    writeln(a, " ", &amp;a);   // Prints: "false &lt;address of a&gt;"
+    //writeln(b, " ", &amp;b); // Error: enum declarations have no address
+    writeln(c, " ", &amp;c);   // Prints: "true &lt;address of c&gt;"
+}
+</code></pre><p>Using <code class="prettyprint">enum</code> would duplicate the constant at each call-site, which is inefficient for arrays and may even lead to allocations on use point in the same way than array literals allocate!
+</p>
+<p>This pre-computed fibonacci example fails to compile:
+</p>
+<pre class="prettyprint"><code>enum int[] fibTable =
+    (){
+        int[] t;
+        t ~= 1;
+        t ~= 1;
+        int precomputedValues = 128;
+        foreach(i; 2..precomputedValues)
+            t ~= t[i - 1] + t[i - 2];
+        return t;
+    }();
+
+
+int fibonacci(int n) pure @nogc
+{
+    if (n &lt; fibTable.length)  // Error: array literal in @nogc function fibonacci may cause GC allocation
+        return fibTable[n];
+    else
+        return fibonacci(n - 1) + fibonacci(n - 2);
+}
+</code></pre><p>For all the other uses of <code class="prettyprint">static</code>, read <a href="#Four-ways-to-use-the-static-keyword-you-may-not-know-about">this article</a>.
 </p>
 </div><a name="Qualified-switch-using-with"></a><div class="idiom"><a class="permalink" href="#Qualified-switch-using-with">Link
 </a><h1>Qualified switch using "with"</h1>
