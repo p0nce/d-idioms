@@ -456,6 +456,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#The-trouble-with-class-destructors">The trouble with class destructors
 </a><a href="#The-truth-about-shared">The truth about shared
 </a><a href="#Throwing-despite-@nogc">Throwing despite @nogc
+</a><a href="#Trailing-commas">Trailing commas
 </a><a href="#Unrecoverable-vs-recoverable-errors">Unrecoverable vs recoverable errors
 </a><a href="#Using-std.typecons.Flag-like-a-pro">Using std.typecons.Flag like a pro
 </a><a href="#Voldemort-types">Voldemort types
@@ -2133,6 +2134,47 @@ You can also throw a mutable exception and catch it as immutable(Exception),
 the whole thing is completely unintegrated with D2's type system.
 Again, it doesn't matter if you catch it or not because the unwinding code will mutate it.
 It's just straight up bad code.
+</code></pre></div><a name="Trailing-commas"></a><div class="idiom"><a class="permalink" href="#Trailing-commas">Link
+</a><h1>Trailing commas</h1>
+<p>D accepts trailing commas in every comma-separated list of things.
+</p>
+<pre class="prettyprint"><code>// Function declarations
+void doNothing(
+        int unusedA,
+        int unusedB,
+    )
+{
+}
+
+// enum declarations
+enum
+{
+    whatever,
+    yolo,
+}
+
+// Array literals
+static immutable double[] valuesOfPI =
+[
+    22.0 / 7.0,
+];
+
+void main()
+{
+    // Function calls
+    doNothing(
+       0,
+       31,
+    );
+
+    // AA literals
+    string[int] severities =
+    [
+         0: "info",
+         1: "warning",
+         2: "error",
+    ];
+}
 </code></pre></div><a name="Unrecoverable-vs-recoverable-errors"></a><div class="idiom"><a class="permalink" href="#Unrecoverable-vs-recoverable-errors">Link
 </a><h1>Unrecoverable vs recoverable errors</h1>
 <p><em>This item is language-agnostic and perhaps the most widely applicable tip on this page.</em>
