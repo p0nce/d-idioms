@@ -17,3 +17,10 @@ which perform 2 AA lookups prefer:
 The `.get` builtin property can also be used. It provides a default value when the key doesn't exist.
 
     aa.get(key, defaultValue);
+
+
+## Reminder: AAs are hashmaps, not balanced trees!
+
+Associative arrays in D are akin to C++'s `std::unordered_map`, **not** `std::map`.
+
+See: [https://dlang.org/spec/hash-map.html](https://dlang.org/spec/hash-map.html)

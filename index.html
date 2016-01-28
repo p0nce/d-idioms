@@ -411,12 +411,14 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Capturing-with-regular-expressions">Capturing with regular expressions
 </a><a href="#Custom-format()-for-builtin-types">Custom format() for builtin types
 </a><a href="#D-online-resources">D online resources
+</a><a href="#Design-by-Introspection">Design by Introspection
 </a><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
 </a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
 </a><a href="#Enumerate-fields-with-__traits(allMembers)">Enumerate fields with __traits(allMembers)
 </a><a href="#Eponymous-templates">Eponymous templates
 </a><a href="#Extend-a-struct-with-alias-this">Extend a struct with alias this
 </a><a href="#Falsey-values">Falsey values
+</a><a href="#Four-ways-to-use-the-static-keyword-you-may-not-know-about">Four ways to use the static keyword you may not know about
 </a><a href="#Friends-don't-let-friends-use-the-default-struct-postblit">Friends don't let friends use the default struct postblit
 </a><a href="#GC-proof-resource-class">GC-proof resource class
 </a><a href="#Getting-a-method-callbacked-from-C">Getting a method callbacked from C
@@ -438,6 +440,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Placement-new-with-emplace">Placement new with emplace
 </a><a href="#Porting-from-C-gotchas">Porting from C gotchas
 </a><a href="#Precise-timestamps-in-milliseconds">Precise timestamps in milliseconds
+</a><a href="#Precomputed-tables-at-compile-time-through-CTFE">Precomputed tables at compile-time through CTFE
 </a><a href="#Qualified-switch-using-with">Qualified switch using with
 </a><a href="#Recursive-Sum-Type-with-matching">Recursive Sum Type with matching
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
@@ -447,11 +450,15 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
 </a><a href="#So-what-does--release-do,-exactly&#63;">So what does -release do, exactly&#63;
 </a><a href="#Static-arrays-are-value-types">Static arrays are value types
+</a><a href="#String-interpolation-as-a-library">String interpolation as a library
+</a><a href="#The-importance-of-being-pure">The importance of being pure
 </a><a href="#The-impossible-real-time-thread">The impossible real-time thread
 </a><a href="#The-trouble-with-class-destructors">The trouble with class destructors
 </a><a href="#The-truth-about-shared">The truth about shared
 </a><a href="#Throwing-despite-@nogc">Throwing despite @nogc
+</a><a href="#Trailing-commas">Trailing commas
 </a><a href="#Unrecoverable-vs-recoverable-errors">Unrecoverable vs recoverable errors
+</a><a href="#Using-std.typecons.Flag-like-a-pro">Using std.typecons.Flag like a pro
 </a><a href="#Voldemort-types">Voldemort types
 </a><a href="#What-is-the-difference-between-out-and-ref-parameters&#x3F">What is the difference between out and ref parameters&#x3F
 </a><a href="#Which-book-should-I-read&#63;">Which book should I read&#63;
@@ -543,12 +550,16 @@ assert(arr == [1,10]);
 <p><strong>It does not mean </strong> <em>unreachable code</em><strong>, it means </strong> <em>crash now</em> <strong> and the compiler will never remove it.</strong>
 </p>
 <h2> Always-on assertion</h2>
-<p>Since <code class="prettyprint">assert(false)</code> never get removed, it can be used to create persistent regular assertions.
+<p>Since <code class="prettyprint">assert(false)</code> never get removed, it can be used to create a persistent assertion.
 </p>
 <pre class="prettyprint"><code>    if (!cond)
         assert(false); // will never be removed by the compiler in -release builds
 
-</code></pre></div><a name="Bypassing-@nogc"></a><div class="idiom"><a class="permalink" href="#Bypassing-@nogc">Link
+</code></pre><p><code class="prettyprint">assert(false)</code> is fit for finding bugs, <a href="#Unrecoverable-vs-recoverable-errors">but not for input errors</a>. In this case, prefer the use of <code class="prettyprint">std.exception.enforce</code>.
+</p>
+<p>See: <a href="http://dlang.org/phobos/std_exception.html#.enforce">http://dlang.org/phobos/std_exception.html#.enforce</a>
+</p>
+</div><a name="Bypassing-@nogc"></a><div class="idiom"><a class="permalink" href="#Bypassing-@nogc">Link
 </a><h1>Bypassing @nogc</h1>
 <p><code class="prettyprint">@nogc</code> is a function attribute which ensures a function never allocates through the GC.
 </p>
@@ -677,6 +688,29 @@ void main(string[] args)
 <li><a href="https://github.com/PhilippeSigaud/D-templates-tutorial/raw/master/D-templates-tutorial.pdf">D template tutorial by Philippe Sigaud</a>
 </li>
 </ul>
+</div><a name="Design-by-Introspection"></a><div class="idiom"><a class="permalink" href="#Design-by-Introspection">Link
+</a><h1>Design by Introspection</h1>
+<h2> What is Design by Introspection?</h2>
+<p>Coined and promoted by Andrei Alexandrescu, <strong>Design by Introspection</strong> (also known as "DbI") means something pretty specific: instead of multiplying the number of named concepts in generic code, let's <strong>inspect types at compile-time for capabilities</strong>.
+</p>
+<p>An example is Phobos' input ranges that can be <a href="http://dlang.org/phobos/std_range_primitives.html#.isInfinite">infinite</a> regardless of the particular compile-time concept they follow.
+</p>
+<p>In the D language, such duck-typing at compile-time seems to unlock most interesting designs.
+</p>
+<h2> Code examples</h2>
+<ul>
+<li><p><code class="prettyprint">std.range.primitives</code>: <a href="http://dlang.org/phobos/std_range_primitives.html">http://dlang.org/phobos/std<em>range</em>primitives.html</a>
+</p>
+</li>
+<li><p><code class="prettyprint">std.experimental.allocator</code>: <a href="http://dlang.org/phobos/std_experimental_allocator.html">http://dlang.org/phobos/std<em>experimental</em>allocator.html</a>
+</p>
+</li>
+</ul>
+<h2> Where do I start?</h2>
+<p>There is currently not much written on this programming technique.
+</p>
+<p>The best resource on the topic is probably this talk by Alexandrescu: <a href="https://www.youtube.com/watch?v=LIb3L4vKZ7U">std::allocator Is to Allocation what std::vector is to Vexation</a>.
+</p>
 </div><a name="Embed-a-dynamic-library-in-an-executable"></a><div class="idiom"><a class="permalink" href="#Embed-a-dynamic-library-in-an-executable">Link
 </a><h1>Embed a dynamic library in an executable</h1>
 <p>Let's say we want to distribute a standalone executable that doesn't need any installation.<br>Here we'll see how to embed SDL.dll into an executable.
@@ -846,6 +880,134 @@ assert(*p == 0);
 
 </code></pre><p><a href="http://minas-mina.com/2015/11/17/if-statement/">See this article for more...</a>
 </p>
+</div><a name="Four-ways-to-use-the-static-keyword-you-may-not-know-about"></a><div class="idiom"><a class="permalink" href="#Four-ways-to-use-the-static-keyword-you-may-not-know-about">Link
+</a><h1>Four ways to use the static keyword you may not know about</h1>
+<p>The <code class="prettyprint">static</code> keyword is heavily re-used in the D language. With this uniquely detailed article, you'll learn to recognize the different species of <code class="prettyprint">static</code> in the wild.
+</p>
+<h2> 1. Most obvious: <code class="prettyprint">static</code> member functions and <code class="prettyprint">static</code> data members</h2>
+<p><strong>Like in Java and C++</strong>, you can declare <code class="prettyprint">static</code> data and functions members in a <code class="prettyprint">struct</code> or a <code class="prettyprint">class</code>.<br>They won't be associated with a particular object.
+</p>
+<pre class="prettyprint"><code>class MyClass
+{
+    // A static member variable =&gt; only one exist for all MyClass instances
+    static int instanceCount = 0;
+
+    // A static member function =&gt; does not receive "this"
+    static void incrementCount()
+    {
+        // Can't use "this" here
+        instanceCount += 1;
+    }
+}
+
+void main()
+{
+    import std.stdio;
+    MyClass.incrementCount();
+    writeln(MyClass.instanceCount); // Prints: "1"
+}
+</code></pre><p><strong>Additionally</strong>, <code class="prettyprint">static immutable</code> can be used instead of <code class="prettyprint">enum</code> to force compile-time evaluation of a constant, <strong>while keeping an address.</strong>
+</p>
+<p>This is especially useful for <a href="#Precomputed-tables-at-compile-time-through-CTFE">arrays computed at compile-time</a>.
+</p>
+<h2> 2. Top-level <code class="prettyprint">static</code> variables and functions</h2>
+<p>This is perhaps the strangest <code class="prettyprint">static</code> abuse. At top-level, <code class="prettyprint">static</code> does <strong>nothing</strong> for variables and function declarations.
+</p>
+<p>Here, a TLS (Thread Local Storage) variable:
+</p>
+<pre class="prettyprint"><code>// At top-level
+static int numEngines = 4;          // Accepted. Does nothing.
+</code></pre><p>This is 100% equivalent to:
+</p>
+<pre class="prettyprint"><code>// At top-level.
+int numEngines = 4;                 // The normal way to declare a TLS variable.
+</code></pre><p>Similarly for functions:
+</p>
+<pre class="prettyprint"><code>static int add(int a, int b)        // You can leave out "static". It does nothing.
+{
+    return a + b;
+}
+</code></pre><p>As the D specification <a href="http://dlang.org/spec/attribute.html#static">says</a>:
+</p>
+<p><em>"Static does not have the additional C meaning of being local to a file. Use the private attribute in D to achieve that."</em>
+</p>
+<p><strong>Leave your C++ knowledge about</strong> <code class="prettyprint">static inline</code> <strong>functions and</strong> <code class="prettyprint">static</code> <strong>top-level variables at the door: it doesn't apply here.</strong>
+</p>
+<h2> 3. Nested <code class="prettyprint">static struct</code>, nested <code class="prettyprint">static class</code>, and nested <code class="prettyprint">static</code> functions</h2>
+<p><code class="prettyprint">static</code> can be put before nested <code class="prettyprint">struct</code>, <code class="prettyprint">class</code> or functions.
+</p>
+<p><strong>It means "I don't have a pointer to the outer context"</strong>.
+</p>
+<pre class="prettyprint"><code>import std.stdio;
+
+void main()
+{
+    float contextData;
+
+    struct InternalA
+    {
+        void uglyStuff()
+        {
+            // can access contextData here, and use this.outer
+        }
+    }
+
+    static struct InternalB
+    {
+        void uglyStuff()
+        {
+            // cannot access contextData here, cannot use this.outer
+        }
+    }
+
+    void subFunA()
+    {
+        // can access contextData here
+    }
+
+    static void subFunB()
+    {
+        // cannot access contextData here
+    }
+
+    writeln(typeof(&amp;subFunA).stringof); // Prints: "void delegate()"
+    writeln(typeof(&amp;subFunB).stringof); // Prints: "void function()"
+}
+</code></pre><p><strong>To sum up</strong>, a nested <code class="prettyprint">static struct</code> or <code class="prettyprint">static class</code>:
+</p>
+<ul>
+<li>Cannot access the parent context because it has no <code class="prettyprint">this.outer</code> property,
+</li>
+<li>Might be a bit smaller in memory because <code class="prettyprint">this.outer</code> is a hidden field.
+</li>
+</ul>
+<p>A nested <code class="prettyprint">static</code> function:
+</p>
+<ul>
+<li>Cannot access the parent context because it has no context pointer to the upper frame,
+</li>
+<li>Can fit in a simple <code class="prettyprint">function</code> pointer instead of a <code class="prettyprint">delegate</code> for this reason.
+</li>
+</ul>
+<h2> 4. Global constructors and global destructors</h2>
+<p>Arguably the most important <code class="prettyprint">static</code> use out of the four we've listed.
+</p>
+<h3> <em>Thread-local</em> global constructors <code class="prettyprint">static this()</code>:</h3>
+<p>Called when a thread is registered to the D runtime. <strong>Typically used to initialize TLS variables.</strong>
+</p>
+<h3> <em>Thread-local</em> global destructor <code class="prettyprint">static ~this()</code>:</h3>
+<p>Called when a thread is unregistered to the D runtime. <strong>Typically used to finalize TLS variables.</strong>
+</p>
+<h3> Global constructors <code class="prettyprint">shared static this()</code>:</h3>
+<p>Called when the D runtime is initialized. <strong>Typically used to initialize</strong> <code class="prettyprint">shared</code> <strong>or</strong> <code class="prettyprint">__gshared</code> <strong>variables</strong>, for example in <a href="https://github.com/DerelictOrg">Derelict</a>.
+</p>
+<h3> Global destructor <code class="prettyprint">shared static ~this()</code>:</h3>
+<p>Called when the D runtime is finalized. <strong>Typically used to finalize</strong> <code class="prettyprint">shared</code> <strong>or</strong> <code class="prettyprint">__gshared</code> <strong>variables.</strong>
+</p>
+<p>Important: global constructors and global destructors can be placed within a <code class="prettyprint">struct</code> or a <code class="prettyprint">class</code>, where they will be able to initialize <code class="prettyprint">shared</code>, <code class="prettyprint">__gshared</code> or <code class="prettyprint">static</code> <em>members</em>.
+</p>
+<p><strong>Beware:</strong> It's a common mistake to write <code class="prettyprint">static this()</code> instead of <code class="prettyprint">shared static this()</code>. <strong>Don't be a TLS victim.</strong>
+</p>
 </div><a name="Friends-don't-let-friends-use-the-default-struct-postblit"></a><div class="idiom"><a class="permalink" href="#Friends-don't-let-friends-use-the-default-struct-postblit">Link
 </a><h1>Friends don't let friends use the default struct postblit</h1>
 <p>By default D structs are copyable and that copy is just a <code class="prettyprint">.dup</code> verbatim bit copy.<br>Indeed the default struct <a href="http://dlang.org/struct.html">postblit</a> does nothing.
@@ -908,7 +1070,7 @@ a = b; // Bit copy here.
 <li>warns when the GC call the destructor and then release the resource, which is <em>coincidental correctness</em> and dangerous to rely on.
 </li>
 </ul>
-<p>The general idea is to check why the destructor is called and act accordingly.
+<p>The general idea behind the <strong>GC-proof resource class</strong> is to check why the destructor was called and act accordingly.
 </p>
 <pre class="prettyprint"><code>class MyGCProofResource
 {
@@ -922,20 +1084,13 @@ a = b; // Bit copy here.
 
     ~this()
     {
-        // Such a destructor must support repeated calls for
-        // the case when it is first called by destroy() and
-        // then called by the GC later
-        if (handle != null)
-        {
-            // Important bit.
-            // Here we verify that the GC isn't responsible
-            // for releasing the resource
-            debug ensureNotInGC("MyResource");
+        // Important bit.
+        // Here we verify that the GC isn't responsible
+        // for releasing the resource, which is dangerous.
+        debug ensureNotInGC("MyResource");
 
-            // release resource
-            free_handle(handle);
-            handle = null;
-        }
+        // release resource
+        free_handle(handle);
     }
 }
 </code></pre><p>The <code class="prettyprint">ensureNotInGC()</code> function can be implemented like this:
@@ -961,11 +1116,15 @@ a = b; // Bit copy here.
         assert(false); // crash
     }
 }
-</code></pre><p>This idiom was first introduced in the <a href="https://github.com/d-gamedev-team/gfm">GFM</a> library.
+</code></pre><p>You'll get a clear message whenever you rely on the GC to release resources.
+</p>
+<p>This idiom was first introduced in the <a href="https://github.com/d-gamedev-team/gfm">GFM</a> library.
 </p>
 </div><a name="Getting-a-method-callbacked-from-C"></a><div class="idiom"><a class="permalink" href="#Getting-a-method-callbacked-from-C">Link
 </a><h1>Getting a method callbacked from C</h1>
-<p>Most C callbacks allow to specify a "user data" pointer.<br>A common trick is to cast <code class="prettyprint">this</code> into a <code class="prettyprint">void*</code> pointer back and forth, and use it as user data.
+<p><strong>How to get a class method callbacked from C?</strong>
+</p>
+<p>What is needed is a way to pass the <code class="prettyprint">this</code> pointer. Most C callbacks allow to specify a "user data" pointer.<br>A common trick is to cast <code class="prettyprint">this</code> into a <code class="prettyprint">void*</code> pointer back and forth, and use it as user data.
 </p>
 <p>Here is an example with SDL2 logging handler:
 </p>
@@ -1369,7 +1528,12 @@ ptr ? *ptr : ValueType.init;
 </code></pre><p>The <code class="prettyprint">.get</code> builtin property can also be used. It provides a default value when the key doesn't exist.
 </p>
 <pre class="prettyprint"><code>aa.get(key, defaultValue);
-</code></pre></div><a name="Patching-a-library-available-on-the-DUB-registry"></a><div class="idiom"><a class="permalink" href="#Patching-a-library-available-on-the-DUB-registry">Link
+</code></pre><h2> Reminder: AAs are hashmaps, not balanced trees!</h2>
+<p>Associative arrays in D are akin to C++'s <code class="prettyprint">std::unordered_map</code>, <strong>not</strong> <code class="prettyprint">std::map</code>.
+</p>
+<p>See: <a href="https://dlang.org/spec/hash-map.html">https://dlang.org/spec/hash-map.html</a>
+</p>
+</div><a name="Patching-a-library-available-on-the-DUB-registry"></a><div class="idiom"><a class="permalink" href="#Patching-a-library-available-on-the-DUB-registry">Link
 </a><h1>Patching a library available on the DUB registry</h1>
 <p>How to patch a <a href="http://code.dlang.org/">DUB</a> library with minimal hassle for users?
 </p>
@@ -1540,7 +1704,85 @@ long getTickMs() nothrow @nogc
     return convClockFreq(MonoTime.currTime.ticks, MonoTime.ticksPerSecond, 1_000);
 }
 
-</code></pre></div><a name="Qualified-switch-using-with"></a><div class="idiom"><a class="permalink" href="#Qualified-switch-using-with">Link
+</code></pre></div><a name="Precomputed-tables-at-compile-time-through-CTFE"></a><div class="idiom"><a class="permalink" href="#Precomputed-tables-at-compile-time-through-CTFE">Link
+</a><h1>Precomputed tables at compile-time through CTFE</h1>
+<p>D compilers provides extensive <a href="https://en.wikipedia.org/wiki/Compile_time_function_execution">Compile-Time Function Execution</a>.<br>This feature allows to easily compute almost anything at compile-time, without using an external program.
+</p>
+<p>Here is an example of a precomputed array from the <a href="https://github.com/d-gamedev-team/gfm">GFM</a> library.
+</p>
+<pre class="prettyprint"><code>static immutable ushort[64] offsettable =
+    (){
+        ushort[64] t;
+        t[] = 1024;        // Fills the table with 1024
+        t[0] = t[32] = 0;
+        return t;
+    }();
+</code></pre><p><strong>What is happening there?</strong>
+</p>
+<ul>
+<li><p><code class="prettyprint">(){   /* body */   }</code> is short syntax for a <code class="prettyprint">delegate</code> literal returning <code class="prettyprint">auto</code> with no argument.
+</p>
+</li>
+<li><p>So, <code class="prettyprint">(){   /* body */   }()</code> means that we call that <code class="prettyprint">delegate</code> immediately.
+</p>
+</li>
+<li><p>the literal is executed at compile-time, as enforced by <code class="prettyprint">static immutable</code>.
+</p>
+</li>
+</ul>
+<p>But why not use <code class="prettyprint">enum</code> for this purpose?
+</p>
+<h2> If you must remember one rule from this article</h2>
+<p><strong>For large constants, prefer using</strong> <code class="prettyprint">static immutable</code> <strong>over</strong> <code class="prettyprint">enum</code><strong>.</strong>
+</p>
+<p>It's important that <code class="prettyprint">static immutable</code> is used in the previous example instead of just <code class="prettyprint">enum</code>. This will create a constant with an address.
+</p>
+<p><code class="prettyprint">enum</code> <strong> creates a compile-time only construct.</strong><br><code class="prettyprint">static immutable</code> <strong> actually puts it in the static data segment.</strong>
+</p>
+<pre class="prettyprint"><code>// This example highlights the difference between "enum" and "static immutable" for constants.
+import std.stdio;
+
+bool amIInCTFE()
+{
+    return __ctfe;
+}
+
+void main()
+{
+    bool                  a = amIInCTFE(); // regular runtime initialization
+    enum bool             b = amIInCTFE(); // forces compile-time evaluation with enum
+    static immutable bool c = amIInCTFE(); // forces compile-time evaluation with static immutable
+
+    writeln(a, " ", &amp;a);   // Prints: "false &lt;address of a&gt;"
+    //writeln(b, " ", &amp;b); // Error: enum declarations have no address
+    writeln(c, " ", &amp;c);   // Prints: "true &lt;address of c&gt;"
+}
+</code></pre><p>Using <code class="prettyprint">enum</code> would duplicate the constant at each call-site, which is inefficient for arrays and may even lead to allocations on use point in the same way than array literals allocate!
+</p>
+<p>This pre-computed fibonacci example fails to compile:
+</p>
+<pre class="prettyprint"><code>enum int[] fibTable =
+    (){
+        int[] t;
+        t ~= 1;
+        t ~= 1;
+        int precomputedValues = 128;
+        foreach(i; 2..precomputedValues)
+            t ~= t[i - 1] + t[i - 2];
+        return t;
+    }();
+
+
+int fibonacci(int n) pure @nogc
+{
+    if (n &lt; fibTable.length)  // Error: array literal in @nogc function fibonacci may cause GC allocation
+        return fibTable[n];
+    else
+        return fibonacci(n - 1) + fibonacci(n - 2);
+}
+</code></pre><p>For all the other uses of <code class="prettyprint">static</code>, read <a href="#Four-ways-to-use-the-static-keyword-you-may-not-know-about">this article</a>.
+</p>
+</div><a name="Qualified-switch-using-with"></a><div class="idiom"><a class="permalink" href="#Qualified-switch-using-with">Link
 </a><h1>Qualified switch using "with"</h1>
 <p>Let's say we have an enum:
 </p>
@@ -1706,6 +1948,8 @@ writeln(decChars.capacity);              // outputs non-zero value now that decC
 </ul>
 <p>See: <a href="http://dlang.org/dmd-windows.html#switch-release">http://dlang.org/dmd-windows.html#switch-release</a>
 </p>
+<p><strong>TRIVIA:</strong> Regardless of the use of <code class="prettyprint">-release</code>, assertions are always on whenever the <code class="prettyprint">-unittest</code> flag is passed to the compiler. This is the sort of special case that breathes life in this very page!
+</p>
 </div><a name="Static-arrays-are-value-types"></a><div class="idiom"><a class="permalink" href="#Static-arrays-are-value-types">Link
 </a><h1>Static arrays are value types</h1>
 <p>It's important to note that static arrays in D are value types.
@@ -1714,24 +1958,86 @@ writeln(decChars.capacity);              // outputs non-zero value now that decC
 {
     arr[] += 4;           // Only the local version is modified.
 }
-int[16] a;
-addFour(a);               // a passed by value on the stack, not by pointer.
+
+void main()
+{
+    int[16] a;
+    addFour(a);               // a passed by value on the stack, not by pointer.
+}
 </code></pre><p>That makes such declaration a trap when porting functions from C or C++.
 </p>
+<h2> Static arrays convert implicitely into slices!</h2>
 <p>To pass static arrays by reference, either write a function taking a slice or use ref.
 </p>
 <pre class="prettyprint"><code>void addFive(ref int[16] arr)
 {
     arr[] += 5;         // Caller parameter modified.
 }
+
 void addSix(int[] arr)
 {
     arr[] += 6;         // Caller parameter modified.
 }
-int[16] a;
-addFive(a);
-addSix(a);              // Static arrays implicitely convertible to slices.
-</code></pre></div><a name="The-impossible-real-time-thread"></a><div class="idiom"><a class="permalink" href="#The-impossible-real-time-thread">Link
+
+void main()
+{
+    int[16] a;
+    addFive(a);         // Works, a is passed by reference
+    addSix(a);          // Works, a is converted into a slice referencing the same data
+}
+</code></pre></div><a name="String-interpolation-as-a-library"></a><div class="idiom"><a class="permalink" href="#String-interpolation-as-a-library">Link
+</a><h1>String interpolation as a library</h1>
+<p>D doesn't have <a href="https://en.wikipedia.org/wiki/String_interpolation">string interpolation</a> built in the language like PHP, Perl or Python.<br>Yet you can get a similar feature using the <code class="prettyprint">scriptlike</code> library from Nick Sabalausky.
+</p>
+<pre class="prettyprint"><code>import scriptlike;
+int num = 21;
+writeln( mixin(interp!"The number ${num} doubled is ${num * 2}.") ); // Output: The number 21 doubled is 42.
+</code></pre><h2> Is <code class="prettyprint">interp</code> difficult to implement?</h2>
+<p>It turns out <code class="prettyprint">interp</code> is a <a href="https://github.com/Abscissa/scriptlike/blob/4350eb745531720764861c82e0c4e689861bb17e/src/scriptlike/core.d#L114">pretty simple function</a>, forced to execute at compile-time through CTFE by the use of <code class="prettyprint">mixin</code>.
+</p>
+<p><code class="prettyprint">scriptlike</code> also provides many more useful features for quick programs.<br>Homepage: <a href="https://github.com/Abscissa/scriptlike">https://github.com/Abscissa/scriptlike</a>
+</p>
+</div><a name="The-importance-of-being-pure"></a><div class="idiom"><a class="permalink" href="#The-importance-of-being-pure">Link
+</a><h1>The importance of being <code class="prettyprint">pure</code></h1>
+<p><code class="prettyprint">pure</code> is a good looking function attribute that unfortunately doesn't seem provide much value at first sight. On the other hand, who doesn't want to write <code class="prettyprint">pure</code> code?
+</p>
+<p><strong>How can we justify the horizontal space investment in</strong> <code class="prettyprint">pure</code> <strong>annotations?</strong>
+</p>
+<h2> <strong>Reason 1:</strong> Purity helps with alias analysis</h2>
+<p>The compiler has to assume a non-<code class="prettyprint">pure</code> function could modify any global state:
+</p>
+<ul>
+<li>global variables
+</li>
+<li>heap allocated by impure means
+</li>
+<li>I/O
+</li>
+<li>and so on
+</li>
+</ul>
+<p>Let's say we have a function lacking a <code class="prettyprint">pure</code> annotation.
+</p>
+<pre class="prettyprint"><code>extern(C) int impureFibonacci(int n);
+</code></pre><p>This function gets called.
+</p>
+<pre class="prettyprint"><code>int result = impureFibonacci(8);
+// Any global state could have changed, like allocated heap, global variables, and so on.
+// That's like a barrier for the optimizer.
+</code></pre><p><strong>The compiler must assume any global state could have changed.</strong>
+</p>
+<h2> <strong>Reason 2:</strong> <code class="prettyprint">pure</code> is documentation</h2>
+<p>As dreadful as annotation streaks like <code class="prettyprint">pure const nothrow @nogc</code> can be, they <em>are</em> some kind of compiler-enforced documentation.
+</p>
+<h2> More about purity</h2>
+<ul>
+<li><p><a href="http://klickverbot.at/blog/2012/05/purity-in-d/">Purity in D</a> by David Nadlinger.
+</p>
+</li>
+</ul>
+<p><em>This article was written with the help of</em> <a href="https://github.com/deadalnix">deadalnix</a><em>.</em>
+</p>
+</div><a name="The-impossible-real-time-thread"></a><div class="idiom"><a class="permalink" href="#The-impossible-real-time-thread">Link
 </a><h1>Real-time thread</h1>
 <p>It is often said on Internet forums that D couldn't possibly do real-time work, since <em>its stop-the-world GC might pause every thread at once</em>.
 </p>
@@ -1828,6 +2134,47 @@ You can also throw a mutable exception and catch it as immutable(Exception),
 the whole thing is completely unintegrated with D2's type system.
 Again, it doesn't matter if you catch it or not because the unwinding code will mutate it.
 It's just straight up bad code.
+</code></pre></div><a name="Trailing-commas"></a><div class="idiom"><a class="permalink" href="#Trailing-commas">Link
+</a><h1>Trailing commas</h1>
+<p>D accepts trailing commas in every comma-separated list of things.
+</p>
+<pre class="prettyprint"><code>// Function declarations
+void doNothing(
+        int unusedA,
+        int unusedB,
+    )
+{
+}
+
+// enum declarations
+enum
+{
+    whatever,
+    yolo,
+}
+
+// Array literals
+static immutable double[] valuesOfPI =
+[
+    22.0 / 7.0,
+];
+
+void main()
+{
+    // Function calls
+    doNothing(
+       0,
+       31,
+    );
+
+    // AA literals
+    string[int] severities =
+    [
+         0: "info",
+         1: "warning",
+         2: "error",
+    ];
+}
 </code></pre></div><a name="Unrecoverable-vs-recoverable-errors"></a><div class="idiom"><a class="permalink" href="#Unrecoverable-vs-recoverable-errors">Link
 </a><h1>Unrecoverable vs recoverable errors</h1>
 <p><em>This item is language-agnostic and perhaps the most widely applicable tip on this page.</em>
@@ -1892,11 +2239,43 @@ It's just straight up bad code.
 </p>
 <p>See also: <a href="http://forum.dlang.org/post/m07gf1$18jl$1@digitalmars.com">http://forum.dlang.org/post/m07gf1$18jl$1@digitalmars.com</a>
 </p>
+</div><a name="Using-std.typecons.Flag-like-a-pro"></a><div class="idiom"><a class="permalink" href="#Using-std.typecons.Flag-like-a-pro">Link
+</a><h1>Using <code class="prettyprint">std.typecons.Flag</code> like a pro</h1>
+<p>Functions calls with boolean arguments are often hard to read and don't provide meaning.
+</p>
+<pre class="prettyprint"><code>void doSomething(bool frob);
+
+[...]
+
+doSomething(false);         // false what?
+</code></pre><p>Fortunately <code class="prettyprint">std.typecons.Flag</code> can help you turn <code class="prettyprint">bool</code> arguments into readable flags at no cost.<br>Buy it now! At your local standard library dealer.
+</p>
+<pre class="prettyprint"><code>import std.typecons;
+
+void doSomething(Flag!"frob" frob);
+
+[...]
+
+doSomething(No.frob);       // ok, no frob. Got it
+</code></pre><h2> Here are the guidelines straight from Andrei Alexandrescu:</h2>
+<ul>
+<li><p>Use the name <code class="prettyprint">Flag!"frob"</code> for the type of the flag
+</p>
+</li>
+<li><p>Use <code class="prettyprint">Yes.frob</code> and <code class="prettyprint">No.frob</code> for the flag values
+</p>
+</li>
+<li><p><strong>Do not alias</strong> <code class="prettyprint">Flag!"frob"</code> <strong>to a new name.</strong>
+</p>
+</li>
+</ul>
+<p>For more documentation: <a href="https://dlang.org/phobos/std_typecons.html#.Flag">https://dlang.org/phobos/std_typecons.html#.Flag</a>
+</p>
 </div><a name="Voldemort-types"></a><div class="idiom"><a class="permalink" href="#Voldemort-types">Link
 </a><h1>Voldemort types</h1>
 <p>A <em>Voldemort type</em> is simply a type that can't be named by the user.
 </p>
-<h2> An example from <code class="prettyprint">ae.utils.graphics</code></h2>
+<h2> An example from <code class="prettyprint">ae.utils.graphics</code>:</h2>
 <pre class="prettyprint"><code>template procedural(alias formula)
 {
     alias fun = binaryFun!(formula, "x", "y");
@@ -1990,7 +2369,7 @@ void main()
 </p>
 </div></div><a href="https://github.com/p0nce/d-idioms/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 <footer><h2>About
-</h2><p>I'm a software developer making voice processing software with D at <a href="https://www.auburnsounds.com">Auburn Sounds</a>. <br> Looking for a developer? I'm available for high-performance consulting. You can find my resume <a href="http://guillaumepiolat.fr/">here</a>. <br> I hope this site is as useful for you to read, as it was for me to write!
+</h2><p>I'm a software developer making voice processing software with D at <a href="https://www.auburnsounds.com">Auburn Sounds</a>. <br> Looking for a developer? I'm available for D consulting. You can find my resume <a href="http://guillaumepiolat.fr/">here</a>. <br> I hope this site is as useful for you to read, as it was for me to write!
 </p><h2>Other contributors:
 </h2><ul id="contributors"><li><a href="https://github.com/BBasile">Basile Burg
 </a></li><li><a href="https://github.com/bubnenkoff">Dmitry Bubnenkov

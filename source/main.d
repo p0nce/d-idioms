@@ -107,7 +107,7 @@ void main(string[] args)
 
                         push("p");
                             writeln(`I'm a software developer making voice processing software with D at <a href="https://www.auburnsounds.com">Auburn Sounds</a>. `
-                                    `<br> Looking for a developer? I'm available for high-performance consulting. You can find my resume <a href="http://guillaumepiolat.fr/">here</a>. `
+                                    `<br> Looking for a developer? I'm available for D consulting. You can find my resume <a href="http://guillaumepiolat.fr/">here</a>. `
                                     `<br> I hope this site is as useful for you to read, as it was for me to write!`);
                         pop();
 

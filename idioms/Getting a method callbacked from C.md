@@ -2,7 +2,9 @@
 Getting a method callbacked from C
 ==================================
 
-Most C callbacks allow to specify a "user data" pointer.
+**How to get a class method callbacked from C?**
+
+What is needed is a way to pass the `this` pointer. Most C callbacks allow to specify a "user data" pointer.
 A common trick is to cast `this` into a `void*` pointer back and forth, and use it as user data.
 
 Here is an example with SDL2 logging handler:

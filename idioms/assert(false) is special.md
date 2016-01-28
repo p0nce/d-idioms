@@ -24,11 +24,15 @@ Instead it is an instruction to crash the program, and is **not** removed in `-r
 
 ## Always-on assertion
 
-Since `assert(false)` never get removed, it can be used to create persistent regular assertions.
+Since `assert(false)` never get removed, it can be used to create a persistent assertion.
 
 ```
     if (!cond)
         assert(false); // will never be removed by the compiler in -release builds
 
 ```
+
+`assert(false)` is fit for finding bugs, [but not for input errors](#Unrecoverable-vs-recoverable-errors). In this case, prefer the use of `std.exception.enforce`.
+
+See: [http://dlang.org/phobos/std_exception.html#.enforce](http://dlang.org/phobos/std_exception.html#.enforce)
 

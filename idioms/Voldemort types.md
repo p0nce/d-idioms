@@ -4,7 +4,7 @@ Voldemort types
 
 A _Voldemort type_ is simply a type that can't be named by the user.
 
-## An example from `ae.utils.graphics`
+## An example from `ae.utils.graphics`:
 
 ```
 template procedural(alias formula)
