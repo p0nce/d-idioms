@@ -48,7 +48,7 @@ void main(string[] args)
                         appendRawFile("common.css");
                         appendRawFile("hybrid.css");
                     pop();
-                    writeln("<link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>");
+                    writeln("<link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>");
 
                     push("title");
                     write("d-idioms - Idioms for the D programming language");
