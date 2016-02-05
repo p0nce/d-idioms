@@ -409,6 +409,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#assert(false)-is-special">assert(false) is special
 </a><a href="#Bypassing-@nogc">Bypassing @nogc
 </a><a href="#Capturing-with-regular-expressions">Capturing with regular expressions
+</a><a href="#Compile-time-RNG">Compile-time RNG
 </a><a href="#Custom-format()-for-builtin-types">Custom format() for builtin types
 </a><a href="#D-online-resources">D online resources
 </a><a href="#Design-by-Introspection">Design by Introspection
@@ -626,6 +627,12 @@ void main(string[] args)
 </p>
 <pre class="prettyprint"><code>auto re = ctRegex!(`My name is (\w+)\. I work for ([A-Za-z ]+)\.`); // automaton built at compile-time
 </code></pre><p>See: <a href="http://dlang.org/phobos/std_regex.html">http://dlang.org/phobos/std_regex.html</a>
+</p>
+</div><a name="Compile-time-RNG"></a><div class="idiom"><a class="permalink" href="#Compile-time-RNG">Link
+</a><h1>Compile-time RNG</h1>
+<p>In January 2016, an anonymous programmer <a href="http://forum.dlang.org/post/suswwamqwdszocvkvjbc@forum.dlang.org">posted on the D forums</a> a Proof-of-Concept for a devious compile-time Random Number Generator.
+</p>
+<p><a href="http://dpaste.dzfl.pl/668646ce6d71">See source code on DPaste...</a>.
 </p>
 </div><a name="Custom-format()-for-builtin-types"></a><div class="idiom"><a class="permalink" href="#Custom-format()-for-builtin-types">Link
 </a><h1>Custom <code class="prettyprint">format()</code> for builtin types</h1>
