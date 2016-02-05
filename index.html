@@ -2046,14 +2046,14 @@ writeln( mixin(interp!"The number ${num} doubled is ${num * 2}.") ); // Output: 
 <p>Real-time threads like audio callbacks are doable since forever. Here is how:
 </p>
 <ul>
-<li><p>Use a thread that isn't registered. Such a thread could be created by an external library, or with <code class="prettyprint">core.thread.Thread</code> and then <a href="http://dlang.org/phobos/core_thread.html#.thread_detachThis">unregistered</a>.
+<li><p>Use a thread that isn't registered. Such a thread could be created by an external library, or with <code class="prettyprint">core.thread.Thread</code> and then unregistered with <a href="http://dlang.org/phobos/core_thread.html#.thread_detachThis"><code class="prettyprint">thread_detachThis()</code></a>. This moves the thread out of <a href="https://github.com/D-Programming-Language/druntime">druntime</a> supervision: it won't be stopped by the GC, but won't be able to use GC allocations.
 </p>
 </li>
-<li><p>Make the thread function <code class="prettyprint">@nogc</code>. You can't use the GC from an unregistered thread.
+<li><p>Make the thread function or callback <code class="prettyprint">@nogc</code>. This will enforce you don't use the GC.
 </p>
 </li>
 </ul>
-<p><strong>Another limitation:</strong> Such a thread must not hold roots to GC objects. What it means is that you can use GC objects from the real-time thread, but these GC objects should be pointed to by other threads to avoid them being collected.
+<p><strong>Another limitation:</strong> Such a thread must not hold roots to GC objects. What it means is that you <strong>can</strong> use GC objects from the real-time thread, but these GC objects should be pointed to by registered threads to avoid them being collected.
 </p>
 </div><a name="The-trouble-with-class-destructors"></a><div class="idiom"><a class="permalink" href="#The-trouble-with-class-destructors">Link
 </a><h1>The trouble with class destructors</h1>
