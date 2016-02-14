@@ -20,7 +20,7 @@ void f() pure nothrow @nogc @safe
 }
 ```
 
-**However,** function _templates_ have their attribute automatically inferred.
+**However,** function _templates_ have their attributes automatically inferred.
 
 ```
 int plusOne(int b = 2)(int a)
