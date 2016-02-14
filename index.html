@@ -2186,7 +2186,7 @@ writeln( mixin(interp!"The number ${num} doubled is ${num * 2}.") ); // Output: 
 <p>Real-time threads like audio callbacks are doable since forever. Here is how:
 </p>
 <ul>
-<li><p>Use a thread that isn't registered. Such a thread could be created by an external library, or with <code class="prettyprint">core.thread.Thread</code> and then unregistered with <a href="http://dlang.org/phobos/core_thread.html#.thread_detachThis"><code class="prettyprint">thread_detachThis()</code></a>. This moves the thread out of <a href="https://github.com/D-Programming-Language/druntime">druntime</a> supervision: it won't be stopped by the GC, but won't be able to use GC allocations.
+<li><p>Use a thread that isn't registered. Such a thread could be created by an external library, or with <code class="prettyprint">core.thread.Thread</code> and then unregistered with <a href="http://dlang.org/phobos/core_thread.html#.thread_detachThis"><code class="prettyprint">thread_detachThis()</code></a>. This moves the thread out of <a href="https://github.com/D-Programming-Language/druntime">druntime</a> supervision: it won't be stopped by the GC, and won't be able to use GC allocations.
 </p>
 </li>
 <li><p>Make the thread function or callback <code class="prettyprint">@nogc</code>. This will enforce you don't use the GC.

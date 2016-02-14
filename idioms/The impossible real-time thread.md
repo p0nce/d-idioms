@@ -10,7 +10,7 @@ It is often said on Internet forums that D couldn't possibly do real-time work, 
 Real-time threads like audio callbacks are doable since forever. Here is how:
 
 
-- Use a thread that isn't registered. Such a thread could be created by an external library, or with `core.thread.Thread` and then unregistered with [`thread_detachThis()`](http://dlang.org/phobos/core_thread.html#.thread_detachThis). This moves the thread out of [druntime](https://github.com/D-Programming-Language/druntime) supervision: it won't be stopped by the GC, but won't be able to use GC allocations.
+- Use a thread that isn't registered. Such a thread could be created by an external library, or with `core.thread.Thread` and then unregistered with [`thread_detachThis()`](http://dlang.org/phobos/core_thread.html#.thread_detachThis). This moves the thread out of [druntime](https://github.com/D-Programming-Language/druntime) supervision: it won't be stopped by the GC, and won't be able to use GC allocations.
 
 - Make the thread function or callback `@nogc`. This will enforce you don't use the GC.
 
