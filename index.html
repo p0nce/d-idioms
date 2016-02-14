@@ -407,6 +407,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </div></header><nav><a href="#&#x2F;+-+&#x2F;-nestable-comments-and-version(none)">&#x2F;+ +&#x2F; nestable comments and version(none)
 </a><a href="#Adding-or-removing-an-element-from-arrays">Adding or removing an element from arrays
 </a><a href="#assert(false)-is-special">assert(false) is special
+</a><a href="#Automatic-attribute-inference-for-function-templates">Automatic attribute inference for function templates
 </a><a href="#Bypassing-@nogc">Bypassing @nogc
 </a><a href="#Capturing-with-regular-expressions">Capturing with regular expressions
 </a><a href="#Compile-time-RNG">Compile-time RNG
@@ -559,6 +560,39 @@ assert(arr == [1,10]);
 </code></pre><p><code class="prettyprint">assert(false)</code> is fit for finding bugs, <a href="#Unrecoverable-vs-recoverable-errors">but not for input errors</a>. In this case, prefer the use of <code class="prettyprint">std.exception.enforce</code>.
 </p>
 <p>See: <a href="http://dlang.org/phobos/std_exception.html#.enforce">http://dlang.org/phobos/std_exception.html#.enforce</a>
+</p>
+</div><a name="Automatic-attribute-inference-for-function-templates"></a><div class="idiom"><a class="permalink" href="#Automatic-attribute-inference-for-function-templates">Link
+</a><h1>Automatic attribute inference for function templates</h1>
+<p>A <code class="prettyprint">pure</code>, <code class="prettyprint">nothrow</code>, <code class="prettyprint">@nogc</code> or <code class="prettyprint">@safe</code> function can only call functions that are respectively <code class="prettyprint">pure</code>, <code class="prettyprint">nothrow</code>, <code class="prettyprint">@nogc</code> or <code class="prettyprint">@safe</code>/<code class="prettyprint">@trusted</code>.
+</p>
+<pre class="prettyprint"><code>int plusOne(int a)
+{
+    return a + 1;
+}
+
+void f() pure nothrow @nogc @safe
+{
+    // Error: pure function 'f' cannot call impure function 'plusOne'
+    // Error: safe function 'f' cannot call system function 'plusOne'
+    // Error: @nogc function 'f' cannot call non-@nogc function 'plusOne'
+    // Error: 'plusOne' is not nothrow
+    plusOne(3);
+}
+</code></pre><p><strong>However,</strong> function <em>templates</em> have their attribute automatically inferred.
+</p>
+<pre class="prettyprint"><code>int plusOne(int b = 2)(int a)
+{
+    return a + 1;
+}
+
+void f() pure nothrow @nogc @safe
+{
+    plusOne(3); // everything fine
+}
+</code></pre><h2> Why?</h2>
+<p>Function templates bodies are always available to the compiler. Which is not the case for non-templated functions, who could be <code class="prettyprint">extern</code>.<br><strong>For consistency,</strong> non-templated functions attributes don't get inferred, even if the source code is available.
+</p>
+<p>See also: <a href="https://dlang.org/spec/function.html#function-attribute-inference">https://dlang.org/spec/function.html#function-attribute-inference</a>
 </p>
 </div><a name="Bypassing-@nogc"></a><div class="idiom"><a class="permalink" href="#Bypassing-@nogc">Link
 </a><h1>Bypassing @nogc</h1>
