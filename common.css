@@ -77,12 +77,13 @@ footer
     box-shadow: 0.2em 0.4em 2.0em 0em rgba(32,32,32,0.1);
     z-index: 10;
     color: black;
+    line-height: 1.3em;
 }
 
 
 footer h2
 {
-    color: white;
+    color: #f8deb7;
     padding: 4rem 4.25rem 0rem 4.25rem;
     margin: 2rem;
 }
@@ -91,21 +92,17 @@ footer p, footer ul
 {
     padding: 0rem 4.25rem 0rem 4.25rem;
     margin: 2rem;
-    color: white;
+    color: #ccb3b3;
 }
 
 footer a
 {
-    color: #88f;
+    color: #84c6ea;
 }
 
 a
 {
     text-decoration: none;
-}
-
-a
-{
     color: #5050c0;
     font-weight: 700;
 }
@@ -113,6 +110,7 @@ a
 a:hover
 {
     color: #5000c0;
+    text-decoration: underline;
 }
 
 nav a

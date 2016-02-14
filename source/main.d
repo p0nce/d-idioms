@@ -102,12 +102,33 @@ void main(string[] args)
                      push("footer");
 
                         push("h2");
+                            writeln("Why d-idioms");
+                        pop;
+
+                        push("p");
+                            writeln(`You may hear about every feature a language has to offer, for example after going through the reference book.<br><br>`
+
+                                    `That does not mean you'll feel comfortable using these features, or figure out how they fit together.<br><br>`
+
+                                    `When I came to D in 2007, I thought its learning curve was gentle. I already knew a subset of it and the language was simpler back then. It felt glorious and familiar.<br><br>`
+
+                                    `The truth took years to unfold. I had skipped the learning phase because of this perceived familiarity. But D is a language of its own that needs dedicated learning like any other. I had to expand my "subset of confidence", feature by feature.<br><br>`
+
+                                    `This unexpected difficulty is aggravated by the fact information is scattered in different places (wiki, language documentation, D specification, D forums...).
+                                    Sometimes valuable information can be hard to come by.<br><br>`
+
+                                    `d-idioms is for: library talk, language explanations, and useful or devious code snippets.<br><br>`
+
+                                    `This website is for the busy developer who doesn't have the time to learn languages in depth.<br><br> <strong>The goal is to expand the subset of D you feel comfortable with, quickly.</strong>`);
+                        pop();
+
+                        push("h2");
                             writeln("About");
                         pop;
 
                         push("p");
-                            writeln(`I'm a software developer making voice processing software with D at <a href="https://www.auburnsounds.com">Auburn Sounds</a>. `
-                                    `<br> Looking for a developer? I'm available for D consulting. You can find my resume <a href="http://guillaumepiolat.fr/">here</a>. `
+                            writeln(`Hi, I'm Guillaume Piolat, I make real-time audio processing software with D at <a href="https://www.auburnsounds.com">Auburn Sounds</a>. `
+                                    `<br> Looking for a developer? I'm also available for consulting. You can find my portfolio <a href="http://guillaumepiolat.fr/">here</a>. `
                                     `<br> I hope this site is as useful for you to read, as it was for me to write!`);
                         pop();
 
