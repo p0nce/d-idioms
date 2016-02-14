@@ -2041,9 +2041,9 @@ writeln(decChars.capacity);              // outputs non-zero value now that decC
 </p>
 </div><a name="Static-arrays-are-value-types"></a><div class="idiom"><a class="permalink" href="#Static-arrays-are-value-types">Link
 </a><h1>Static arrays are value types</h1>
-<p>It's important to note that static arrays in D are value types.
+<p>It's important to note that D static arrays are value types.
 </p>
-<pre class="prettyprint"><code>void addFour(int[16] arr) // The whole of arr is passed on the stack.
+<pre class="prettyprint"><code>void addFour(int[16] arr)
 {
     arr[] += 4;           // Only the local version is modified.
 }
@@ -2051,7 +2051,8 @@ writeln(decChars.capacity);              // outputs non-zero value now that decC
 void main()
 {
     int[16] a;
-    addFour(a);               // a passed by value on the stack, not by pointer.
+    addFour(a);           // a is passed by value on the stack, not by pointer.
+    assert(a[0] == 0);
 }
 </code></pre><p>That makes such declaration a trap when porting functions from C or C++.
 </p>
@@ -2060,12 +2061,12 @@ void main()
 </p>
 <pre class="prettyprint"><code>void addFive(ref int[16] arr)
 {
-    arr[] += 5;         // Caller parameter modified.
+    arr[] += 5;           // Caller parameter modified.
 }
 
 void addSix(int[] arr)
 {
-    arr[] += 6;         // Caller parameter modified.
+    arr[] += 6;           // Caller parameter modified.
 }
 
 void main()

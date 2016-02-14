@@ -2,10 +2,10 @@
 Static arrays are value types
 =============================
 
-It's important to note that static arrays in D are value types.
+It's important to note that D static arrays are value types.
 
 ```
-void addFour(int[16] arr) // The whole of arr is passed on the stack.
+void addFour(int[16] arr)
 {
     arr[] += 4;           // Only the local version is modified.
 }
@@ -13,7 +13,8 @@ void addFour(int[16] arr) // The whole of arr is passed on the stack.
 void main()
 {
     int[16] a;
-    addFour(a);               // a passed by value on the stack, not by pointer.
+    addFour(a);           // a is passed by value on the stack, not by pointer.
+    assert(a[0] == 0);
 }
 ```
 
@@ -26,12 +27,12 @@ To pass static arrays by reference, either write a function taking a slice or us
 ```
 void addFive(ref int[16] arr)
 {
-    arr[] += 5;         // Caller parameter modified.
+    arr[] += 5;           // Caller parameter modified.
 }
 
 void addSix(int[] arr)
 {
-    arr[] += 6;         // Caller parameter modified.
+    arr[] += 6;           // Caller parameter modified.
 }
 
 void main()
