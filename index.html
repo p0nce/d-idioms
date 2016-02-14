@@ -409,6 +409,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Bypassing-@nogc">Bypassing @nogc
 </a><a href="#Capturing-with-regular-expressions">Capturing with regular expressions
 </a><a href="#Compile-time-RNG">Compile-time RNG
+</a><a href="#Converting-from-and-to-C-strings">Converting from and to C strings
 </a><a href="#Custom-format()-for-builtin-types">Custom format() for builtin types
 </a><a href="#D-online-resources">D online resources
 </a><a href="#Design-by-Introspection">Design by Introspection
@@ -666,6 +667,49 @@ void main(string[] args)
 <p>In January 2016, an anonymous programmer <a href="http://forum.dlang.org/post/suswwamqwdszocvkvjbc@forum.dlang.org">posted on the D forums</a> a Proof-of-Concept for a devious compile-time Random Number Generator.
 </p>
 <p><a href="http://dpaste.dzfl.pl/668646ce6d71">See source code on DPaste...</a>.
+</p>
+</div><a name="Converting-from-and-to-C-strings"></a><div class="idiom"><a class="permalink" href="#Converting-from-and-to-C-strings">Link
+</a><h1>Converting from and to C strings</h1>
+<h2> Convert to C strings</h2>
+<p>Use <code class="prettyprint">std.string.toStringz</code>.
+</p>
+<pre class="prettyprint"><code>extern(C) nothrow @nogc void log_message(const char* message);
+
+void logMessage(string msg)
+{
+    import std.string: toStringz;
+    log_message(toStringz(msg));
+}
+</code></pre><p><strong>D string literals are already zero-terminated</strong>, you don't have anything to do in this case.
+</p>
+<pre class="prettyprint"><code>extern(C) nothrow @nogc void window_set_title(const char* title);
+
+void main()
+{
+    window_set_title("Welcome to zombo.com");  // Works: literals terminated with '\0'
+}
+
+</code></pre><p>See also: <a href="http://dlang.org/phobos/std_string.html#.toStringz">http://dlang.org/phobos/std_string.html#.toStringz</a>
+</p>
+<h2> Convert from C strings</h2>
+<p>Use <code class="prettyprint">std.string.fromStringz</code>.
+</p>
+<pre class="prettyprint"><code>extern(C) nothrow @nogc char* window_get_title(window_id id);
+
+struct Window
+{
+    // Note: to avoid allocations you can return a slice within the C string
+    // and keep the slice constant. Else you can use .dup or .idup to get
+    // an immutable string.
+    const(char)[] name(string msg)
+    {
+        import std.string: fromStringz;
+        return fromStringz( window_get_title(_id) );
+    }
+
+    window_id _id;
+}
+</code></pre><p>See also: <a href="http://dlang.org/phobos/std_string.html#.fromStringz">http://dlang.org/phobos/std_string.html#.fromStringz</a>
 </p>
 </div><a name="Custom-format()-for-builtin-types"></a><div class="idiom"><a class="permalink" href="#Custom-format()-for-builtin-types">Link
 </a><h1>Custom <code class="prettyprint">format()</code> for builtin types</h1>
