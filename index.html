@@ -412,6 +412,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Custom-format()-for-builtin-types">Custom format() for builtin types
 </a><a href="#D-online-resources">D online resources
 </a><a href="#Design-by-Introspection">Design by Introspection
+</a><a href="#Differences-in-integer-handling-vs-C">Differences in integer handling vs C
 </a><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
 </a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
 </a><a href="#Enumerate-fields-with-__traits(allMembers)">Enumerate fields with __traits(allMembers)
@@ -749,6 +750,55 @@ void main(string[] args)
 <p>There is currently not much written on this programming technique.
 </p>
 <p>The best resource on the topic is probably this talk by Alexandrescu: <a href="https://www.youtube.com/watch?v=LIb3L4vKZ7U">std::allocator Is to Allocation what std::vector is to Vexation</a>.
+</p>
+</div><a name="Differences-in-integer-handling-vs-C"></a><div class="idiom"><a class="permalink" href="#Differences-in-integer-handling-vs-C">Link
+</a><h1>Differences in integer handling vs C</h1>
+<p>By and large D integer handling is identical to C. However there are some differences you might want to be aware of.
+</p>
+<p>By design, <strong>none of those can break C code ported to D.</strong>
+</p>
+<h2> <code class="prettyprint">&gt;&gt;&gt;</code> operator</h2>
+<p>D has a <code class="prettyprint">&gt;&gt;&gt;</code> operator to force unsigned right bit-shifting, regardless of the type of the left operand.
+</p>
+<pre class="prettyprint"><code>import std.stdio;
+
+void main()
+{
+    short i = -48;
+    writeln(i &gt;&gt;  1);                                     // Output: -24
+
+    // unsigned shift, regardless of signedness of i
+    writeln(i &gt;&gt;&gt; 1);                                     // Output: 2147483624
+
+    writeln(typeof(i &gt;&gt;&gt; 1).stringof);                    // Output: int
+}
+</code></pre><p>The <code class="prettyprint">&gt;&gt;&gt;</code> operator promotes integers like the other bit-shifting operators.
+</p>
+<h2> Unary <code class="prettyprint">+</code> and <code class="prettyprint">-</code> operators do not promote</h2>
+<p>In C, <code class="prettyprint">+</code> and <code class="prettyprint">-</code> promote their operand to <code class="prettyprint">int</code> if smaller than <code class="prettyprint">int</code>.
+</p>
+<pre class="prettyprint"><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    char a = 1;
+    printf("%zu\n", sizeof( +a ));                        // Output: 4
+    printf("%zu\n", sizeof( -a ));                        // Output: 4
+    return 0;
+}
+</code></pre><p>But not in D:
+</p>
+<pre class="prettyprint"><code>import std.stdio;
+
+void main()
+{
+    byte a = 1;
+    writeln(( +a ).sizeof);                               // Output: 1
+    writeln(( -a ).sizeof);                               // Output: 1
+}
+</code></pre><h2> Signed overflow is not Undefined Behaviour</h2>
+<p>In D signed integer overflow is well-defined with wrapping semantics. You can rely on it and don't have to avoid signed overflow.
+</p>
+<p>Source: <a href="https://forum.dlang.org/post/n23bo3$qe$1@digitalmars.com">https://forum.dlang.org/post/n23bo3$qe$1@digitalmars.com</a>
 </p>
 </div><a name="Embed-a-dynamic-library-in-an-executable"></a><div class="idiom"><a class="permalink" href="#Embed-a-dynamic-library-in-an-executable">Link
 </a><h1>Embed a dynamic library in an executable</h1>
@@ -2407,8 +2457,8 @@ void main()
 <p>See <a href="http://nomad.so/2015/09/working-with-files-in-the-d-programming-language/">this article</a>, the best reference on the topic.
 </p>
 </div></div><a href="https://github.com/p0nce/d-idioms/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
-<footer><h2>Why d-idioms
-</h2><p>You may hear about every feature a language has to offer, for example after going through the reference book.<br><br>That does not mean you'll feel comfortable using these features, or figure out how they fit together.<br><br>When I came to D in 2007, I thought its learning curve was gentle. I already knew a subset of it and the language was simpler back then. It felt glorious and familiar.<br><br>The truth took years to unfold. I had skipped the learning phase because of this perceived familiarity. But D is a language of its own that needs dedicated learning like any other. I had to expand my "subset of confidence", feature by feature.<br><br>This unexpected difficulty is aggravated by the fact information is scattered in different places (wiki, language documentation, D specification, D forums...).
+<footer><h2>Why d-idioms?
+</h2><p>You may hear about every feature a language has to offer, for example after going through the reference book.<br><br>That does not mean you'll feel comfortable using these features, or figure out how they fit together.<br><br>When I discovered D in 2007, I thought its learning curve was gentle. I already knew a subset of it and the language was simpler back then. It all felt glorious and familiar.<br><br>The truth took years to unfold. I had skipped the learning phase because of this perceived familiarity. But D is a language of its own that needs dedicated learning like any other. I had to expand my "subset of confidence", feature by feature.<br><br>This unexpected difficulty is aggravated by the fact information is scattered in different places (wiki, language documentation, D specification, D forums...).
                                     Sometimes valuable information can be hard to come by.<br><br>d-idioms is for: library talk, language explanations, and useful or devious code snippets.<br><br>This website is for the busy developer who doesn't have the time to learn languages in depth.<br><br> <strong>The goal is to expand the subset of D you feel comfortable with, quickly.</strong>
 </p><h2>About
 </h2><p>Hi, I'm Guillaume Piolat, I make real-time audio processing software with D at <a href="https://www.auburnsounds.com">Auburn Sounds</a>. <br> Looking for a developer? I'm also available for consulting. You can find my portfolio <a href="http://guillaumepiolat.fr/">here</a>. <br> I hope this site is as useful for you to read, as it was for me to write!
