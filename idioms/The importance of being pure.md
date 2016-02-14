@@ -2,7 +2,7 @@
 The importance of being `pure`
 ==============================
 
-`pure` is a good looking function attribute that unfortunately doesn't seem provide much value at first sight. On the other hand, who doesn't want to write `pure` code?
+`pure` is a good looking function attribute that unfortunately doesn't seem to provide much value at first sight. On the other hand, who doesn't want to write `pure` code?
 
 **How can we justify the horizontal space investment in** `pure` **annotations?**
 
