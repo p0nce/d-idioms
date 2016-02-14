@@ -16,7 +16,7 @@ Try [The D Programming Language (TDPL)](http://erdani.com/index.php/books/tdpl/)
 
 ** "I want to learn how to program, with D."**
 
-Try [Programming In D](http://ddili.org/ders/d.en/]http://ddili.org/ders/d.en/) by Ali Cehreli.
+Try [Programming In D](http://ddili.org/ders/d.en/) by Ali Cehreli.
 
 
 
