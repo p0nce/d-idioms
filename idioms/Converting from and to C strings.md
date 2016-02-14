@@ -53,5 +53,15 @@ struct Window
 }
 ```
 
+**What if you already know the length of the C string?**
+
+Then you can use regular slicing.
+
+```
+assert(len == strlen(messageC));
+string messageD = messageC[0..len];
+```
+
+
 See also: [http://dlang.org/phobos/std_string.html#.fromStringz](http://dlang.org/phobos/std_string.html#.fromStringz)
 
