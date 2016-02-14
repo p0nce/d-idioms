@@ -102,7 +102,7 @@ void main(string[] args)
                      push("footer");
 
                         push("h2");
-                            writeln("Why d-idioms");
+                            writeln("Why d-idioms?");
                         pop;
 
                         push("p");
@@ -110,7 +110,7 @@ void main(string[] args)
 
                                     `That does not mean you'll feel comfortable using these features, or figure out how they fit together.<br><br>`
 
-                                    `When I came to D in 2007, I thought its learning curve was gentle. I already knew a subset of it and the language was simpler back then. It felt glorious and familiar.<br><br>`
+                                    `When I discovered D in 2007, I thought its learning curve was gentle. I already knew a subset of it and the language was simpler back then. It all felt glorious and familiar.<br><br>`
 
                                     `The truth took years to unfold. I had skipped the learning phase because of this perceived familiarity. But D is a language of its own that needs dedicated learning like any other. I had to expand my "subset of confidence", feature by feature.<br><br>`
 
