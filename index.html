@@ -416,7 +416,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Differences-in-integer-handling-vs-C">Differences in integer handling vs C
 </a><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
 </a><a href="#Ensure-array-access-without-bounds-checking">Ensure array access without bounds checking
-</a><a href="#Enumerate-fields-with-__traits(allMembers)">Enumerate fields with __traits(allMembers)
+</a><a href="#Enumerate-fields-with-__traits(allMembers)-and-static-foreach">Enumerate fields with __traits(allMembers) and static foreach
 </a><a href="#Eponymous-templates">Eponymous templates
 </a><a href="#Extend-a-struct-with-alias-this">Extend a struct with alias this
 </a><a href="#Falsey-values">Falsey values
@@ -882,8 +882,8 @@ void main(string[] args)
 </p>
 <pre class="prettyprint"><code>int[] myArray;
 myArray.ptr[index] = 4; // no bounds check, guaranteed
-</code></pre></div><a name="Enumerate-fields-with-__traits(allMembers)"></a><div class="idiom"><a class="permalink" href="#Enumerate-fields-with-__traits(allMembers)">Link
-</a><h1>Enumerate fields with <code class="prettyprint">__traits(allMembers)</code></h1>
+</code></pre></div><a name="Enumerate-fields-with-__traits(allMembers)-and-static-foreach"></a><div class="idiom"><a class="permalink" href="#Enumerate-fields-with-__traits(allMembers)-and-static-foreach">Link
+</a><h1>Enumerate fields with <code class="prettyprint">__traits(allMembers)</code> and "static" <code class="prettyprint">foreach</code></h1>
 <p>Using <code class="prettyprint">__traits(allMembers, X)</code> allows us to iterate on the fields of a <code class="prettyprint">struct</code> or <code class="prettyprint">class</code>.
 </p>
 <p>This can be useful when:
@@ -903,7 +903,10 @@ myArray.ptr[index] = 4; // no bounds check, guaranteed
 <pre class="prettyprint"><code>BuildSettings dup() const
 {
     BuildSettings ret;
-    foreach (m; __traits(allMembers, BuildSettings)) // this foreach is a special "static" foreach
+
+    // Important: this foreach is a special "static" foreach
+    //            though it isn't visually different from a regular foreach
+    foreach (m; __traits(allMembers, BuildSettings))
     {
         static if (is(typeof(__traits(getMember, ret, m) = __traits(getMember, this, m).dup)))
             __traits(getMember, ret, m) = __traits(getMember, this, m).dup;
