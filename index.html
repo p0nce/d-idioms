@@ -433,6 +433,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><a href="#Is-a-specific-program-available-in-PATH&#63;">Is a specific program available in PATH&#63;
 </a><a href="#Knowing-inout-inside-out">Knowing inout inside out
+</a><a href="#Leveraging-TLS-for-a-fast-thread-safe-singleton">Leveraging TLS for a fast thread-safe singleton
 </a><a href="#Linking-with-C-gotchas">Linking with C gotchas
 </a><a href="#Minimum-or-maximum-of-numbers">Minimum or maximum of numbers
 </a><a href="#Never-use-&gt;=-for-dependencies">Never use &gt;= for dependencies
@@ -447,7 +448,6 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Recursive-Sum-Type-with-matching">Recursive Sum Type with matching
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
 </a><a href="#Should-I-use-++pre-increment-or-post-increment++&#x3F;">Should I use ++pre-increment or post-increment++&#x3F;
-</a><a href="#Singleton">Singleton
 </a><a href="#Skip-initialization-with-=-void">Skip initialization with = void
 </a><a href="#Slices-.capacity,-the-mysterious-property">Slices .capacity, the mysterious property
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
@@ -1600,7 +1600,59 @@ inout(int)[] lastItems(inout(int)[] arr, size_t pivot)
 {
     inout(int) member; // Wrong, won't compile
 }
-</code></pre></div><a name="Linking-with-C-gotchas"></a><div class="idiom"><a class="permalink" href="#Linking-with-C-gotchas">Link
+</code></pre></div><a name="Leveraging-TLS-for-a-fast-thread-safe-singleton"></a><div class="idiom"><a class="permalink" href="#Leveraging-TLS-for-a-fast-thread-safe-singleton">Link
+</a><h1>Leveraging TLS for a fast thread-safe singleton</h1>
+<p>In D the declarations you reasonably thought would be globals, are instead put in Thread-Local Storage (TLS) unless marked with <code class="prettyprint">shared</code> or <code class="prettyprint">__gshared</code>. Each thread the has its own independent copy of TLS things.
+</p>
+<pre class="prettyprint"><code>class A
+{
+    static int instanceCount = 0; // Caution: one per thread
+}
+
+</code></pre><h2> Don't ask what TLS can do for you. Ask what you can do with TLS!</h2>
+<p><strong>TLS is useful to avoid locks when accessing global state.</strong>
+</p>
+<p>In this example, we'll show how to leverage TLS to avoid a costly <code class="prettyprint">synchronized</code> block and still be thread-safe.
+</p>
+<pre class="prettyprint"><code>class FastSingleton
+{
+private:
+
+    this()
+    {
+    }
+
+    // TLS flag, each thread has its own
+    static bool instantiated_;
+
+    // "True" global
+    __gshared FastSingleton instance_;
+
+public:
+    static FastSingleton get()
+    {
+        // Since every thread has its own instanciated_ variable,
+        // there is no need for synchronization here.
+        if (!instanciated_)
+        {
+            synchronized (FastSingleton.classinfo)
+            {
+                if (!instance_)
+                {
+                    instance_ = new FastSingleton();
+                }
+                instantiated_ = true;
+            }
+            return instance_;
+        }
+    }
+
+}
+</code></pre><p>This singleton implementation was taken from <a href="https://www.youtube.com/watch?v=yMNMV9JlkcQ">this talk</a> by David Simcha.
+</p>
+<p>If you find any other use for TLS, please send us your discoveries.
+</p>
+</div><a name="Linking-with-C-gotchas"></a><div class="idiom"><a class="permalink" href="#Linking-with-C-gotchas">Link
 </a><h1>Linking with C gotchas</h1>
 <h2> The little known <code class="prettyprint">pragma(mangle)</code></h2>
 <p><code class="prettyprint">pragma(mangle)</code> is extremely useful when you need to statically link with a C function whose name is a reserved D keyword:
@@ -2025,39 +2077,6 @@ assert(indexOf("Hello home sweet home", "home") == 6);
     {
         return ++m;
     }
-}
-</code></pre></div><a name="Singleton"></a><div class="idiom"><a class="permalink" href="#Singleton">Link
-</a><h1>Fast and threadsafe singleton </h1>
-<p>taken from this <a href="http://dconf.org/2013/talks/simcha.html">Talk</a> ( <a href="https://www.youtube.com/watch?v=yMNMV9JlkcQ">Youtube Link</a>) by David Simcha.
-</p>
-<p>The idea here is that since D has thread local storage variables it is only<br>necessairy to call the (expensive) synchronized method once per thread.
-</p>
-<pre class="prettyprint"><code>class MySingleton
-{
-    private this()
-    {
-
-    }
-
-    private static bool instantiated_;
-    private __gshared MySingleton instance_;
-
-    static MySingleton get()
-    {
-        if (!instanciated_)
-        {
-            synchronized (MySingleton.classinfo)
-            {
-                if (!instance_)
-                {
-                    instance_ = new MySingleton();
-                }
-                instantiated_ = true;
-            }
-            return instance_;
-        }
-    }
-
 }
 </code></pre></div><a name="Skip-initialization-with-=-void"></a><div class="idiom"><a class="permalink" href="#Skip-initialization-with-=-void">Link
 </a><h1>Skip initialization with <code class="prettyprint">= void</code></h1>
