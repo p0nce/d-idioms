@@ -141,6 +141,7 @@ void main(string[] args)
                         auto contributors = [
                             Contributor("Basile Burg", "https://github.com/BBasile"),
                             Contributor("Dmitry Bubnenkov", "https://github.com/bubnenkoff"),
+                            Contributor("Yannick Koechlin", "https://github.com/yannick"),
                         ];
 
                         push("h2");
