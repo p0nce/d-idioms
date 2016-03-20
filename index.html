@@ -447,6 +447,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><a href="#Recursive-Sum-Type-with-matching">Recursive Sum Type with matching
 </a><a href="#Searching-for-a-substring-position">Searching for a substring position
 </a><a href="#Should-I-use-++pre-increment-or-post-increment++&#x3F;">Should I use ++pre-increment or post-increment++&#x3F;
+</a><a href="#Singleton">Singleton
 </a><a href="#Skip-initialization-with-=-void">Skip initialization with = void
 </a><a href="#Slices-.capacity,-the-mysterious-property">Slices .capacity, the mysterious property
 </a><a href="#Smallest-dub.json-for-an-executable">Smallest dub.json for an executable
@@ -2024,6 +2025,39 @@ assert(indexOf("Hello home sweet home", "home") == 6);
     {
         return ++m;
     }
+}
+</code></pre></div><a name="Singleton"></a><div class="idiom"><a class="permalink" href="#Singleton">Link
+</a><h1>Fast and threadsafe singleton </h1>
+<p>taken from this <a href="http://dconf.org/2013/talks/simcha.html">Talk</a> ( <a href="https://www.youtube.com/watch?v=yMNMV9JlkcQ">Youtube Link</a>) by David Simcha.
+</p>
+<p>The idea here is that since D has thread local storage variables it is only<br>necessairy to call the (expensive) synchronized method once per thread.
+</p>
+<pre class="prettyprint"><code>class MySingleton
+{
+    private this()
+    {
+
+    }
+
+    private static bool instantiated_;
+    private __gshared MySingleton instance_;
+
+    static MySingleton get()
+    {
+        if (!instanciated_)
+        {
+            synchronized (MySingleton.classinfo)
+            {
+                if (!instance_)
+                {
+                    instance_ = new MySingleton();
+                }
+                instantiated_ = true;
+            }
+            return instance_;
+        }
+    }
+
 }
 </code></pre></div><a name="Skip-initialization-with-=-void"></a><div class="idiom"><a class="permalink" href="#Skip-initialization-with-=-void">Link
 </a><h1>Skip initialization with <code class="prettyprint">= void</code></h1>
