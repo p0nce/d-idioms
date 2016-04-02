@@ -47,7 +47,7 @@ void ensureNotInGC(string resourceName) nothrow
         // when called during a collection.
         // Freeing memory not owned by the GC is otherwise ignored.
         import core.memory;
-        GC.free(cast(void*)1);
+        cast(void) GC.malloc(1);
         return;
     }
     catch(InvalidMemoryOperationError e)
