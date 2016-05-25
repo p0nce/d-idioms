@@ -2,7 +2,7 @@
 Eponymous templates
 ===================
 
-The term **eponymous templates** refers to a symbol with the same as its enclosing `template` block.
+The term **eponymous templates** refers to a symbol with the same name as its enclosing `template` block.
 
 ```
 template HasUniqueElements(int[] arr)
