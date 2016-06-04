@@ -102,7 +102,7 @@ D provides a limited form of anonymous nested `struct` and `union`, but they can
 
 ## Convert array to pointers explicitely
 
-When porting from C you will probably have to spam `.ptr` anywhere an array is implicitely converted to a pointer.
+When porting from C, you will probably have to spam `.ptr` anywhere an array is implicitely converted to a pointer.
 
     // In C
     void sum(const int *array, int n);

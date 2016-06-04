@@ -2,7 +2,7 @@
 Optimal AA lookup
 =================
 
-When used on an Associative Array, the `in` operator returns a pointer to the searched element, or `null` if not found.
+When used on an Associative Array, the `in` operator returns either a pointer to the searched for element, or `null` if not found.
 
 Instead of:
 

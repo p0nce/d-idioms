@@ -39,4 +39,4 @@ As dreadful as annotation streaks like `pure const nothrow @nogc` can be, they _
 
 - [Purity in D](http://klickverbot.at/blog/2012/05/purity-in-d/) by David Nadlinger.
 
-_This article was written with the help of_ [deadalnix](https://github.com/deadalnix)_._
+_This article was written with the help of_ [Amaury Sechet](https://github.com/deadalnix)_._

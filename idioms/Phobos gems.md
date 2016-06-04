@@ -16,7 +16,7 @@ See: [http://dlang.org/phobos/std_exception.html#.enforce](http://dlang.org/phob
 ## Explicit destructor call with `object.destroy()`
 
 Whenever you want to destroy an object manually, `destroy()` is probably what you want.
-As a part of `object.d, it is always available.
+As a part of `object.d`, it is always available.
 
 See: [http://dlang.org/phobos/object.html#.destroy](http://dlang.org/phobos/object.html#.destroy)
 

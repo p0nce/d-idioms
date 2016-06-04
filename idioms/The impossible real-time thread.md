@@ -1,10 +1,10 @@
-================
-Real-time thread
-================
+===============================
+The impossible real-time thread
+===============================
 
 It is often said on Internet forums that D couldn't possibly do real-time work, since _its stop-the-world GC might pause every thread at once_.
 
-**This is wildly inaccurate.** The GC pauses all threads _that have been registered_.
+**This is wildly inaccurate.** The GC pauses all threads _registered to the D runtime_.
 
 
 Real-time threads like audio callbacks are doable since forever. Here is how:

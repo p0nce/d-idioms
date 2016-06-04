@@ -1711,7 +1711,7 @@ assert(maximum == 4.0);
 </p>
 </div><a name="Optimal-AA-lookup"></a><div class="idiom"><a class="permalink" href="#Optimal-AA-lookup">Link
 </a><h1>Optimal AA lookup</h1>
-<p>When used on an Associative Array, the <code class="prettyprint">in</code> operator returns a pointer to the searched element, or <code class="prettyprint">null</code> if not found.
+<p>When used on an Associative Array, the <code class="prettyprint">in</code> operator returns either a pointer to the searched for element, or <code class="prettyprint">null</code> if not found.
 </p>
 <p>Instead of:
 </p>
@@ -1758,7 +1758,7 @@ ptr ? *ptr : ValueType.init;
 <p>See: <a href="http://dlang.org/phobos/std_exception.html#.enforce">http://dlang.org/phobos/std_exception.html#.enforce</a>
 </p>
 <h2> Explicit destructor call with <code class="prettyprint">object.destroy()</code></h2>
-<p>Whenever you want to destroy an object manually, <code class="prettyprint">destroy()</code> is probably what you want.<br>As a part of `object.d, it is always available.
+<p>Whenever you want to destroy an object manually, <code class="prettyprint">destroy()</code> is probably what you want.<br>As a part of <code class="prettyprint">object.d</code>, it is always available.
 </p>
 <p>See: <a href="http://dlang.org/phobos/object.html#.destroy">http://dlang.org/phobos/object.html#.destroy</a>
 </p>
@@ -1878,7 +1878,7 @@ struct Foo
     bar_t bar;
 }
 </code></pre><h2> Convert array to pointers explicitely</h2>
-<p>When porting from C you will probably have to spam <code class="prettyprint">.ptr</code> anywhere an array is implicitely converted to a pointer.
+<p>When porting from C, you will probably have to spam <code class="prettyprint">.ptr</code> anywhere an array is implicitely converted to a pointer.
 </p>
 <pre class="prettyprint"><code>// In C
 void sum(const int *array, int n);
@@ -1901,7 +1901,7 @@ long getTickMs() nothrow @nogc
 
 </code></pre></div><a name="Precomputed-tables-at-compile-time-through-CTFE"></a><div class="idiom"><a class="permalink" href="#Precomputed-tables-at-compile-time-through-CTFE">Link
 </a><h1>Precomputed tables at compile-time through CTFE</h1>
-<p>D compilers provides extensive <a href="https://en.wikipedia.org/wiki/Compile_time_function_execution">Compile-Time Function Execution</a>.<br>This feature allows to easily compute almost anything at compile-time, without using an external program.
+<p>D compilers provide extensive <a href="https://en.wikipedia.org/wiki/Compile_time_function_execution">Compile-Time Function Execution</a>.<br>This feature allows to easily compute almost anything at compile-time, without using an external program.
 </p>
 <p>Here is an example of a precomputed array from the <a href="https://github.com/d-gamedev-team/gfm">GFM</a> library.
 </p>
@@ -2015,7 +2015,7 @@ case huge:
     writeln("huge");
     break;
 }
-</code></pre><p>This idiom was discovered by <a href="https://github.com/deadalnix">deadalnix</a>.
+</code></pre><p>This idiom was discovered by <a href="https://github.com/deadalnix">Amaury Sechet</a>.
 </p>
 </div><a name="Recursive-Sum-Type-with-matching"></a><div class="idiom"><a class="permalink" href="#Recursive-Sum-Type-with-matching">Link
 </a><h1>Recursive Sum Type with matching</h1>
@@ -2231,13 +2231,13 @@ writeln( mixin(interp!"The number ${num} doubled is ${num * 2}.") ); // Output: 
 </p>
 </li>
 </ul>
-<p><em>This article was written with the help of</em> <a href="https://github.com/deadalnix">deadalnix</a><em>.</em>
+<p><em>This article was written with the help of</em> <a href="https://github.com/deadalnix">Amaury Sechet</a><em>.</em>
 </p>
 </div><a name="The-impossible-real-time-thread"></a><div class="idiom"><a class="permalink" href="#The-impossible-real-time-thread">Link
-</a><h1>Real-time thread</h1>
+</a><h1>The impossible real-time thread</h1>
 <p>It is often said on Internet forums that D couldn't possibly do real-time work, since <em>its stop-the-world GC might pause every thread at once</em>.
 </p>
-<p><strong>This is wildly inaccurate.</strong> The GC pauses all threads <em>that have been registered</em>.
+<p><strong>This is wildly inaccurate.</strong> The GC pauses all threads <em>registered to the D runtime</em>.
 </p>
 <p>Real-time threads like audio callbacks are doable since forever. Here is how:
 </p>

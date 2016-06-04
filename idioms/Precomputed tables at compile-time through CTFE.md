@@ -2,7 +2,7 @@
 Precomputed tables at compile-time through CTFE
 ===============================================
 
-D compilers provides extensive [Compile-Time Function Execution](https://en.wikipedia.org/wiki/Compile_time_function_execution).
+D compilers provide extensive [Compile-Time Function Execution](https://en.wikipedia.org/wiki/Compile_time_function_execution).
 This feature allows to easily compute almost anything at compile-time, without using an external program.
 
 Here is an example of a precomputed array from the [GFM](https://github.com/d-gamedev-team/gfm) library.
