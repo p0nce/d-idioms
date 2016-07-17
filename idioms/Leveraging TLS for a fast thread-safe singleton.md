@@ -36,9 +36,9 @@ private:
 public:
     static FastSingleton get()
     {
-        // Since every thread has its own instanciated_ variable,
+        // Since every thread has its own instantiated_ variable,
         // there is no need for synchronization here.
-        if (!instanciated_)
+        if (!instantiated_)
         {
             synchronized (FastSingleton.classinfo)
             {
