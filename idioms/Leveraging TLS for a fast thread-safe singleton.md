@@ -48,8 +48,8 @@ public:
                 }
                 instantiated_ = true;
             }
-            return instance_;
         }
+        return instance_;
     }
 
 }
