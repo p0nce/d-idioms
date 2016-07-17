@@ -38,7 +38,7 @@ public:
     {
         // Since every thread has its own instanciated_ variable,
         // there is no need for synchronization here.
-        if (!instanciated_)
+        if (!instantiated_)
         {
             synchronized (FastSingleton.classinfo)
             {
@@ -48,8 +48,8 @@ public:
                 }
                 instantiated_ = true;
             }
-            return instance_;
         }
+        return instance_;
     }
 
 }
