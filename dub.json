@@ -2,6 +2,7 @@
 	"name": "d-idioms",
     "dependencies":
     {
-        "dmarkdown": "~>0.1.0"
+        "dmarkdown": "~>0.1.0",
+		"dateparser": "~>2.0"
     }
 }

@@ -1,16 +1,25 @@
 module main;
 
+import core.time;
+
+import std.datetime;
+import std.array;
 import std.stdio;
 import std.file;
+import std.conv;
 import std.string;
 import std.algorithm;
-
 import page;
 
 
-struct Idiom
+class Idiom
 {
-    string markdownFile;
+public:
+    this(string mdFile)
+    {
+        this.markdownFile = mdFile;
+        this._modTime = getLastModificationDate(mdFile);
+    }
 
     string title()
     {
@@ -22,6 +31,34 @@ struct Idiom
         dchar[dchar] transTable1 = [' ' : '-'];
         return translate(title(), transTable1);
     }
+
+    SysTime getLastModificationDate(string mdFile)
+    {
+        import dateparser;
+        import std.process;
+        auto git = execute(["git", "log", "-1", "--format=%cd", mdFile]);
+        if (git.status != 0) 
+            throw new Exception("Couldn't get last mod with git");
+
+        string dateStr = strip(chomp(git.output));
+        SysTime mod = parse(dateStr);
+        return mod;
+    }
+
+    SysTime modTime()
+    {
+        return _modTime;
+    }
+
+    string lastModifiedString()
+    {
+        return format("&nbsp; Modified: %s", _modTime.toFriendlyString());
+    }
+
+private:
+    string markdownFile;
+    SysTime _modTime;
+
 }
 
 void main(string[] args)
@@ -31,7 +68,12 @@ void main(string[] args)
     // finds all idioms by enumarating Markdown
     auto mdFiles = filter!`endsWith(a.name,".md")`(dirEntries("idioms",SpanMode.depth));
     foreach(md; mdFiles)
-        idioms ~= Idiom(md);
+        idioms ~= new Idiom(md);
+
+    // Sort tips by last change time
+    bool sortByLastChange = true;
+    if (sortByLastChange)
+        idioms = sort!"a.modTime > b.modTime"(idioms).array;
 
     auto page = new Page("index.html");
 
@@ -77,8 +119,13 @@ void main(string[] args)
                     push("nav");
                         foreach(idiom; idioms)
                         {
-                            push("a", "href=\"#" ~ idiom.anchorName() ~ "\"");
-                                writeln(idiom.title());
+                            push("div", `class="item-nav"`);
+                                push("a", "href=\"#" ~ idiom.anchorName() ~ "\"");
+                                    writeln(idiom.title());                                                                
+                                pop;
+                                push("span", `style=" color:rgb(158,158,158); font-size: 0.8em; float: right;"`);
+                                    writeln(" " ~ idiom.lastModifiedString());
+                                pop;
                             pop;
                         }
                     pop;
@@ -162,5 +209,29 @@ void main(string[] args)
                 pop;
             pop;
         }
+}
 
+string toFriendlyString(SysTime time)
+{
+    string result;
+    int day = time.day;
+    int month = time.month;
+    int year = time.year;
+    result ~= to!string(time.day);
+    result ~= `<span class="sub">`;
+    if (day == 1)
+        result ~= "st";
+    else if (day == 2)
+        result ~= "nd";
+    else if (day == 3)
+        result ~= "rd";
+    else 
+        result ~= "th";
+    result ~= "</span>";
+    result ~= " ";
+    static immutable string[12] months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    result ~= months[month-1];
+    result ~= " ";
+    result ~= to!string(year);
+    return result;
 }
