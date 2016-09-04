@@ -407,7 +407,9 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <title>d-idioms - Idioms for the D programming language</title></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-71912218-1', 'auto');ga('send', 'pageview');</script><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title">Idioms for the D Programming Language
-</div></header><nav><div class="item-nav"><a href="#So-D-is-just-C++-with-a-Garbage-Collector&#63;">So D is just C++ with a Garbage Collector&#63;
+</div></header><nav><div class="item-nav"><a href="#So-what-do-module-declarations-do,-exactly&#63;">So what do module declarations do, exactly&#63;
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Sep 4<span class="sub">th</span> 2016
+</span></div><div class="item-nav"><a href="#So-D-is-just-C++-with-a-Garbage-Collector&#63;">So D is just C++ with a Garbage Collector&#63;
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Sep 4<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#The-trouble-with-class-destructors">The trouble with class destructors
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Sep 4<span class="sub">th</span> 2016, created Jan 31<span class="sub">th</span> 2015
@@ -539,7 +541,51 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 8<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 7<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
-</span></div></nav><div class="container"><a name="So-D-is-just-C++-with-a-Garbage-Collector&#63;"></a><div class="idiom"><a class="permalink" href="#So-D-is-just-C++-with-a-Garbage-Collector&#63;">Link
+</span></div></nav><div class="container"><a name="So-what-do-module-declarations-do,-exactly&#63;"></a><div class="idiom"><a class="permalink" href="#So-what-do-module-declarations-do,-exactly&#63;">Link
+</a><h1>So what do module declarations do, exactly?</h1>
+<p>Module declarations are the things found at the top of modules.
+</p>
+<pre class="prettyprint"><code>module fancylib.interfaces; // this is a module declaration aka module directive
+</code></pre><p>They seem simple enough, but elicit a number of questions in the long run:
+</p>
+<ul>
+<li><p><em>What if we don't name them after their position in the file system?</em>
+</p>
+</li>
+<li><p><em>What if we omit module declarations like some D programs do?</em>
+</p>
+</li>
+</ul>
+<h2> Every module has a name</h2>
+<p>Every module has a module name whether it has a <code class="prettyprint">module</code> declaration or not.
+</p>
+<p>If you don't use one, the compiler uses the file name by default, but <em>only</em> the file name. The path on the file system is in no way taken into account.
+</p>
+<p>Given a source file <code class="prettyprint">source/foo.d</code>, using the following declaration is the same as not using a module declaration at all:
+</p>
+<pre class="prettyprint"><code>module foo; // can be omitted for a file source/foo.d
+</code></pre><p>However, you rarely want to omit module declarations, we'll see why.
+</p>
+<h2> Module names role in <code class="prettyprint"> import</code></h2>
+<p>When a module is imported, the compiler will search for it in D files directly given through the command-line. If this fails, it will append the module name to import directories (the paths given with <code class="prettyprint">-I</code>) in order to find such a file.
+</p>
+<pre class="prettyprint"><code>// Do I know such a module with this name?
+// Can I find it in &lt;import-paths&gt;/mylib/foo/bar.d otherwise?
+import mylib.foo.bar;
+</code></pre><h2> If you need to remember one thing</h2>
+<p>Modules have two ways to be found:
+</p>
+<ul>
+<li>Being passed directly on the command-line. In this case, modules can hold any name in the <code class="prettyprint">module</code> declaration, as long as such names are used consistently.
+</li>
+<li>Using the module name to search inside import directories given by <code class="prettyprint">-I</code>.
+</li>
+</ul>
+<p>Unless your program is small and self-contained, you should prefer the latter, and use module names matching file pathes in the file-system.
+</p>
+<p>See also: <a href="https://dlang.org/spec/module.html#module_declaration">https://dlang.org/spec/module.html#module_declaration</a>
+</p>
+</div><a name="So-D-is-just-C++-with-a-Garbage-Collector&#63;"></a><div class="idiom"><a class="permalink" href="#So-D-is-just-C++-with-a-Garbage-Collector&#63;">Link
 </a><h1>So D is just C++ with a Garbage Collector?</h1>
 <p>There is sometimes a perception in Internet forums that D is a mere repackaging of C++. D would bring more or less the same feature set with a more friendly syntax, and not bring any new possibility.
 </p>
