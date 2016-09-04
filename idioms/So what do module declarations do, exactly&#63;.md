@@ -49,3 +49,5 @@ Modules have two ways to be found:
   - Using the module name to search inside import directories given by `-I`.
 
 Unless your program is small and self-contained, you should prefer the latter, and use module names matching file pathes in the file-system.
+
+See also: [https://dlang.org/spec/module.html#module_declaration](https://dlang.org/spec/module.html#module_declaration)
