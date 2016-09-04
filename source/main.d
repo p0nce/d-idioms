@@ -19,6 +19,7 @@ public:
     {
         this.markdownFile = mdFile;
         this._modTime = getLastModificationDate(mdFile);
+        this._createTime = getCreationDate(mdFile);
     }
 
     string title()
@@ -45,19 +46,40 @@ public:
         return mod;
     }
 
+    SysTime getCreationDate(string mdFile)
+    {
+        import dateparser;
+        import std.process;
+        auto git = execute(["git", "log", "--format=%aD", "--reverse", "--follow", mdFile]);
+        if (git.status != 0) 
+            throw new Exception("Couldn't get creation time with git");
+
+        string dateStr = strip(chomp(splitLines(git.output)[0]));
+        SysTime mod = parse(dateStr);
+        return mod;
+    }
+
     SysTime modTime()
     {
         return _modTime;
     }
 
+    SysTime createTime()
+    {
+        return _createTime;
+    }
+
     string lastModifiedString()
     {
-        return format("&nbsp; Modified: %s", _modTime.toFriendlyString());
+        if (_modTime == _createTime)
+            return format("Created %s", _createTime.toFriendlyString());
+        return format("Modified %s, created %s", _modTime.toFriendlyString(), _createTime.toFriendlyString());
     }
 
 private:
     string markdownFile;
     SysTime _modTime;
+    SysTime _createTime;
 
 }
 
@@ -123,7 +145,7 @@ void main(string[] args)
                                 push("a", "href=\"#" ~ idiom.anchorName() ~ "\"");
                                     writeln(idiom.title());                                                                
                                 pop;
-                                push("span", `style=" color:rgb(158,158,158); font-size: 0.8em; float: right;"`);
+                                push("span", `style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"`);
                                     writeln(" " ~ idiom.lastModifiedString());
                                 pop;
                             pop;
@@ -217,6 +239,11 @@ string toFriendlyString(SysTime time)
     int day = time.day;
     int month = time.month;
     int year = time.year;
+
+    static immutable string[12] months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    result ~= months[month-1];
+    result ~= " ";
+
     result ~= to!string(time.day);
     result ~= `<span class="sub">`;
     if (day == 1)
@@ -229,9 +256,7 @@ string toFriendlyString(SysTime time)
         result ~= "th";
     result ~= "</span>";
     result ~= " ";
-    static immutable string[12] months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    result ~= months[month-1];
-    result ~= " ";
+    
     result ~= to!string(year);
     return result;
 }
