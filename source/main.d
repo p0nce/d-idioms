@@ -35,28 +35,48 @@ public:
 
     SysTime getLastModificationDate(string mdFile)
     {
-        import dateparser;
-        import std.process;
-        auto git = execute(["git", "log", "-1", "--format=%cd", mdFile]);
-        if (git.status != 0) 
-            throw new Exception("Couldn't get last mod with git");
+        try
+        {
+            import dateparser;
+            import std.process;
+            auto git = execute(["git", "log", "-1", "--format=%cd", mdFile]);
+            if (git.status != 0) 
+                throw new Exception("Couldn't get last mod with git");
 
-        string dateStr = strip(chomp(git.output));
-        SysTime mod = parse(dateStr);
-        return mod;
+            string dateStr = strip(chomp(git.output));
+            SysTime mod = parse(dateStr);
+            return mod;
+        }
+        catch(Exception e)
+        {
+            // Usualy happens when the idiom is not yet commited
+            return Clock.currTime();
+        }
     }
 
     SysTime getCreationDate(string mdFile)
     {
-        import dateparser;
-        import std.process;
-        auto git = execute(["git", "log", "--format=%aD", "--reverse", "--follow", mdFile]);
-        if (git.status != 0) 
-            throw new Exception("Couldn't get creation time with git");
+        try
+        {
+            import dateparser;
+            import std.process;
+            auto git = execute(["git", "log", "--format=%aD", "--reverse", "--follow", mdFile]);
+            if (git.status != 0) 
+                throw new Exception("Couldn't get creation time with git");
 
-        string dateStr = strip(chomp(splitLines(git.output)[0]));
-        SysTime mod = parse(dateStr);
-        return mod;
+            string[] outputs = splitLines(git.output);
+            if (outputs.length < 1)
+                throw new Exception("Couldn't get creation time with git");
+
+            string dateStr = strip(chomp(outputs[0]));
+            SysTime mod = parse(dateStr);
+            return mod;
+        }
+        catch(Exception e)
+        {
+            // Usualy happens when the idiom is not yet commited
+            return Clock.currTime();
+        }
     }
 
     SysTime modTime()
