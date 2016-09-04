@@ -40,7 +40,7 @@ public:
             import dateparser;
             import std.process;
             auto git = execute(["git", "log", "-1", "--format=%cd", mdFile]);
-            if (git.status != 0) 
+            if (git.status != 0)
                 throw new Exception("Couldn't get last mod with git");
 
             string dateStr = strip(chomp(git.output));
@@ -61,7 +61,7 @@ public:
             import dateparser;
             import std.process;
             auto git = execute(["git", "log", "--format=%aD", "--reverse", "--follow", mdFile]);
-            if (git.status != 0) 
+            if (git.status != 0)
                 throw new Exception("Couldn't get creation time with git");
 
             string[] outputs = splitLines(git.output);
@@ -91,7 +91,9 @@ public:
 
     string lastModifiedString()
     {
-        if (_modTime == _createTime)
+        if (_modTime.year == _createTime.year
+            && _modTime.month == _createTime.month
+            && _modTime.day == _createTime.day)
             return format("Created %s", _createTime.toFriendlyString());
         return format("Modified %s, created %s", _modTime.toFriendlyString(), _createTime.toFriendlyString());
     }
@@ -163,7 +165,7 @@ void main(string[] args)
                         {
                             push("div", `class="item-nav"`);
                                 push("a", "href=\"#" ~ idiom.anchorName() ~ "\"");
-                                    writeln(idiom.title());                                                                
+                                    writeln(idiom.title());
                                 pop;
                                 push("span", `style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"`);
                                     writeln(" " ~ idiom.lastModifiedString());
@@ -272,11 +274,11 @@ string toFriendlyString(SysTime time)
         result ~= "nd";
     else if (day == 3)
         result ~= "rd";
-    else 
+    else
         result ~= "th";
     result ~= "</span>";
     result ~= " ";
-    
+
     result ~= to!string(year);
     return result;
 }
