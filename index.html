@@ -1028,12 +1028,13 @@ assert(*p == 0);
 <p>The <code class="prettyprint">static</code> keyword is heavily re-used in the D language. With this uniquely detailed article, you'll learn to recognize the different species of <code class="prettyprint">static</code> in the wild.
 </p>
 <h2> 1. Most obvious: <code class="prettyprint">static</code> member functions and <code class="prettyprint">static</code> data members</h2>
-<p><strong>Like in Java and C++</strong>, you can declare <code class="prettyprint">static</code> data and functions members in a <code class="prettyprint">struct</code> or a <code class="prettyprint">class</code>.<br>They won't be associated with a particular object.
+<p>Much like in Java and C++, you can declare <code class="prettyprint">static</code> data and functions members in a <code class="prettyprint">struct</code> or a <code class="prettyprint">class</code>. The one caveat is that <strong>static data members will be put in Thread Local Storage unless marked with</strong> <code class="prettyprint">__gshared</code>.
 </p>
 <pre class="prettyprint"><code>class MyClass
 {
     // A static member variable =&gt; only one exist for all MyClass instances
-    static int instanceCount = 0;
+    // You need __gshared here else instanceCount would be thread-local
+    static __gshared int instanceCount = 0;
 
     // A static member function =&gt; does not receive "this"
     static void incrementCount()
@@ -1064,9 +1065,9 @@ static int numEngines = 4;          // Accepted. Does nothing.
 </p>
 <pre class="prettyprint"><code>// At top-level.
 int numEngines = 4;                 // The normal way to declare a TLS variable.
-</code></pre><p>Similarly for functions:
+</code></pre><p>Similarly for top-level functions:
 </p>
-<pre class="prettyprint"><code>static int add(int a, int b)        // You can leave out "static". It does nothing.
+<pre class="prettyprint"><code>static int add(int a, int b)        // You can leave out "static" at top-level. It does nothing.
 {
     return a + b;
 }

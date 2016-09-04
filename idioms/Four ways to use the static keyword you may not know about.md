@@ -7,14 +7,14 @@ The `static` keyword is heavily re-used in the D language. With this uniquely de
 
 ## 1. Most obvious: `static` member functions and `static` data members
 
-**Like in Java and C++**, you can declare `static` data and functions members in a `struct` or a `class`.
-They won't be associated with a particular object.
+Much like in Java and C++, you can declare `static` data and functions members in a `struct` or a `class`. The one caveat is that **static data members will be put in Thread Local Storage unless marked with** `__gshared`.
 
 ```
 class MyClass
 {
     // A static member variable => only one exist for all MyClass instances
-    static int instanceCount = 0;
+    // You need __gshared here else instanceCount would be thread-local
+    static __gshared int instanceCount = 0;
 
     // A static member function => does not receive "this"
     static void incrementCount()
@@ -54,10 +54,10 @@ This is 100% equivalent to:
 int numEngines = 4;                 // The normal way to declare a TLS variable.
 ```
 
-Similarly for functions:
+Similarly for top-level functions:
 
 ```
-static int add(int a, int b)        // You can leave out "static". It does nothing.
+static int add(int a, int b)        // You can leave out "static" at top-level. It does nothing.
 {
     return a + b;
 }
