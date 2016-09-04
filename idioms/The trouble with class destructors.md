@@ -22,6 +22,10 @@ The order in which the garbage collector calls destructors for unreferenced obje
 
 Using GC allocation is forbidden within a class destructor.
 
+## 5. Don't assume a class destructor won't be called because the constructor threw an exception.
+
+If a class constructor throw, the corresponding destructor **will** be called as part of the normal teardown sequence! Be prepared for this: your class destructor should check for object validity.
+
 
 ## Conclusion
 
