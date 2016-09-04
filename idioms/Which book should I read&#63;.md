@@ -18,7 +18,9 @@ Try [The D Programming Language (TDPL)](http://erdani.com/index.php/books/tdpl/)
 
 Try [Programming In D](http://ddili.org/ders/d.en/) by Ali Cehreli.
 
+** "I want to do Web development, with D."**
 
+Try [D Web Development](https://www.packtpub.com/web-development/d-web-development) by Kai Nacke.
 
 
 
