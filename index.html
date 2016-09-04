@@ -541,11 +541,47 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 7<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
 </span></div></nav><div class="container"><a name="So-D-is-just-C++-with-a-Garbage-Collector&#63;"></a><div class="idiom"><a class="permalink" href="#So-D-is-just-C++-with-a-Garbage-Collector&#63;">Link
 </a><h1>So D is just C++ with a Garbage Collector?</h1>
-<p>Reading the Internet, there is a perception out there that D is a mere repackaged C++. It would bring approximately the same feature set and would not bring new possibilities. This point is usually made by those heavily vested in C++.
+<p>There is sometimes a perception in Internet forums that D is a mere repackaging of C++. D would bring more or less the same feature set with a more friendly syntax, and not bring any new possibility.
 </p>
-<p>The goal of this article is to provide honest counter-points to this belief. As a language devoted to control and power, <em>of course</em> D allows breakthrough designs alongside with the expected <a href="#How-does-D-improve-on-C++17?">incremental improvements</a>. It would be criminal not to.
+<p>The goal of this article is to provide counterpoints to this belief. D does allows some design that the community regards as new, alongside with the expected <a href="#How-does-D-improve-on-C++17?">incremental improvements</a>.
 </p>
-<p><strong>Here is a list of things that D can do, and C++ can't</strong>, not matter how you bend it.
+<p>Here is an edited list of things that D can do, and C++ can't.
+</p>
+<h2> Static introspection</h2>
+<p>Can this module be <code class="prettyprint">import</code>ed?<br>Is this method <code class="prettyprint">const</code>?<br>What is the list of all child classes of the given <code class="prettyprint">class</code>?
+</p>
+<p>Branded under the moniker <em>Design by Introspection</em>, static introspection applied to APIs enables code that abandon more type-safety in the quest for more genericity.
+</p>
+<p>Examples:
+</p>
+<ul>
+<li><a href="#Design-by-Introspection">Design By Introspection</a>
+</li>
+<li><a href="#Enumerate-fields-with-__traits(allMembers)-and-static-foreach">Enumerate field at compile-time</a>
+</li>
+</ul>
+<h2> Full-on CTFE</h2>
+<p>Compile-Time Function Evaluation, patiently evolved from a "glorified constant folder", is ubiquitous in D. Endlessly applicable, it also requires very few explanations: just add <code class="prettyprint">enum</code> and you get it.<br>Regular looking code, evaluated at compile-time, with only a few limitations: what's not to love?
+</p>
+<p>Examples:
+</p>
+<ul>
+<li><p><a href="#Precomputed-tables-at-compile-time-through-CTFE">Pre-computed tables computed at compile-time</a>
+</p>
+</li>
+</ul>
+<h2> Generative abilities</h2>
+<p>CTFE and deep type introspection would be nothing without the ability to generate code at compile-time easily.<br>String mixins, templates, mixin templates, "static" <code class="prettyprint">foreach</code> are different way in which this can be achieved.
+</p>
+<p>Examples:
+</p>
+<ul>
+<li><a href="#String-interpolation-as-a-library">String interpolation as a library</a>
+</li>
+<li><a href="#Embed-a-dynamic-library-in-an-executable">Using external files as data</a>
+</li>
+</ul>
+<p>The combination of Static Introspection, generative features and CTFE forms the trinity that powers D's unique selling point. It's the fire behind the proverbial smoke.
 </p>
 </div><a name="The-trouble-with-class-destructors"></a><div class="idiom"><a class="permalink" href="#The-trouble-with-class-destructors">Link
 </a><h1>The trouble with class destructors</h1>
