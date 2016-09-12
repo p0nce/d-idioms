@@ -38,4 +38,10 @@ Voldemort types were discovered and named by Andrei Alexandrescu. They are typic
 
 See also: [Voldemort Types in D](http://www.drdobbs.com/cpp/voldemort-types-in-d/232901591)
 
+## Symbol name bloat
+
+Using Voldemort types can lead to excessive executable bloat due to long symbol names. Applying the *Horcrux method* can help solve this, see:
+
+http://www.schveiguy.com/blog/2016/05/have-your-voldemort-types-and-keep-your-disk-space-too/
+
 
