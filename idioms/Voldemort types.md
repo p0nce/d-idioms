@@ -34,14 +34,14 @@ Outside of the `procedural` function of this [eponymous template](#Eponymous-tem
 
 Hiding information about types. Because the user can't name or instantiate Voldemort types at will, expressions in a Voldemort lazy computation chain can change types without changing user code.
 
-Voldemort types were discovered and named by Andrei Alexandrescu. They are typically used in chains of lazy computations, like ranges.
+Voldemort types were promoted and named by Andrei Alexandrescu. They are typically used in chains of lazy computations, like ranges.
 
 See also: [Voldemort Types in D](http://www.drdobbs.com/cpp/voldemort-types-in-d/232901591)
 
-## Symbol name bloat
+## Avoidind symbol bloat with the Horcrux Method
 
-Using Voldemort types can lead to excessive executable bloat due to long symbol names. Applying the *Horcrux method* can help solve this, see:
+Using Voldemort types can lead to excessive executable bloat due to long symbol names. Applying the *Horcrux method* can help solve this.
 
-http://www.schveiguy.com/blog/2016/05/have-your-voldemort-types-and-keep-your-disk-space-too/
+See: [http://www.schveiguy.com/blog/2016/05/have-your-voldemort-types-and-keep-your-disk-space-too/](http://www.schveiguy.com/blog/2016/05/have-your-voldemort-types-and-keep-your-disk-space-too/)
 
 
