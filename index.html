@@ -407,7 +407,9 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <title>d-idioms - Idioms for the D programming language</title></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-71912218-1', 'auto');ga('send', 'pageview');</script><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title">Idioms for the D Programming Language
-</div></header><nav><div class="item-nav"><a href="#Voldemort-types">Voldemort types
+</div></header><nav><div class="item-nav"><a href="#Games-made-with-D">Games made with D
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Sep 14<span class="sub">th</span> 2016
+</span></div><div class="item-nav"><a href="#Voldemort-types">Voldemort types
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Sep 12<span class="sub">th</span> 2016, created Jan 5<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#So-what-do-module-declarations-do,-exactly&#63;">So what do module declarations do, exactly&#63;
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Sep 4<span class="sub">th</span> 2016
@@ -431,10 +433,10 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 10<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#The-importance-of-being-pure">The importance of being pure
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 27<span class="sub">th</span> 2016
-</span></div><div class="item-nav"><a href="#The-impossible-real-time-thread">The impossible real-time thread
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 24<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Qualified-switch-using-with">Qualified switch using with
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 4<span class="sub">th</span> 2015
+</span></div><div class="item-nav"><a href="#The-impossible-real-time-thread">The impossible real-time thread
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 24<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Eponymous-templates">Eponymous templates
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified May 25<span class="sub">th</span> 2016, created Oct 4<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#GC-proof-resource-class">GC-proof resource class
@@ -541,7 +543,53 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 8<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 7<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
-</span></div></nav><div class="container"><a name="Voldemort-types"></a><div class="idiom"><a class="permalink" href="#Voldemort-types">Link
+</span></div></nav><div class="container"><a name="Games-made-with-D"></a><div class="idiom"><a class="permalink" href="#Games-made-with-D">Link
+</a><h1>Games made with D</h1>
+<h2> Quantum Break</h2>
+<p><a href="http://www.quantumbreak.com/">Quantum Break</a> is an AAA video game developed by Remedy Entertainment (2016).<br>Is it written in C++ with D as the scripting language. Available on Xbox One and Windows.
+</p>
+<p>See:
+</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=OLFBal4Qo_k">Quantum Break: AAA Gaming With Some D Code</a>
+</li>
+<li><a href="https://www.youtube.com/watch?v=FKceA691Wcg">Using D Alongside a Game Engine by Manu Evans</a>
+</li>
+<li><a href="https://github.com/Remedy-Entertainment/binderoo">Binderoo</a> the binding library
+</li>
+</ul>
+<h2> Mayhem Intergalactic</h2>
+<p><a href="http://www.inventivedingo.com/mayhemig">Mayhem Intergalactic</a> is the first ever commercial video game written in D (2007).<br>Available for Windows.<br>See the <a href="http://forum.dlang.org/post/fjakft$cv4$1@digitalmars.com">newsgroup announcement</a>.
+</p>
+<h2> Kenta Cho's games</h2>
+<p>Kenta Cho released a number of Windows shooter games in early D.
+</p>
+<ul>
+<li><a href="http://www.asahi-net.or.jp/~cs8k-cyu/windows/tt_e.html">Torus Trooper</a>
+</li>
+<li><a href="http://www.asahi-net.or.jp/~cs8k-cyu/windows/tf_e.html">TUMIKI Fighters</a>
+</li>
+<li><a href="http://www.asahi-net.or.jp/~cs8k-cyu/windows/ttn_e.html">Titanion</a>
+</li>
+<li><a href="http://www.asahi-net.or.jp/~cs8k-cyu/windows/mcd_e.html">Mu-cade</a>
+</li>
+<li><a href="http://www.asahi-net.or.jp/~cs8k-cyu/windows/gr_e.html">Gunroar</a>
+</li>
+<li><a href="http://www.asahi-net.or.jp/~cs8k-cyu/windows/p47_e.html">PARSEC47</a>
+</li>
+<li><a href="http://www.asahi-net.or.jp/~cs8k-cyu/windows/a7xpg_e.html">A7Xpg</a>
+</li>
+</ul>
+<h2> Atrium</h2>
+<p><a href="https://github.com/gecko0307/atrium">Atrium</a> is an unfinished first-person game with physics based puzzles, entirely written with the D programming language.
+</p>
+<h2> Vibrant</h2>
+<p><a href="http://www.gamesfrommars.fr/vibrant/">Vibrant</a> is an arena shooter based on 2D dogfigthing. Available for Windows and OS X.<br>It was <a href="https://www.tigsource.com/2010/10/01/vibrant/">featured</a> on the TIGSource blog back in 2010.
+</p>
+<h2> Jan Jurzitza's games</h2>
+<p>Jan Jurzitza wrote several <a href="http://ludumdare.com/compo/author/webfreak001/">Ludum Dare entries</a>.
+</p>
+</div><a name="Voldemort-types"></a><div class="idiom"><a class="permalink" href="#Voldemort-types">Link
 </a><h1>Voldemort types</h1>
 <p>A <em>Voldemort type</em> is simply a type that can't be named by the user.
 </p>
@@ -1169,24 +1217,6 @@ ptr ? *ptr : ValueType.init;
 </ul>
 <p><em>This article was written with the help of</em> <a href="https://github.com/deadalnix">Amaury Sechet</a><em>.</em>
 </p>
-</div><a name="The-impossible-real-time-thread"></a><div class="idiom"><a class="permalink" href="#The-impossible-real-time-thread">Link
-</a><h1>The impossible real-time thread</h1>
-<p>It is often said on Internet forums that D couldn't possibly do real-time work, since <em>its stop-the-world GC might pause every thread at once</em>.
-</p>
-<p><strong>This is wildly inaccurate.</strong> The GC pauses all threads <em>registered to the D runtime</em>.
-</p>
-<p>Real-time threads like audio callbacks are doable since forever. Here is how:
-</p>
-<ul>
-<li><p>Use a thread that isn't registered. Such a thread could be created by an external library, or with <code class="prettyprint">core.thread.Thread</code> and then unregistered with <a href="http://dlang.org/phobos/core_thread.html#.thread_detachThis"><code class="prettyprint">thread_detachThis()</code></a>. This moves the thread out of <a href="https://github.com/D-Programming-Language/druntime">druntime</a> supervision: it won't be stopped by the GC, and won't be able to use GC allocations.
-</p>
-</li>
-<li><p>Make the thread function or callback <code class="prettyprint">@nogc</code>. This will enforce you don't use the GC.
-</p>
-</li>
-</ul>
-<p><strong>Another limitation:</strong> Such a thread must not hold roots to GC objects. What it means is that you <strong>can</strong> use GC objects from the real-time thread, but these GC objects should be pointed to by registered threads to avoid them being collected.
-</p>
 </div><a name="Qualified-switch-using-with"></a><div class="idiom"><a class="permalink" href="#Qualified-switch-using-with">Link
 </a><h1>Qualified switch using "with"</h1>
 <p>Let's say we have an enum:
@@ -1226,6 +1256,24 @@ case huge:
     break;
 }
 </code></pre><p>This idiom was discovered by <a href="https://github.com/deadalnix">Amaury Sechet</a>.
+</p>
+</div><a name="The-impossible-real-time-thread"></a><div class="idiom"><a class="permalink" href="#The-impossible-real-time-thread">Link
+</a><h1>The impossible real-time thread</h1>
+<p>It is often said on Internet forums that D couldn't possibly do real-time work, since <em>its stop-the-world GC might pause every thread at once</em>.
+</p>
+<p><strong>This is wildly inaccurate.</strong> The GC pauses all threads <em>registered to the D runtime</em>.
+</p>
+<p>Real-time threads like audio callbacks are doable since forever. Here is how:
+</p>
+<ul>
+<li><p>Use a thread that isn't registered. Such a thread could be created by an external library, or with <code class="prettyprint">core.thread.Thread</code> and then unregistered with <a href="http://dlang.org/phobos/core_thread.html#.thread_detachThis"><code class="prettyprint">thread_detachThis()</code></a>. This moves the thread out of <a href="https://github.com/D-Programming-Language/druntime">druntime</a> supervision: it won't be stopped by the GC, and won't be able to use GC allocations.
+</p>
+</li>
+<li><p>Make the thread function or callback <code class="prettyprint">@nogc</code>. This will enforce you don't use the GC.
+</p>
+</li>
+</ul>
+<p><strong>Another limitation:</strong> Such a thread must not hold roots to GC objects. What it means is that you <strong>can</strong> use GC objects from the real-time thread, but these GC objects should be pointed to by registered threads to avoid them being collected.
 </p>
 </div><a name="Eponymous-templates"></a><div class="idiom"><a class="permalink" href="#Eponymous-templates">Link
 </a><h1>Eponymous templates</h1>
