@@ -128,7 +128,7 @@ void main(string[] args)
                 push("head");
 
                     writeln("<meta charset=\"utf-8\">");
-                    writeln("<meta name=\"description\" content=\"D Programming Language idioms.\">");
+                    writeln("<meta name=\"description\" content=\"Effective D Programming Language.\">");
                     push("style", "type=\"text/css\"  media=\"all\" ");
                         appendRawFile("reset.css");
                         appendRawFile("common.css");
