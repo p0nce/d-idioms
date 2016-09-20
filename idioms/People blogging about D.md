@@ -8,4 +8,6 @@ People blogging about D
 - Átila Neves's blog: [https://atilanevesoncode.wordpress.com/](https://atilanevesoncode.wordpress.com/)
 - Gary Willoughby's blog: [http://nomad.so/tag/d/](http://nomad.so/tag/d/)
 - The Art of Machinery: [https://theartofmachinery.com/](https://theartofmachinery.com/)
-- A D blog aggregator: [http://planet.dsource.org/](http://planet.dsource.org/)
+
+Planet D is a blog aggregator much more complete than this list:
+[http://planet.dsource.org/](http://planet.dsource.org/)
