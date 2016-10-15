@@ -38,16 +38,10 @@ import std.stdio;
 
 mixin template RvalueRef(T) if (is(T == struct))
 {
-    private const(T)* _ptr;
-
     @nogc @safe
-    ref const(T) byRef() pure nothrow return
+    ref const(T) byRef() const pure nothrow return
     {
-        if (_ptr is null) {
-            _ptr = &this;
-        }
-
-        return *_ptr;
+        return this;
     }
 }
 
