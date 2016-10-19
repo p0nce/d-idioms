@@ -1055,7 +1055,7 @@ void main()
 </p>
 </div><a name="Leveraging-TLS-for-a-fast-thread-safe-singleton"></a><div class="idiom"><a class="permalink" href="#Leveraging-TLS-for-a-fast-thread-safe-singleton">Link
 </a><h1 id="leveraging-tls-for-a-fast-thread-safe-singleton">Leveraging TLS for a fast thread-safe singleton</h1>
-<p>In D the declarations you reasonably thought would be globals, are instead put in Thread-Local Storage (TLS) unless marked with <code class="prettyprint">shared</code> or <code class="prettyprint">__gshared</code>. Each thread the has its own independent copy of TLS things.
+<p>In D the declarations you reasonably thought would be globals, are instead put in Thread-Local Storage (TLS) unless marked with <code class="prettyprint">shared</code> or <code class="prettyprint">__gshared</code>. Each thread the runtime knows has its own independent copy of TLS things.
 </p>
 <pre class="prettyprint"><code>class A
 {

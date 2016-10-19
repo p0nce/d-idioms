@@ -2,7 +2,7 @@
 Leveraging TLS for a fast thread-safe singleton
 ===============================================
 
-In D the declarations you reasonably thought would be globals, are instead put in Thread-Local Storage (TLS) unless marked with `shared` or `__gshared`. Each thread the has its own independent copy of TLS things.
+In D the declarations you reasonably thought would be globals, are instead put in Thread-Local Storage (TLS) unless marked with `shared` or `__gshared`. Each thread the runtime knows has its own independent copy of TLS things.
 
 ```
 class A
