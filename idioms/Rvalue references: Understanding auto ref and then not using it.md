@@ -77,7 +77,7 @@ What `auto ref` does is generating two different versions of the function, one p
 
 **Wait!** You may immediately notice two key differences with C++:
 
-- There are no Rvalue references: Rvalues are copied instead.
+- There are no Rvalue references: Rvalues are moved instead.
 - In the worst case, using `auto ref` may lead to template bloat with many such parameters.
 
 You'll be relieved to know there is a way to mimic the C++ behaviour.
