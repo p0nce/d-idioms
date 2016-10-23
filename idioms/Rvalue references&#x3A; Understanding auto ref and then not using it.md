@@ -4,7 +4,7 @@ Rvalue references: Understanding `auto ref` and then not using it
 
 ## What are Rvalue references?
 
-_“Rvalue references”_, known from C++, are a way to pass both Lvalues and Rvalues by reference.
+_"Rvalue references"_, known from C++, are a way to pass both Lvalues and Rvalues by reference.
 It looks like this:
 
 ```cpp
