@@ -4,7 +4,7 @@ Rvalue references: Understanding `auto ref` and then not using it
 
 ## What are Rvalue references?
 
-_â€œRvalue referencesâ€_, known from C++, are a way to pass both Lvalues and Rvalues by reference.
+_“Rvalue references”_, known from C++, are a way to pass both Lvalues and Rvalues by reference.
 It looks like this:
 
 ```cpp
@@ -127,4 +127,4 @@ void main()
 
 By effectively converting the Lvalue into an Rvalue using the `ref` storage class on a function return type, we can pass the `Vector2f` to a function taking `ref const` input.
 
-_This idiom was written by_ [Randy SchÃ¼tt](https://github.com/Dgame)_._
+_This idiom was written by_ [Randy Schütt](https://github.com/Dgame)_._
