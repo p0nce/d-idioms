@@ -27,8 +27,8 @@ void foo(const Vector2f& pos)
 int main()
 {
     Vector2f v(42, 23);
-    foo(v);                   // Pass a Rvaworks
-    foo(Vector2f(42, 23));    // works as well
+    foo(v);                   // Pass a Lvalue, works
+    foo(Vector2f(42, 23));    // Pass a Rvalue, works as well
 }
 ```
 
@@ -127,4 +127,4 @@ void main()
 
 By effectively converting the Lvalue into an Rvalue using the `ref` storage class on a function return type, we can pass the `Vector2f` to a function taking `ref const` input.
 
-_This idiom was written by_ [Randy Schütt](https://github.com/Dgame)_._
+_This idiom was written by_ [Randy SchÃ¼tt](https://github.com/Dgame)_._
