@@ -90,8 +90,11 @@ Let's define in our struct a `byRef` method which return `this` by reference.
 ```d
 import std.stdio;
 
-mixin template RvalueRef(T) if (is(T == struct))
+mixin template RvalueRef()
 {
+    alias T = typeof(this); // typeof(this) get us the type we're in
+    static assert (is(T == struct));
+
     @nogc @safe
     ref const(T) byRef() const pure nothrow return
     {
@@ -109,7 +112,7 @@ struct Vector2f
         this.y = y;
     }
 
-    mixin RvalueRef!(typeof(this));
+    mixin RvalueRef;
 }
 
 void foo(ref const Vector2f pos)
