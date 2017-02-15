@@ -39,8 +39,7 @@ Kenta Cho released a number of Windows shooter games in early D.
 
 ## Vibrant
 
-[Vibrant](http://www.gamesfrommars.fr/vibrant/) is an arena shooter based on 2D dogfigthing. Available for Windows and OS X.
-It was [featured](https://www.tigsource.com/2010/10/01/vibrant/) on the TIGSource blog back in 2010.
+[Vibrant](https://ponce.itch.io/vibrant) is an arena shooter based on 2D dogfigthing. Available for Windows and OS X.
 
 ## Jan Jurzitza's games
 
