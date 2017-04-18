@@ -407,7 +407,9 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <title>d-idioms - Idioms for the D programming language</title></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-71912218-1', 'auto');ga('send', 'pageview');</script><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title">Idioms for the D Programming Language
-</div></header><nav><div class="item-nav"><a href="#Games-made-with-D">Games made with D
+</div></header><nav><div class="item-nav"><a href="#Differences-in-integer-handling-vs-C">Differences in integer handling vs C
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Apr 18<span class="sub">th</span> 2017, created Feb 14<span class="sub">th</span> 2016
+</span></div><div class="item-nav"><a href="#Games-made-with-D">Games made with D
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Feb 15<span class="sub">th</span> 2017, created Sep 14<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#Rvalue-references&#x3A;-Understanding-auto-ref-and-then-not-using-it">Rvalue references&#x3A; Understanding auto ref and then not using it
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Nov 21<span class="sub">th</span> 2016, created Oct 23<span class="sub">th</span> 2016
@@ -459,8 +461,6 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Feb 14<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#Static-arrays-are-value-types">Static arrays are value types
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Feb 14<span class="sub">th</span> 2016, created Jan 10<span class="sub">th</span> 2015
-</span></div><div class="item-nav"><a href="#Differences-in-integer-handling-vs-C">Differences in integer handling vs C
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Feb 14<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#Trailing-commas">Trailing commas
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Jan 27<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#So-what-does--release-do,-exactly&#63;">So what does -release do, exactly&#63;
@@ -551,7 +551,86 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 8<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 7<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
-</span></div></nav><div class="container"><a name="Games-made-with-D"></a><div class="idiom"><a class="permalink" href="#Games-made-with-D">Link
+</span></div></nav><div class="container"><a name="Differences-in-integer-handling-vs-C"></a><div class="idiom"><a class="permalink" href="#Differences-in-integer-handling-vs-C">Link
+</a><h1 id="differences-in-integer-handling-vs-c">Differences in integer handling vs C</h1>
+<p>By and large D integer handling is identical to C. However there are some differences you might want to be aware of.
+</p>
+<p>By design, none of those can break C code ported to D, <strong>except in one case described here.</strong>
+</p>
+<h2 id="operator"> <code class="prettyprint">&gt;&gt;&gt;</code> operator</h2>
+<p>D has a <code class="prettyprint">&gt;&gt;&gt;</code> operator to force unsigned right bit-shifting, regardless of the type of the left operand.
+</p>
+<pre class="prettyprint"><code>import std.stdio;
+
+void main()
+{
+    short i = -48;
+    writeln(i &gt;&gt;  1);                                     // Output: -24
+
+    // unsigned shift, regardless of signedness of i
+    writeln(i &gt;&gt;&gt; 1);                                     // Output: 2147483624
+
+    writeln(typeof(i &gt;&gt;&gt; 1).stringof);                    // Output: int
+}
+</code></pre><p>The <code class="prettyprint">&gt;&gt;&gt;</code> operator promotes integers like the other bit-shifting operators.
+</p>
+<h2 id="signed-overflow-is-not-undefined-behaviour"> Signed overflow is not Undefined Behaviour</h2>
+<p>In D signed integer overflow is well-defined with wrapping semantics. You can rely on it and don't have to avoid signed overflow.
+</p>
+<p>Source: <a href="https://forum.dlang.org/post/n23bo3$qe$1@digitalmars.com">https://forum.dlang.org/post/n23bo3$qe$1@digitalmars.com</a>
+</p>
+<h2 id="unary-and-operators-do-not-promote"> Unary <code class="prettyprint">+</code> and <code class="prettyprint">-</code> operators do not promote</h2>
+<p>In C, <code class="prettyprint">+</code> and <code class="prettyprint">-</code> promote their operand to <code class="prettyprint">int</code> if smaller than <code class="prettyprint">int</code>.
+</p>
+<pre class="prettyprint"><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    char a = 1;
+    printf("%zu\n", sizeof( +a ));                        // Output: 4
+    printf("%zu\n", sizeof( -a ));                        // Output: 4
+    return 0;
+}
+</code></pre><p>But not in D:
+</p>
+<pre class="prettyprint"><code>import std.stdio;
+
+void main()
+{
+    byte a = 1;
+    writeln(( +a ).sizeof);                               // Output: 1
+    writeln(( -a ).sizeof);                               // Output: 1
+}
+</code></pre><p><strong>This can make a subtle difference in rare occurences.</strong>
+</p>
+<p>This C program prints "128".
+</p>
+<pre class="prettyprint"><code>#include &lt;stdio.h&gt;
+
+int main()
+{
+    signed char c = -128;
+
+    // Prints -128 because unary minus 
+    // promotes to int if smaller
+    printf("%d\n", (int)(-c)); 
+    return 0;
+}
+</code></pre><p>Whereas this similar D program prints "-128".
+</p>
+<pre class="prettyprint"><code>import core.stdc.stdio;
+void main()
+{
+    byte c = -128;
+
+    // Prints -128 because unary minus 
+    // does not promote
+    printf("%d\n", cast(int)(-c)); 
+}
+</code></pre><p><strong>This is the only known risk when porting integer code from C to D.</strong>
+</p>
+<p><em>This trap was reported by</em> <a href="http://code.dlang.org/">ketmar</a>.
+</p>
+</div><a name="Games-made-with-D"></a><div class="idiom"><a class="permalink" href="#Games-made-with-D">Link
 </a><h1 id="games-made-with-d">Games made with D</h1>
 <h2 id="quantum-break"> Quantum Break</h2>
 <p><a href="http://www.quantumbreak.com/">Quantum Break</a> is an AAA video game developed by Remedy Entertainment (2016).<br/>Is it written in C++ with D as the scripting language. Available on Xbox One and Windows.
@@ -1887,56 +1966,7 @@ void main()
     addFive(a);         // Works, a is passed by reference
     addSix(a);          // Works, a is converted into a slice referencing the same data
 }
-</code></pre></div><a name="Differences-in-integer-handling-vs-C"></a><div class="idiom"><a class="permalink" href="#Differences-in-integer-handling-vs-C">Link
-</a><h1 id="differences-in-integer-handling-vs-c">Differences in integer handling vs C</h1>
-<p>By and large D integer handling is identical to C. However there are some differences you might want to be aware of.
-</p>
-<p>By design, <strong>none of those can break C code ported to D.</strong>
-</p>
-<h2 id="operator"> <code class="prettyprint">&gt;&gt;&gt;</code> operator</h2>
-<p>D has a <code class="prettyprint">&gt;&gt;&gt;</code> operator to force unsigned right bit-shifting, regardless of the type of the left operand.
-</p>
-<pre class="prettyprint"><code>import std.stdio;
-
-void main()
-{
-    short i = -48;
-    writeln(i &gt;&gt;  1);                                     // Output: -24
-
-    // unsigned shift, regardless of signedness of i
-    writeln(i &gt;&gt;&gt; 1);                                     // Output: 2147483624
-
-    writeln(typeof(i &gt;&gt;&gt; 1).stringof);                    // Output: int
-}
-</code></pre><p>The <code class="prettyprint">&gt;&gt;&gt;</code> operator promotes integers like the other bit-shifting operators.
-</p>
-<h2 id="unary-and-operators-do-not-promote"> Unary <code class="prettyprint">+</code> and <code class="prettyprint">-</code> operators do not promote</h2>
-<p>In C, <code class="prettyprint">+</code> and <code class="prettyprint">-</code> promote their operand to <code class="prettyprint">int</code> if smaller than <code class="prettyprint">int</code>.
-</p>
-<pre class="prettyprint"><code>#include &lt;stdio.h&gt;
-
-int main(void) {
-    char a = 1;
-    printf("%zu\n", sizeof( +a ));                        // Output: 4
-    printf("%zu\n", sizeof( -a ));                        // Output: 4
-    return 0;
-}
-</code></pre><p>But not in D:
-</p>
-<pre class="prettyprint"><code>import std.stdio;
-
-void main()
-{
-    byte a = 1;
-    writeln(( +a ).sizeof);                               // Output: 1
-    writeln(( -a ).sizeof);                               // Output: 1
-}
-</code></pre><h2 id="signed-overflow-is-not-undefined-behaviour"> Signed overflow is not Undefined Behaviour</h2>
-<p>In D signed integer overflow is well-defined with wrapping semantics. You can rely on it and don't have to avoid signed overflow.
-</p>
-<p>Source: <a href="https://forum.dlang.org/post/n23bo3$qe$1@digitalmars.com">https://forum.dlang.org/post/n23bo3$qe$1@digitalmars.com</a>
-</p>
-</div><a name="Trailing-commas"></a><div class="idiom"><a class="permalink" href="#Trailing-commas">Link
+</code></pre></div><a name="Trailing-commas"></a><div class="idiom"><a class="permalink" href="#Trailing-commas">Link
 </a><h1 id="trailing-commas">Trailing commas</h1>
 <p>D accepts trailing commas in every comma-separated list of things.
 </p>
