@@ -76,7 +76,7 @@ int main()
 {
     signed char c = -128;
 
-    // Prints -128 because unary minus 
+    // Prints 128 because unary minus 
     // promotes to int if smaller
     printf("%d\n", (int)(-c)); 
     return 0;
@@ -92,7 +92,9 @@ void main()
     byte c = -128;
 
     // Prints -128 because unary minus 
-    // does not promote
+    // does not promote and 128 cannot
+    // be represented with 8-bit signed
+    // integers.
     printf("%d\n", cast(int)(-c)); 
 }
 ```
