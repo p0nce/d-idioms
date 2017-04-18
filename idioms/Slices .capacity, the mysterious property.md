@@ -30,3 +30,13 @@ writeln(decChars.capacity);              // output '0' since decChars points to 
 decChars = decChars.dup;                 // makes a GC copy of the slice
 writeln(decChars.capacity);              // outputs non-zero value now that decChars points to GC memory
 ```
+
+## "Slices" and "Dynamic Arrays" are one single thing
+
+There might be a tendency in D to call slices that own their memory _Dynamic Arrays_  and the ones that don't _Slices_. **This is a harmful dichotomy.** Not only are they exactly the same in type and layout, but `.capacity` also works the same: asking the runtime about it.
+
+Instead it is useful to see **one single concept** which is the _slice_. 
+Slices point to memory regions, and all the relevant inforomation is taken from memory region properties. 
+
+**That a slice own or not its memory is purely derived from the area of memory pointed to.**
+
