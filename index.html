@@ -407,10 +407,12 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <title>d-idioms - Idioms for the D programming language</title></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-71912218-1', 'auto');ga('send', 'pageview');</script><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title">Idioms for the D Programming Language
-</div></header><nav><div class="item-nav"><a href="#Slices-.capacity,-the-mysterious-property">Slices .capacity, the mysterious property
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Apr 18<span class="sub">th</span> 2017, created Mar 22<span class="sub">th</span> 2015
+</div></header><nav><div class="item-nav"><a href="#Is-this-available-at-compile-time-or-runtime&#63;">Is this available at compile-time or runtime&#63;
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Apr 19<span class="sub">th</span> 2017
 </span></div><div class="item-nav"><a href="#Differences-in-integer-handling-vs-C">Differences in integer handling vs C
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Apr 18<span class="sub">th</span> 2017, created Feb 14<span class="sub">th</span> 2016
+</span></div><div class="item-nav"><a href="#Slices-.capacity,-the-mysterious-property">Slices .capacity, the mysterious property
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Apr 18<span class="sub">th</span> 2017, created Mar 22<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Games-made-with-D">Games made with D
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Feb 15<span class="sub">th</span> 2017, created Sep 14<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#Rvalue-references&#x3A;-Understanding-auto-ref-and-then-not-using-it">Rvalue references&#x3A; Understanding auto ref and then not using it
@@ -437,20 +439,20 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Sep 4<span class="sub">th</span> 2016, created Jan 5<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#Four-ways-to-use-the-static-keyword-you-may-not-know-about">Four ways to use the static keyword you may not know about
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Sep 4<span class="sub">th</span> 2016, created Jan 26<span class="sub">th</span> 2016
+</span></div><div class="item-nav"><a href="#Qualified-switch-using-with">Qualified switch using with
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 4<span class="sub">th</span> 2015
+</span></div><div class="item-nav"><a href="#Precomputed-tables-at-compile-time-through-CTFE">Precomputed tables at compile-time through CTFE
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 26<span class="sub">th</span> 2016
+</span></div><div class="item-nav"><a href="#Porting-from-C-gotchas">Porting from C gotchas
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 11<span class="sub">th</span> 2015
+</span></div><div class="item-nav"><a href="#Phobos-gems">Phobos gems
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 17<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Optimal-AA-lookup">Optimal AA lookup
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 10<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#The-importance-of-being-pure">The importance of being pure
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 27<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#The-impossible-real-time-thread">The impossible real-time thread
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 24<span class="sub">th</span> 2015
-</span></div><div class="item-nav"><a href="#Phobos-gems">Phobos gems
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 17<span class="sub">th</span> 2015
-</span></div><div class="item-nav"><a href="#Porting-from-C-gotchas">Porting from C gotchas
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 11<span class="sub">th</span> 2015
-</span></div><div class="item-nav"><a href="#Precomputed-tables-at-compile-time-through-CTFE">Precomputed tables at compile-time through CTFE
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 26<span class="sub">th</span> 2016
-</span></div><div class="item-nav"><a href="#Qualified-switch-using-with">Qualified switch using with
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 4<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Eponymous-templates">Eponymous templates
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified May 25<span class="sub">th</span> 2016, created Oct 4<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#GC-proof-resource-class">GC-proof resource class
@@ -483,10 +485,10 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Jan 5<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#Never-use-&gt;=-for-dependencies">Never use &gt;= for dependencies
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 4<span class="sub">th</span> 2016, created Jan 28<span class="sub">th</span> 2015
-</span></div><div class="item-nav"><a href="#Throwing-despite-@nogc">Throwing despite @nogc
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 4<span class="sub">th</span> 2016, created Jun 8<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#What-is-the-difference-between-out-and-ref-parameters&#x3F">What is the difference between out and ref parameters&#x3F
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Jan 4<span class="sub">th</span> 2016
+</span></div><div class="item-nav"><a href="#Throwing-despite-@nogc">Throwing despite @nogc
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 4<span class="sub">th</span> 2016, created Jun 8<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#How-does-D-improve-on-C++17&#63;">How does D improve on C++17&#63;
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 2<span class="sub">nd</span> 2016, created Apr 26<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Working-with-associative-arrays">Working with associative arrays
@@ -551,31 +553,55 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 8<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 7<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
-</span></div></nav><div class="container"><a name="Slices-.capacity,-the-mysterious-property"></a><div class="idiom"><a class="permalink" href="#Slices-.capacity,-the-mysterious-property">Link
-</a><h1 id="slices-capacity-the-mysterious-property">Slices <code class="prettyprint">.capacity</code>, the mysterious property</h1>
-<p>Dynamic arrays aka slices in D have a <code class="prettyprint">.capacity</code> property: the maximum length the slice can reach before needing reallocation.
+</span></div></nav><div class="container"><a name="Is-this-available-at-compile-time-or-runtime&#63;"></a><div class="idiom"><a class="permalink" href="#Is-this-available-at-compile-time-or-runtime&#63;">Link
+</a><h1 id="should-this-property-be-available-at-compile-time-or-runtime">Should this property be available at compile-time or runtime?</h1>
+<p>It is common in <a href="#Design-by-Introspection">Design by Introspection</a> to decide between a runtime value and a compile-time value.
 </p>
-<pre class="prettyprint"><code>int[] arr = new int[10];
-writeln(arr.capacity);
-assert(arr.capacity &gt;= arr.length);
-</code></pre><p>Since <code class="prettyprint">.capacity</code> is read-only, the <code class="prettyprint">.reserve</code> builtin property also exist to ensure allocation size. This is similar to C++'s <code class="prettyprint">std::vector::capacity()</code> and <code class="prettyprint">std::vector::reserve(size_t n)</code>. Handy!
+<ul>
+<li>"Should this image abstraction have a runtime or compile-time dimension?"
+</li>
+<li>"Should this sound abstraction have a runtime or compile-time duration?"
+</li>
+<li>"Should this allocator abstraction have a runtime or compile-time alignment?"
+</li>
+</ul>
+<h2 id="a-hot-sample"> A hot sample</h2>
+<p>For example, our generic example library will operate on a <code class="prettyprint">Volcano</code> concept.<br/>The only requirement is to have a <code class="prettyprint">.magma</code> property, be it compile-time or runtime, implicitely convertible to <code class="prettyprint">int</code>.
 </p>
-<pre class="prettyprint"><code>T[] arr;
-arr.reserve(N);
-foreach(i ; 0..N)
-  arr ~= expr(i);                        // guaranteed not to allocate in the loop
-</code></pre><p>I hear you saying: <strong>"How is that possible since D slices are only a pointer and a length?"</strong><br/>There is a trick, getting that information relies on the GC, and slices pointing to non-GC memory will report a capacity of 0 which means reallocating is mandatory for appending.
-</p>
-<pre class="prettyprint"><code>char[16] hexChars = "0123456789abcdef";
-char[] decChars = hexChars[0..10];
-writeln(decChars.capacity);              // output '0' since decChars points to non-GC memory
+<pre class="prettyprint"><code>template isVolcano(S)
+{
+    enum bool isVolcano = hasMagma!S; // only requirement for now
+}
 
-decChars = decChars.dup;                 // makes a GC copy of the slice
-writeln(decChars.capacity);              // outputs non-zero value now that decChars points to GC memory
-</code></pre><h2 id="slices-and-dynamic-arrays-are-one-single-thing"> "Slices" and "Dynamic Arrays" are one single thing</h2>
-<p>There is a tendency to call slices that own their memory "Dynamic Arrays"  and the ones that don't "Slices"; perhaps to map other languages to D. 
+template hasMagma(S)
+{
+    enum bool hasDuration = is(typeof(
+        (inout int = 0)
+        {
+            S s = S.init;
+            int d = s.magma; // need a magma property
+        }));
+}
+</code></pre><h2 id="you-don-t-necessarily-have-to-choose"> You don't necessarily have to choose</h2>
+<p>It turns out generic algorithms can work with both a runtime or compile-time <code class="prettyprint">.magma</code> property, <strong>with this simple C++ trick</strong>.
 </p>
-<p><strong>This is a harmful dichotomy.</strong> That a slice own or not its memory is purely derived from the pointed area.
+<pre class="prettyprint"><code>template hasStaticMagma(S)
+{
+    enum bool hasStaticMagma = hasMagma!S &amp;&amp; __traits(compiles, int[S.magma]);
+}
+
+void myVolcanoGenericAlgorithm(S) if (isVolcano!S)
+{
+    static if (hasStaticMagma!S)
+    {
+        // optimized version for statically known .magma ...
+    }
+    else
+    {
+        // plain version ...
+    }
+}
+</code></pre><p>You aren't forced to choose runtime or static for your meta-programming design. This idiom enables faster code when some value is statically known, without necessarily hindering your design.
 </p>
 </div><a name="Differences-in-integer-handling-vs-C"></a><div class="idiom"><a class="permalink" href="#Differences-in-integer-handling-vs-C">Link
 </a><h1 id="differences-in-integer-handling-vs-c">Differences in integer handling vs C</h1>
@@ -636,7 +662,7 @@ int main()
 {
     signed char c = -128;
 
-    // Prints -128 because unary minus 
+    // Prints 128 because unary minus 
     // promotes to int if smaller
     printf("%d\n", (int)(-c)); 
     return 0;
@@ -649,12 +675,40 @@ void main()
     byte c = -128;
 
     // Prints -128 because unary minus 
-    // does not promote
+    // does not promote and 128 cannot
+    // be represented with 8-bit signed
+    // integers.
     printf("%d\n", cast(int)(-c)); 
 }
 </code></pre><p><strong>This is the only known risk when porting integer code from C to D.</strong>
 </p>
 <p><em>This trap was reported by</em> <a href="http://code.dlang.org/">ketmar</a>.
+</p>
+</div><a name="Slices-.capacity,-the-mysterious-property"></a><div class="idiom"><a class="permalink" href="#Slices-.capacity,-the-mysterious-property">Link
+</a><h1 id="slices-capacity-the-mysterious-property">Slices <code class="prettyprint">.capacity</code>, the mysterious property</h1>
+<p>Dynamic arrays aka slices in D have a <code class="prettyprint">.capacity</code> property: the maximum length the slice can reach before needing reallocation.
+</p>
+<pre class="prettyprint"><code>int[] arr = new int[10];
+writeln(arr.capacity);
+assert(arr.capacity &gt;= arr.length);
+</code></pre><p>Since <code class="prettyprint">.capacity</code> is read-only, the <code class="prettyprint">.reserve</code> builtin property also exist to ensure allocation size. This is similar to C++'s <code class="prettyprint">std::vector::capacity()</code> and <code class="prettyprint">std::vector::reserve(size_t n)</code>. Handy!
+</p>
+<pre class="prettyprint"><code>T[] arr;
+arr.reserve(N);
+foreach(i ; 0..N)
+  arr ~= expr(i);                        // guaranteed not to allocate in the loop
+</code></pre><p>I hear you saying: <strong>"How is that possible since D slices are only a pointer and a length?"</strong><br/>There is a trick, getting that information relies on the GC, and slices pointing to non-GC memory will report a capacity of 0 which means reallocating is mandatory for appending.
+</p>
+<pre class="prettyprint"><code>char[16] hexChars = "0123456789abcdef";
+char[] decChars = hexChars[0..10];
+writeln(decChars.capacity);              // output '0' since decChars points to non-GC memory
+
+decChars = decChars.dup;                 // makes a GC copy of the slice
+writeln(decChars.capacity);              // outputs non-zero value now that decChars points to GC memory
+</code></pre><h2 id="slices-and-dynamic-arrays-are-one-single-thing"> "Slices" and "Dynamic Arrays" are one single thing</h2>
+<p>There is a tendency to call slices that own their memory "Dynamic Arrays"  and the ones that don't "Slices"; perhaps to map other languages to D. 
+</p>
+<p><strong>This is a harmful dichotomy.</strong> That a slice own or not its memory is purely derived from the pointed area.
 </p>
 </div><a name="Games-made-with-D"></a><div class="idiom"><a class="permalink" href="#Games-made-with-D">Link
 </a><h1 id="games-made-with-d">Games made with D</h1>
@@ -1439,123 +1493,124 @@ void main()
 </p>
 <p><strong>Beware:</strong> It's a common mistake to write <code class="prettyprint">static this()</code> instead of <code class="prettyprint">shared static this()</code>. <strong>Don't be a TLS victim.</strong>
 </p>
-</div><a name="Optimal-AA-lookup"></a><div class="idiom"><a class="permalink" href="#Optimal-AA-lookup">Link
-</a><h1 id="optimal-aa-lookup">Optimal AA lookup</h1>
-<p>When used on an Associative Array, the <code class="prettyprint">in</code> operator returns either a pointer to the searched for element, or <code class="prettyprint">null</code> if not found.
+</div><a name="Qualified-switch-using-with"></a><div class="idiom"><a class="permalink" href="#Qualified-switch-using-with">Link
+</a><h1 id="qualified-switch-using-with">Qualified switch using "with"</h1>
+<p>Let's say we have an enum:
 </p>
-<p>Instead of:
+<pre class="prettyprint"><code>enum MyEnum
+{
+    small,
+    normal,
+    huge
+}
+</code></pre><p>Switching on an enum value is annoying and redundant: <code class="prettyprint">MyEnum</code> has to be repeated for each case.
 </p>
-<pre class="prettyprint"><code>key in aa ? aa[key] : ValueType.init;
-</code></pre><p>which perform 2 AA lookups prefer:
+<pre class="prettyprint"><code>final switch(enumValue)
+{
+case MyEnum.small:
+    writeln("small");
+    break;
+case MyEnum.normal:
+    writeln("normal");
+    break;
+case MyEnum.huge:
+    writeln("huge");
+    break;
+}
+</code></pre><p>We can work-around this by using <code class="prettyprint">with</code>:
 </p>
-<pre class="prettyprint"><code>auto ptr = key in aa;
-ptr ? *ptr : ValueType.init;
-</code></pre><p>The <code class="prettyprint">.get</code> builtin property can also be used. It provides a default value when the key doesn't exist.
+<pre class="prettyprint"><code>final switch(enumValue) with (MyEnum)
+{
+case small:
+    writeln("small");
+    break;
+case normal:
+    writeln("normal");
+    break;
+case huge:
+    writeln("huge");
+    break;
+}
+</code></pre><p>This idiom was discovered by <a href="https://github.com/deadalnix">Amaury Sechet</a>.
 </p>
-<pre class="prettyprint"><code>aa.get(key, defaultValue);
-</code></pre><h2 id="reminder-aas-are-hashmaps-not-balanced-trees"> Reminder: AAs are hashmaps, not balanced trees!</h2>
-<p>Associative arrays in D are akin to C++'s <code class="prettyprint">std::unordered_map</code>, <strong>not</strong> <code class="prettyprint">std::map</code>.
+</div><a name="Precomputed-tables-at-compile-time-through-CTFE"></a><div class="idiom"><a class="permalink" href="#Precomputed-tables-at-compile-time-through-CTFE">Link
+</a><h1 id="precomputed-tables-at-compile-time-through-ctfe">Precomputed tables at compile-time through CTFE</h1>
+<p>D compilers provide extensive <a href="https://en.wikipedia.org/wiki/Compile_time_function_execution">Compile-Time Function Execution</a>.<br/>This feature allows to easily compute almost anything at compile-time, without using an external program.
 </p>
-<p>See: <a href="https://dlang.org/spec/hash-map.html">https://dlang.org/spec/hash-map.html</a>
+<p>Here is an example of a precomputed array from the <a href="https://github.com/d-gamedev-team/gfm">GFM</a> library.
 </p>
-</div><a name="The-importance-of-being-pure"></a><div class="idiom"><a class="permalink" href="#The-importance-of-being-pure">Link
-</a><h1 id="the-importance-of-being-pure">The importance of being <code class="prettyprint">pure</code></h1>
-<p><code class="prettyprint">pure</code> is a good looking function attribute that unfortunately doesn't seem to provide much value at first sight. On the other hand, who doesn't want to write <code class="prettyprint">pure</code> code?
-</p>
-<p><strong>How can we justify the horizontal space investment in</strong> <code class="prettyprint">pure</code> <strong>annotations?</strong>
-</p>
-<h2 id="reason-1-purity-helps-with-alias-analysis"> <strong>Reason 1:</strong> Purity helps with alias analysis</h2>
-<p>The compiler has to assume a non-<code class="prettyprint">pure</code> function could modify any global state:
-</p>
-<ul>
-<li>global variables
-</li>
-<li>heap allocated by impure means
-</li>
-<li>I/O
-</li>
-<li>and so on
-</li>
-</ul>
-<p>Let's say we have a function lacking a <code class="prettyprint">pure</code> annotation.
-</p>
-<pre class="prettyprint"><code>extern(C) int impureFibonacci(int n);
-</code></pre><p>This function gets called.
-</p>
-<pre class="prettyprint"><code>int result = impureFibonacci(8);
-// Any global state could have changed, like allocated heap, global variables, and so on.
-// That's like a barrier for the optimizer.
-</code></pre><p><strong>The compiler must assume any global state could have changed.</strong>
-</p>
-<h2 id="reason-2-pure-is-documentation"> <strong>Reason 2:</strong> <code class="prettyprint">pure</code> is documentation</h2>
-<p>As dreadful as annotation streaks like <code class="prettyprint">pure const nothrow @nogc</code> can be, they <em>are</em> some kind of compiler-enforced documentation.
-</p>
-<h2 id="more-about-purity"> More about purity</h2>
-<ul>
-<li><p><a href="http://klickverbot.at/blog/2012/05/purity-in-d/">Purity in D</a> by David Nadlinger.
-</p>
-</li>
-</ul>
-<p><em>This article was written with the help of</em> <a href="https://github.com/deadalnix">Amaury Sechet</a><em>.</em>
-</p>
-</div><a name="The-impossible-real-time-thread"></a><div class="idiom"><a class="permalink" href="#The-impossible-real-time-thread">Link
-</a><h1 id="the-impossible-real-time-thread">The impossible real-time thread</h1>
-<p>It is often said on Internet forums that D couldn't possibly do real-time work, since <em>its stop-the-world GC might pause every thread at once</em>.
-</p>
-<p><strong>This is wildly inaccurate.</strong> The GC pauses all threads <em>registered to the D runtime</em>.
-</p>
-<p>Real-time threads like audio callbacks are doable since forever. Here is how:
+<pre class="prettyprint"><code>static immutable ushort[64] offsettable =
+    (){
+        ushort[64] t;
+        t[] = 1024;        // Fills the table with 1024
+        t[0] = t[32] = 0;
+        return t;
+    }();
+</code></pre><p><strong>What is happening there?</strong>
 </p>
 <ul>
-<li><p>Use a thread that isn't registered. Such a thread could be created by an external library, or with <code class="prettyprint">core.thread.Thread</code> and then unregistered with <a href="http://dlang.org/phobos/core_thread.html#.thread_detachThis"><code class="prettyprint">thread_detachThis()</code></a>. This moves the thread out of <a href="https://github.com/D-Programming-Language/druntime">druntime</a> supervision: it won't be stopped by the GC, and won't be able to use GC allocations.
+<li><p><code class="prettyprint">(){   /* body */   }</code> is short syntax for a <code class="prettyprint">delegate</code> literal returning <code class="prettyprint">auto</code> with no argument.
 </p>
 </li>
-<li><p>Make the thread function or callback <code class="prettyprint">@nogc</code>. This will enforce you don't use the GC.
+<li><p>So, <code class="prettyprint">(){   /* body */   }()</code> means that we call that <code class="prettyprint">delegate</code> immediately.
+</p>
+</li>
+<li><p>the literal is executed at compile-time, as enforced by <code class="prettyprint">static immutable</code>.
 </p>
 </li>
 </ul>
-<p><strong>Another limitation:</strong> Such a thread must not hold roots to GC objects. What it means is that you <strong>can</strong> use GC objects from the real-time thread, but these GC objects should be pointed to by registered threads to avoid them being collected.
+<p>But why not use <code class="prettyprint">enum</code> for this purpose?
 </p>
-</div><a name="Phobos-gems"></a><div class="idiom"><a class="permalink" href="#Phobos-gems">Link
-</a><h1 id="phobos-gems">Phobos Gems</h1>
-<p>There is no shortage of useful and surprising things in the D standard library.<br/>Here is some of the most useful stuff.
+<h2 id="if-you-must-remember-one-rule-from-this-article"> If you must remember one rule from this article</h2>
+<p><strong>For large constants, prefer using</strong> <code class="prettyprint">static immutable</code> <strong>over</strong> <code class="prettyprint">enum</code><strong>.</strong>
 </p>
-<h2 id="check-recoverable-errors-with-std-exception-enforce"> Check recoverable errors with <code class="prettyprint">std.exception.enforce</code></h2>
-<p>It is good practice to check for unrecoverable errors with <code class="prettyprint">assert</code>, and recoverable errors with <code class="prettyprint">enforce</code>.<br/>Which means you should <a href="#Unrecoverable-vs-recoverable-errors">learn the difference</a> between those two types of errors.
+<p>It's important that <code class="prettyprint">static immutable</code> is used in the previous example instead of just <code class="prettyprint">enum</code>. This will create a constant with an address.
 </p>
-<p>See: <a href="http://dlang.org/phobos/std_exception.html#.enforce">http://dlang.org/phobos/std_exception.html#.enforce</a>
+<p><code class="prettyprint">enum</code> <strong> creates a compile-time only construct.</strong><br/><code class="prettyprint">static immutable</code> <strong> actually puts it in the static data segment.</strong>
 </p>
-<h2 id="explicit-destructor-call-with-object-destroy"> Explicit destructor call with <code class="prettyprint">object.destroy()</code></h2>
-<p>Whenever you want to destroy an object manually, <code class="prettyprint">destroy()</code> is probably what you want.<br/>As a part of <code class="prettyprint">object.d</code>, it is always available.
+<pre class="prettyprint"><code>// This example highlights the difference between "enum" and "static immutable" for constants.
+import std.stdio;
+
+bool amIInCTFE()
+{
+    return __ctfe;
+}
+
+void main()
+{
+    bool                  a = amIInCTFE(); // regular runtime initialization
+    enum bool             b = amIInCTFE(); // forces compile-time evaluation with enum
+    static immutable bool c = amIInCTFE(); // forces compile-time evaluation with static immutable
+
+    writeln(a, " ", &amp;a);   // Prints: "false &lt;address of a&gt;"
+    //writeln(b, " ", &amp;b); // Error: enum declarations have no address
+    writeln(c, " ", &amp;c);   // Prints: "true &lt;address of c&gt;"
+}
+</code></pre><p>Using <code class="prettyprint">enum</code> would duplicate the constant at each call-site, which is inefficient for arrays and may even lead to allocations on use point in the same way than array literals allocate!
 </p>
-<p>See: <a href="http://dlang.org/phobos/object.html#.destroy">http://dlang.org/phobos/object.html#.destroy</a>
+<p>This pre-computed fibonacci example fails to compile:
 </p>
-<h2 id="allocate-a-class-object-on-stack-with-std-typecons-scoped"> Allocate a class object on stack with <code class="prettyprint">std.typecons.scoped</code></h2>
-<p><code class="prettyprint">scoped</code> replaces <code class="prettyprint">new</code> and put a <code class="prettyprint">class</code> object on the stack, with the double benefit of avoiding GC and performing deterministic destruction.
+<pre class="prettyprint"><code>enum int[] fibTable =
+    (){
+        int[] t;
+        t ~= 1;
+        t ~= 1;
+        int precomputedValues = 128;
+        foreach(i; 2..precomputedValues)
+            t ~= t[i - 1] + t[i - 2];
+        return t;
+    }();
+
+
+int fibonacci(int n) pure @nogc
+{
+    if (n &lt; fibTable.length)  // Error: array literal in @nogc function fibonacci may cause GC allocation
+        return fibTable[n];
+    else
+        return fibonacci(n - 1) + fibonacci(n - 2);
+}
+</code></pre><p>For all the other uses of <code class="prettyprint">static</code>, read <a href="#Four-ways-to-use-the-static-keyword-you-may-not-know-about">this article</a>.
 </p>
-<pre class="prettyprint"><code>import std.typecons;
-auto myClass = scoped!MyClass(); // no need for 'new', and automatic destructor call at scope exit.
-</code></pre><p>See: <a href="http://dlang.org/phobos/std_typecons.html#.scoped">http://dlang.org/phobos/std_typecons.html#.scoped</a>
-</p>
-<h2 id="remove-type-qualifiers-with-std-traits-unqual"> Remove type qualifiers with <code class="prettyprint">std.traits.Unqual</code></h2>
-<p><code class="prettyprint">Unqual</code> enables to write template and instantiate them with <code class="prettyprint">const(T)</code>, <code class="prettyprint">immutable(T)</code>, <code class="prettyprint">shared(T)</code>&hellip;
-</p>
-<p>See: <a href="http://dlang.org/phobos/std_traits.html#.Unqual">http://dlang.org/phobos/std_traits.html#.Unqual</a>
-</p>
-<h2 id="convert-a-range-to-a-dynamic-array-with-std-array-array"> Convert a range to a dynamic array with <code class="prettyprint">std.array.array</code></h2>
-<p><code class="prettyprint">array</code> is usually used to convert a range computation to a dynamic array.
-</p>
-<p>See: <a href="http://dlang.org/phobos/std_array.html#.array">http://dlang.org/phobos/std_array.html#.array</a>
-</p>
-<h2 id="more-phobos-gems"> More Phobos gems</h2>
-<ul>
-<li><p><a href="http://nomad.so/2014/08/hidden-treasure-in-the-d-standard-library/">Hidden treasure in the D standard library</a>
-</p>
-</li>
-<li><p><a href="http://nomad.so/2015/08/more-hidden-treasure-in-the-d-standard-library/">http://nomad.so/2015/08/more-hidden-treasure-in-the-d-standard-library/</a>
-</p>
-</li>
-</ul>
 </div><a name="Porting-from-C-gotchas"></a><div class="idiom"><a class="permalink" href="#Porting-from-C-gotchas">Link
 </a><h1 id="porting-from-c-gotchas">Porting from C gotchas</h1>
 <h2 id="globals-must-be-marked-gshared"> Globals must be marked <code class="prettyprint">__gshared</code></h2>
@@ -1640,123 +1695,122 @@ sum(coeff, sizeof(coeff) / sizeof(int));
 void sum(const(int)* array, int n);
 int[16] coeff;
 sum(coeff.ptr, coeff.sizeof / int.sizeof); // array not implicitely convertible to a pointer
-</code></pre></div><a name="Precomputed-tables-at-compile-time-through-CTFE"></a><div class="idiom"><a class="permalink" href="#Precomputed-tables-at-compile-time-through-CTFE">Link
-</a><h1 id="precomputed-tables-at-compile-time-through-ctfe">Precomputed tables at compile-time through CTFE</h1>
-<p>D compilers provide extensive <a href="https://en.wikipedia.org/wiki/Compile_time_function_execution">Compile-Time Function Execution</a>.<br/>This feature allows to easily compute almost anything at compile-time, without using an external program.
+</code></pre></div><a name="Phobos-gems"></a><div class="idiom"><a class="permalink" href="#Phobos-gems">Link
+</a><h1 id="phobos-gems">Phobos Gems</h1>
+<p>There is no shortage of useful and surprising things in the D standard library.<br/>Here is some of the most useful stuff.
 </p>
-<p>Here is an example of a precomputed array from the <a href="https://github.com/d-gamedev-team/gfm">GFM</a> library.
+<h2 id="check-recoverable-errors-with-std-exception-enforce"> Check recoverable errors with <code class="prettyprint">std.exception.enforce</code></h2>
+<p>It is good practice to check for unrecoverable errors with <code class="prettyprint">assert</code>, and recoverable errors with <code class="prettyprint">enforce</code>.<br/>Which means you should <a href="#Unrecoverable-vs-recoverable-errors">learn the difference</a> between those two types of errors.
 </p>
-<pre class="prettyprint"><code>static immutable ushort[64] offsettable =
-    (){
-        ushort[64] t;
-        t[] = 1024;        // Fills the table with 1024
-        t[0] = t[32] = 0;
-        return t;
-    }();
-</code></pre><p><strong>What is happening there?</strong>
+<p>See: <a href="http://dlang.org/phobos/std_exception.html#.enforce">http://dlang.org/phobos/std_exception.html#.enforce</a>
 </p>
+<h2 id="explicit-destructor-call-with-object-destroy"> Explicit destructor call with <code class="prettyprint">object.destroy()</code></h2>
+<p>Whenever you want to destroy an object manually, <code class="prettyprint">destroy()</code> is probably what you want.<br/>As a part of <code class="prettyprint">object.d</code>, it is always available.
+</p>
+<p>See: <a href="http://dlang.org/phobos/object.html#.destroy">http://dlang.org/phobos/object.html#.destroy</a>
+</p>
+<h2 id="allocate-a-class-object-on-stack-with-std-typecons-scoped"> Allocate a class object on stack with <code class="prettyprint">std.typecons.scoped</code></h2>
+<p><code class="prettyprint">scoped</code> replaces <code class="prettyprint">new</code> and put a <code class="prettyprint">class</code> object on the stack, with the double benefit of avoiding GC and performing deterministic destruction.
+</p>
+<pre class="prettyprint"><code>import std.typecons;
+auto myClass = scoped!MyClass(); // no need for 'new', and automatic destructor call at scope exit.
+</code></pre><p>See: <a href="http://dlang.org/phobos/std_typecons.html#.scoped">http://dlang.org/phobos/std_typecons.html#.scoped</a>
+</p>
+<h2 id="remove-type-qualifiers-with-std-traits-unqual"> Remove type qualifiers with <code class="prettyprint">std.traits.Unqual</code></h2>
+<p><code class="prettyprint">Unqual</code> enables to write template and instantiate them with <code class="prettyprint">const(T)</code>, <code class="prettyprint">immutable(T)</code>, <code class="prettyprint">shared(T)</code>&hellip;
+</p>
+<p>See: <a href="http://dlang.org/phobos/std_traits.html#.Unqual">http://dlang.org/phobos/std_traits.html#.Unqual</a>
+</p>
+<h2 id="convert-a-range-to-a-dynamic-array-with-std-array-array"> Convert a range to a dynamic array with <code class="prettyprint">std.array.array</code></h2>
+<p><code class="prettyprint">array</code> is usually used to convert a range computation to a dynamic array.
+</p>
+<p>See: <a href="http://dlang.org/phobos/std_array.html#.array">http://dlang.org/phobos/std_array.html#.array</a>
+</p>
+<h2 id="more-phobos-gems"> More Phobos gems</h2>
 <ul>
-<li><p><code class="prettyprint">(){   /* body */   }</code> is short syntax for a <code class="prettyprint">delegate</code> literal returning <code class="prettyprint">auto</code> with no argument.
+<li><p><a href="http://nomad.so/2014/08/hidden-treasure-in-the-d-standard-library/">Hidden treasure in the D standard library</a>
 </p>
 </li>
-<li><p>So, <code class="prettyprint">(){   /* body */   }()</code> means that we call that <code class="prettyprint">delegate</code> immediately.
-</p>
-</li>
-<li><p>the literal is executed at compile-time, as enforced by <code class="prettyprint">static immutable</code>.
+<li><p><a href="http://nomad.so/2015/08/more-hidden-treasure-in-the-d-standard-library/">http://nomad.so/2015/08/more-hidden-treasure-in-the-d-standard-library/</a>
 </p>
 </li>
 </ul>
-<p>But why not use <code class="prettyprint">enum</code> for this purpose?
+</div><a name="Optimal-AA-lookup"></a><div class="idiom"><a class="permalink" href="#Optimal-AA-lookup">Link
+</a><h1 id="optimal-aa-lookup">Optimal AA lookup</h1>
+<p>When used on an Associative Array, the <code class="prettyprint">in</code> operator returns either a pointer to the searched for element, or <code class="prettyprint">null</code> if not found.
 </p>
-<h2 id="if-you-must-remember-one-rule-from-this-article"> If you must remember one rule from this article</h2>
-<p><strong>For large constants, prefer using</strong> <code class="prettyprint">static immutable</code> <strong>over</strong> <code class="prettyprint">enum</code><strong>.</strong>
+<p>Instead of:
 </p>
-<p>It's important that <code class="prettyprint">static immutable</code> is used in the previous example instead of just <code class="prettyprint">enum</code>. This will create a constant with an address.
+<pre class="prettyprint"><code>key in aa ? aa[key] : ValueType.init;
+</code></pre><p>which perform 2 AA lookups prefer:
 </p>
-<p><code class="prettyprint">enum</code> <strong> creates a compile-time only construct.</strong><br/><code class="prettyprint">static immutable</code> <strong> actually puts it in the static data segment.</strong>
+<pre class="prettyprint"><code>auto ptr = key in aa;
+ptr ? *ptr : ValueType.init;
+</code></pre><p>The <code class="prettyprint">.get</code> builtin property can also be used. It provides a default value when the key doesn't exist.
 </p>
-<pre class="prettyprint"><code>// This example highlights the difference between "enum" and "static immutable" for constants.
-import std.stdio;
-
-bool amIInCTFE()
-{
-    return __ctfe;
-}
-
-void main()
-{
-    bool                  a = amIInCTFE(); // regular runtime initialization
-    enum bool             b = amIInCTFE(); // forces compile-time evaluation with enum
-    static immutable bool c = amIInCTFE(); // forces compile-time evaluation with static immutable
-
-    writeln(a, " ", &amp;a);   // Prints: "false &lt;address of a&gt;"
-    //writeln(b, " ", &amp;b); // Error: enum declarations have no address
-    writeln(c, " ", &amp;c);   // Prints: "true &lt;address of c&gt;"
-}
-</code></pre><p>Using <code class="prettyprint">enum</code> would duplicate the constant at each call-site, which is inefficient for arrays and may even lead to allocations on use point in the same way than array literals allocate!
+<pre class="prettyprint"><code>aa.get(key, defaultValue);
+</code></pre><h2 id="reminder-aas-are-hashmaps-not-balanced-trees"> Reminder: AAs are hashmaps, not balanced trees!</h2>
+<p>Associative arrays in D are akin to C++'s <code class="prettyprint">std::unordered_map</code>, <strong>not</strong> <code class="prettyprint">std::map</code>.
 </p>
-<p>This pre-computed fibonacci example fails to compile:
+<p>See: <a href="https://dlang.org/spec/hash-map.html">https://dlang.org/spec/hash-map.html</a>
 </p>
-<pre class="prettyprint"><code>enum int[] fibTable =
-    (){
-        int[] t;
-        t ~= 1;
-        t ~= 1;
-        int precomputedValues = 128;
-        foreach(i; 2..precomputedValues)
-            t ~= t[i - 1] + t[i - 2];
-        return t;
-    }();
-
-
-int fibonacci(int n) pure @nogc
-{
-    if (n &lt; fibTable.length)  // Error: array literal in @nogc function fibonacci may cause GC allocation
-        return fibTable[n];
-    else
-        return fibonacci(n - 1) + fibonacci(n - 2);
-}
-</code></pre><p>For all the other uses of <code class="prettyprint">static</code>, read <a href="#Four-ways-to-use-the-static-keyword-you-may-not-know-about">this article</a>.
+</div><a name="The-importance-of-being-pure"></a><div class="idiom"><a class="permalink" href="#The-importance-of-being-pure">Link
+</a><h1 id="the-importance-of-being-pure">The importance of being <code class="prettyprint">pure</code></h1>
+<p><code class="prettyprint">pure</code> is a good looking function attribute that unfortunately doesn't seem to provide much value at first sight. On the other hand, who doesn't want to write <code class="prettyprint">pure</code> code?
 </p>
-</div><a name="Qualified-switch-using-with"></a><div class="idiom"><a class="permalink" href="#Qualified-switch-using-with">Link
-</a><h1 id="qualified-switch-using-with">Qualified switch using "with"</h1>
-<p>Let's say we have an enum:
+<p><strong>How can we justify the horizontal space investment in</strong> <code class="prettyprint">pure</code> <strong>annotations?</strong>
 </p>
-<pre class="prettyprint"><code>enum MyEnum
-{
-    small,
-    normal,
-    huge
-}
-</code></pre><p>Switching on an enum value is annoying and redundant: <code class="prettyprint">MyEnum</code> has to be repeated for each case.
+<h2 id="reason-1-purity-helps-with-alias-analysis"> <strong>Reason 1:</strong> Purity helps with alias analysis</h2>
+<p>The compiler has to assume a non-<code class="prettyprint">pure</code> function could modify any global state:
 </p>
-<pre class="prettyprint"><code>final switch(enumValue)
-{
-case MyEnum.small:
-    writeln("small");
-    break;
-case MyEnum.normal:
-    writeln("normal");
-    break;
-case MyEnum.huge:
-    writeln("huge");
-    break;
-}
-</code></pre><p>We can work-around this by using <code class="prettyprint">with</code>:
+<ul>
+<li>global variables
+</li>
+<li>heap allocated by impure means
+</li>
+<li>I/O
+</li>
+<li>and so on
+</li>
+</ul>
+<p>Let's say we have a function lacking a <code class="prettyprint">pure</code> annotation.
 </p>
-<pre class="prettyprint"><code>final switch(enumValue) with (MyEnum)
-{
-case small:
-    writeln("small");
-    break;
-case normal:
-    writeln("normal");
-    break;
-case huge:
-    writeln("huge");
-    break;
-}
-</code></pre><p>This idiom was discovered by <a href="https://github.com/deadalnix">Amaury Sechet</a>.
+<pre class="prettyprint"><code>extern(C) int impureFibonacci(int n);
+</code></pre><p>This function gets called.
+</p>
+<pre class="prettyprint"><code>int result = impureFibonacci(8);
+// Any global state could have changed, like allocated heap, global variables, and so on.
+// That's like a barrier for the optimizer.
+</code></pre><p><strong>The compiler must assume any global state could have changed.</strong>
+</p>
+<h2 id="reason-2-pure-is-documentation"> <strong>Reason 2:</strong> <code class="prettyprint">pure</code> is documentation</h2>
+<p>As dreadful as annotation streaks like <code class="prettyprint">pure const nothrow @nogc</code> can be, they <em>are</em> some kind of compiler-enforced documentation.
+</p>
+<h2 id="more-about-purity"> More about purity</h2>
+<ul>
+<li><p><a href="http://klickverbot.at/blog/2012/05/purity-in-d/">Purity in D</a> by David Nadlinger.
+</p>
+</li>
+</ul>
+<p><em>This article was written with the help of</em> <a href="https://github.com/deadalnix">Amaury Sechet</a><em>.</em>
+</p>
+</div><a name="The-impossible-real-time-thread"></a><div class="idiom"><a class="permalink" href="#The-impossible-real-time-thread">Link
+</a><h1 id="the-impossible-real-time-thread">The impossible real-time thread</h1>
+<p>It is often said on Internet forums that D couldn't possibly do real-time work, since <em>its stop-the-world GC might pause every thread at once</em>.
+</p>
+<p><strong>This is wildly inaccurate.</strong> The GC pauses all threads <em>registered to the D runtime</em>.
+</p>
+<p>Real-time threads like audio callbacks are doable since forever. Here is how:
+</p>
+<ul>
+<li><p>Use a thread that isn't registered. Such a thread could be created by an external library, or with <code class="prettyprint">core.thread.Thread</code> and then unregistered with <a href="http://dlang.org/phobos/core_thread.html#.thread_detachThis"><code class="prettyprint">thread_detachThis()</code></a>. This moves the thread out of <a href="https://github.com/D-Programming-Language/druntime">druntime</a> supervision: it won't be stopped by the GC, and won't be able to use GC allocations.
+</p>
+</li>
+<li><p>Make the thread function or callback <code class="prettyprint">@nogc</code>. This will enforce you don't use the GC.
+</p>
+</li>
+</ul>
+<p><strong>Another limitation:</strong> Such a thread must not hold roots to GC objects. What it means is that you <strong>can</strong> use GC objects from the real-time thread, but these GC objects should be pointed to by registered threads to avoid them being collected.
 </p>
 </div><a name="Eponymous-templates"></a><div class="idiom"><a class="permalink" href="#Eponymous-templates">Link
 </a><h1 id="eponymous-templates">Eponymous templates</h1>
@@ -2280,6 +2334,43 @@ inout(int)[] lastItems(inout(int)[] arr, size_t pivot)
 </p>
 <p>See: <a href="http://code.dlang.org/package-format#version-specs">http://code.dlang.org/package-format#version-specs</a>
 </p>
+</div><a name="What-is-the-difference-between-out-and-ref-parameters&#x3F"></a><div class="idiom"><a class="permalink" href="#What-is-the-difference-between-out-and-ref-parameters&#x3F">Link
+</a><h1 id="what-is-the-difference-between-out-and-ref-parameters">What is the difference between <code class="prettyprint">out</code> and <code class="prettyprint">ref</code> parameters?</h1>
+<p>Both pass parameters by reference. But <code class="prettyprint">out</code> parameters are initialized with <code class="prettyprint">.init</code> at function startup, while <code class="prettyprint">ref</code> parameters aren't.
+</p>
+<pre class="prettyprint"><code>import std.stdio;
+import std.math;
+
+void functionUsingRef(ref float refParam)
+{
+    writeln(refParam);
+}
+
+void functionUsingOut(out float outParam)
+in
+{
+    // Initialization for out parameters happens
+    // before function pre-conditions.
+    assert(isNaN(outParam));
+}
+body
+{
+    writeln(outParam);
+    // Nothing actually forces you to write outParam
+    // but that's what you should normally do.
+    // You can also read it's value.
+}
+
+void main()
+{
+    float x = 2.5f;
+    functionUsingRef(x); // Output: 2.5
+    functionUsingOut(x); // Output: nan
+    writeln(x);          // Output: nan
+}
+
+</code></pre><p><code class="prettyprint">ref</code> and <code class="prettyprint">out</code> are <strong>storage classes</strong>, not <strong>type qualifiers</strong>. They don't belong to the parameter's type.
+</p>
 </div><a name="Throwing-despite-@nogc"></a><div class="idiom"><a class="permalink" href="#Throwing-despite-@nogc">Link
 </a><h1 id="throwing-despite-nogc">Throwing despite <code class="prettyprint">@nogc</code></h1>
 <p> <strong>This trick is a dirty Proof Of Concept. Just never do it.</strong>
@@ -2318,44 +2409,7 @@ You can also throw a mutable exception and catch it as immutable(Exception),
 the whole thing is completely unintegrated with D2's type system.
 Again, it doesn't matter if you catch it or not because the unwinding code will mutate it.
 It's just straight up bad code.
-</code></pre></div><a name="What-is-the-difference-between-out-and-ref-parameters&#x3F"></a><div class="idiom"><a class="permalink" href="#What-is-the-difference-between-out-and-ref-parameters&#x3F">Link
-</a><h1 id="what-is-the-difference-between-out-and-ref-parameters">What is the difference between <code class="prettyprint">out</code> and <code class="prettyprint">ref</code> parameters?</h1>
-<p>Both pass parameters by reference. But <code class="prettyprint">out</code> parameters are initialized with <code class="prettyprint">.init</code> at function startup, while <code class="prettyprint">ref</code> parameters aren't.
-</p>
-<pre class="prettyprint"><code>import std.stdio;
-import std.math;
-
-void functionUsingRef(ref float refParam)
-{
-    writeln(refParam);
-}
-
-void functionUsingOut(out float outParam)
-in
-{
-    // Initialization for out parameters happens
-    // before function pre-conditions.
-    assert(isNaN(outParam));
-}
-body
-{
-    writeln(outParam);
-    // Nothing actually forces you to write outParam
-    // but that's what you should normally do.
-    // You can also read it's value.
-}
-
-void main()
-{
-    float x = 2.5f;
-    functionUsingRef(x); // Output: 2.5
-    functionUsingOut(x); // Output: nan
-    writeln(x);          // Output: nan
-}
-
-</code></pre><p><code class="prettyprint">ref</code> and <code class="prettyprint">out</code> are <strong>storage classes</strong>, not <strong>type qualifiers</strong>. They don't belong to the parameter's type.
-</p>
-</div><a name="How-does-D-improve-on-C++17&#63;"></a><div class="idiom"><a class="permalink" href="#How-does-D-improve-on-C++17&#63;">Link
+</code></pre></div><a name="How-does-D-improve-on-C++17&#63;"></a><div class="idiom"><a class="permalink" href="#How-does-D-improve-on-C++17&#63;">Link
 </a><h1 id="how-does-d-improve-on-c-17">How does D improve on C++17?</h1>
 <p><strong>Warning: this post is opinionated.</strong>
 </p>
