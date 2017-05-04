@@ -21,8 +21,8 @@ template isVolcano(S)
 
 template hasMagma(S)
 {
-    enum bool hasDuration = is(typeof(
-        (inout int = 0)
+    enum bool hasMagma = is(typeof(
+        ()
         {
             S s = S.init;
             int d = s.magma; // need a magma property
