@@ -408,7 +408,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title">Idioms for the D Programming Language
 </div></header><nav><div class="item-nav"><a href="#Is-this-available-at-compile-time-or-runtime&#63;">Is this available at compile-time or runtime&#63;
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Apr 19<span class="sub">th</span> 2017
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified May 4<span class="sub">th</span> 2017, created Apr 19<span class="sub">th</span> 2017
 </span></div><div class="item-nav"><a href="#Differences-in-integer-handling-vs-C">Differences in integer handling vs C
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Apr 18<span class="sub">th</span> 2017, created Feb 14<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#Slices-.capacity,-the-mysterious-property">Slices .capacity, the mysterious property
@@ -575,8 +575,8 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 
 template hasMagma(S)
 {
-    enum bool hasDuration = is(typeof(
-        (inout int = 0)
+    enum bool hasMagma = is(typeof(
+        ()
         {
             S s = S.init;
             int d = s.magma; // need a magma property
