@@ -141,12 +141,12 @@ void main(string[] args)
                     pop;
                 pop;
                 push("body");
-                    write(`<script>`
-`(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){`
-`(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),`
-`m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)`
-`})(window,document,'script','//www.google-analytics.com/analytics.js','ga');`
-`ga('create', 'UA-71912218-1', 'auto');`
+                    write(`<script>`~
+`(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){`~
+`(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),`~
+`m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)`~
+`})(window,document,'script','//www.google-analytics.com/analytics.js','ga');`~
+`ga('create', 'UA-71912218-1', 'auto');`~
 `ga('send', 'pageview');</script>`);
 
                     writeln("<script src=\"highlight.pack.js\"></script>");
@@ -187,8 +187,6 @@ void main(string[] args)
                             pop;
                         }
                     pop;
-                    writeln("<a href=\"https://github.com/p0nce/d-idioms/\"><img style=\"position: absolute; top: 0; right: 0; border: 0;\" src=\"https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67\" alt=\"Fork me on GitHub\" data-canonical-src=\"https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png\"></a>");
-
 
                      push("footer");
 
@@ -207,9 +205,9 @@ void main(string[] args)
                                     `The truth took years to unfold. I had skipped the learning phase because of this perceived familiarity. But D is a language of its own that needs dedicated learning like any other. I had to expand my "subset of confidence", feature by feature.<br><br>`~
 
                                     `This unexpected difficulty is aggravated by the fact information is scattered in different places (wiki, language documentation, D specification, D forums...).`~
-                                    `Sometimes valuable information can be hard to come by. It doesn't help that some of the resources implicitely assume that your time has little value.<br><br>`
+                                    `Sometimes valuable information can be hard to come by. It doesn't help that some of the resources implicitely assume that your time has little value.<br><br>`~
 
-                                    `d-idioms is for: library talk, language explanations, and useful or devious code snippets.<br><br>`
+                                    `d-idioms is for: library talk, language explanations, and useful or devious code snippets.<br><br>`~
 
                                     `This website is for the busy developer who doesn't have the time to learn languages in depth.<br><br> <strong>d-idioms expands the subset of D you feel comfortable with, quickly. `~
                                     `This is a pragmatic page, about a pragmatic language, for pragmatic programmers.</strong><br><br>`);
@@ -221,7 +219,7 @@ void main(string[] args)
 
                         push("p");
                             writeln(`Hi, I'm Guillaume Piolat, I make real-time audio processing software with D at <a href="https://www.auburnsounds.com">Auburn Sounds</a>. `~
-                                    `<br> Looking for a developer? I'm also available for consulting. You can find my portfolio <a href="http://guillaumepiolat.fr/">here</a>. `
+                                    `<br> Looking for a developer? I'm also available for consulting. You can find my portfolio <a href="http://guillaumepiolat.fr/">here</a>. `~
                                     `<br> I hope this site is as useful for you to read, as it was for me to write!`);
                         pop();
 
