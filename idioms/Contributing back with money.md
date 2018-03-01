@@ -11,13 +11,13 @@ While the D phenomenon relies primarily on benevolent effort, a bit of money can
 
 The D Language Foundation is a 501(c) non-profit public charity devoted to advancing open source technology related to the D programming language.
 
-https://dlang.org/foundation/donate.html
+[https://dlang.org/foundation/donate.html](https://dlang.org/foundation/donate.html)
 
 A one-stop shop for pushing the interests of the D world at large.
 
 
 ## Patreons
 
-- Adam D. Ruppe is the creator of the awesome http://dpldocs.info/ (online and fast documentation for any DUB package) and author of D Cookbook. https://www.patreon.com/adam_d_ruppe/overview
+- Adam D. Ruppe is the creator of the awesome [http://dpldocs.info/](http://dpldocs.info/) (online and fast documentation for any DUB package) and author of D Cookbook. [https://www.patreon.com/adam_d_ruppe/overview](https://www.patreon.com/adam_d_ruppe/overview)
 
 *Let us know if you identify other ecosystem contributors with a Patreon.*
