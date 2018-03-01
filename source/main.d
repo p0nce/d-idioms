@@ -156,7 +156,6 @@ void main(string[] args)
                         push("img", "id=\"logo\" src=\"d-logo.svg\"");
                         pop;
 
-
                         push("div", "id=\"title-container\"");
                             push("div", "id=\"title\"");
                                 writeln("Idioms for the D Programming Language");
