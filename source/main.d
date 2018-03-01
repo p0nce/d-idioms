@@ -137,7 +137,7 @@ void main(string[] args)
                     writeln("<link href='//fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>");
 
                     push("title");
-                    write("d-idioms - Idioms for the D programming language");
+                    write("d-idioms - Idioms for the D programming language");                        
                     pop;
                 pop;
                 push("body");
@@ -155,9 +155,17 @@ void main(string[] args)
                     push("header");
                         push("img", "id=\"logo\" src=\"d-logo.svg\"");
                         pop;
-                        push("div", "id=\"title\"");
-                            writeln("Idioms for the D Programming Language");
-                        pop();
+
+
+                        push("div", "id=\"title-container\"");
+                            push("div", "id=\"title\"");
+                                writeln("Idioms for the D Programming Language");
+                                write("<br>");
+                                push("div", "id=\"sub-title\"");
+                                    write("<b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.");
+                                pop;
+                            pop();
+                        pop;
                     pop;
 
                     push("nav");
@@ -218,8 +226,7 @@ void main(string[] args)
                         pop;
 
                         push("p");
-                            writeln(`Hi, I'm Guillaume Piolat, I make real-time audio processing software with D at <a href="https://www.auburnsounds.com">Auburn Sounds</a>. `~
-                                    `<br> Looking for a developer? I'm also available for consulting. You can find my portfolio <a href="http://guillaumepiolat.fr/">here</a>. `~
+                            writeln(`Hi, I'm Guillaume Piolat, I make professional audio plug-ins with D at <a href="https://www.auburnsounds.com">Auburn Sounds</a>. `~
                                     `<br> I hope this site is as useful for you to read, as it was for me to write!`);
                         pop();
 
