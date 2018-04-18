@@ -43,11 +43,11 @@ That makes `debug` remarkedly similar to... `version`.
 
 ## `debug` is indeed strikingly similar to `version`
 
-The only **2 differences** between `-debug` and `-version` are:
+The **2 key differences** between `-debug` and `-version` are:
 
-- Semantic: `version`is for software features, and `debug` is to enable logging, information, statistics... about programs with no user-facing effect.
+- Semantic: `version` is for software features, and `debug` is to enable logging/information/statistics... about programs with no user-facing effect.
 
-- Quick printf-debugging: under a `debug` clause, you don't have to follow `pure`, `nothrow`, `@nogc` or `@safe`.
+- Quick printf-debugging: under a `debug` clause, you don't have to follow `pure`, `nothrow`, `@nogc` or `@safe`. It's a special case in the compiler to enable debug logging.
 
 
-See: [https://dlang.org/dmd-windows.html#switch-debug](https://dlang.org/dmd-windows.html#switch-debug)
+Read more about `-debug`: [https://dlang.org/dmd-windows.html#switch-debug](https://dlang.org/dmd-windows.html#switch-debug)
