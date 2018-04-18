@@ -49,5 +49,7 @@ The **2 key differences** between `-debug` and `-version` are:
 
 - Quick printf-debugging: under a `debug` clause, you don't have to follow `pure`, `nothrow`, `@nogc` or `@safe`. It's a special case in the compiler to enable debug logging.
 
+**Breaking** `pure`/`@nogc`/`nothrow`/`@safe` **with** `-debug` **is Undefined Behaviour**, though in most cases it will work just fine and you don't have to worry. Just **don't ship code with -debug** enabled.
+
 
 Read more about `-debug`: [https://dlang.org/dmd-windows.html#switch-debug](https://dlang.org/dmd-windows.html#switch-debug)
