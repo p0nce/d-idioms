@@ -2,6 +2,8 @@
 Static arrays are value types
 =============================
 
+_(Note: on this whole website, with "static arrays" we mean fixed-size arrays, not arrays declared with_ `static`_)._
+
 It's important to note that D static arrays are value types.
 
 ```
@@ -43,4 +45,5 @@ void main()
 }
 ```
 
+One of the oddities about static arrays is that [you can't `new` them](#One-does-not-simply-call-new-for-static-arrays).
 
