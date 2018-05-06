@@ -1,6 +1,6 @@
-==========================
-Type qualifiers and slices
-==========================
+===================================
+Type qualifiers and slices creation
+===================================
 
 When a slice is created with `new` and a type qualifier, the qualifier applies to _pointed elements_ 
 instead of the whole slice as would be expected.
