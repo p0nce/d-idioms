@@ -9,27 +9,21 @@ While the D phenomenon relies primarily on benevolent effort, a bit of money can
 
 ## The D Foundation
 
-The D Language Foundation is a 501(c) non-profit public charity devoted to advancing open source technology related to the D programming language.
-
-[https://dlang.org/foundation/donate.html](https://dlang.org/foundation/donate.html)
+The [D Language Foundation](https://dlang.org/foundation/donate.html) is a 501(c) non-profit public charity devoted to advancing open source technology related to the D programming language.
 
 A one-stop shop for pushing the interests of the D world at large.
 
+
 ## LDC
 
-The LDC project is pivotal to many D companies that profit from top performance.
-If you are one of them, consider giving back to this critical infrastructure 
-piece that makes your product exist in the first place.
-
-[https://github.com/ldc-developers/ldc](https://github.com/ldc-developers/ldc)
-
-
+[The LDC project](https://github.com/ldc-developers/ldc) is pivotal to many D companies that profit from top performance.
+If you are one of them, consider giving back to this critical infrastructure piece that makes your product _possible_ in the first place.
 
 
 ## Solo developers
 
 - Adam D. Ruppe is the creator of the awesome [http://dpldocs.info/](http://dpldocs.info/) (online and fast documentation for any DUB package) and author of D Cookbook. [https://www.patreon.com/adam_d_ruppe/overview](https://www.patreon.com/adam_d_ruppe/overview)
 
-- Basile B creates Coedit, an IDE specially purposed for D (donation link on the Github page): https://github.com/BBasile/Coedit
+- Basile B creates [Coedit](https://github.com/BBasile/Coedit), an IDE specially purposed for D (donation link on the Github page).
 
-*Let us know if you identify other ecosystem contributors with a Patreon.*
+*Let us know if you identify other ecosystem contributors with a donation link!*
