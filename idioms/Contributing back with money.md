@@ -13,6 +13,8 @@ The [D Language Foundation](https://dlang.org/foundation/donate.html) is a 501(c
 
 A one-stop shop for pushing the interests of the D world at large.
 
+You can contribute for free through Amazon Smile! [https://forum.dlang.org/thread/pikn41$u9q$1@digitalmars.com](https://forum.dlang.org/thread/pikn41$u9q$1@digitalmars.com)
+
 
 ## LDC
 
