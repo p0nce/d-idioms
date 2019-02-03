@@ -19,13 +19,15 @@ You can contribute for free through Amazon Smile! [https://forum.dlang.org/threa
 ## LDC
 
 [The LDC project](https://github.com/ldc-developers/ldc) is pivotal to many D companies that profit from top performance.
-If you are one of them, consider giving back to this critical infrastructure piece that makes your product _possible_ in the first place.
+If you are one of them, consider giving back to this critical piece of infrastructure...
 
 
 ## Solo developers
 
-- Adam D. Ruppe is the creator of the awesome [http://dpldocs.info/](http://dpldocs.info/) (online and fast documentation for any DUB package) and author of D Cookbook. [https://www.patreon.com/adam_d_ruppe/overview](https://www.patreon.com/adam_d_ruppe/overview)
+- Adam D. Ruppe is the creator of [http://dpldocs.info/](http://dpldocs.info/) (online and fast documentation for any DUB package) and author of D Cookbook. [https://www.patreon.com/adam_d_ruppe/overview](https://www.patreon.com/adam_d_ruppe/overview)
 
 - Basile B creates [Coedit](https://github.com/BBasile/Coedit), an IDE specially purposed for D (donation link on the Github page).
+
+- WebFreak creates [code-d](https://marketplace.visualstudio.com/items?itemName=webfreak.code-d#overview) a Visual Studio Code extension for dlang: [https://www.patreon.com/WebFreak/overview](https://www.patreon.com/WebFreak/overview)
 
 *Let us know if you identify other ecosystem contributors with a donation link!*
