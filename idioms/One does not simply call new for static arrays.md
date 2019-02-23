@@ -31,18 +31,46 @@ Doesn't that sound like an inconsistency? Something that would have to be **expl
 
 ## Why?
 
-The reasoning for `new` and static arrays was probably that you never really want to allocate a static array on the heap *and then get a raw pointer on that memory*.
-It could as well be a slice with little to no speed loss.
+The reasoning for `new` and static arrays was probably that you rarely really want to allocate a static
+array on the heap; it could just as well be a slice.
 
 **So there is no syntax to do this**.
-When you do write `new int[4]` this will instead return a `int[]` _slice_ with a length of 4. 
-Like all slices it comes with a length, which is safer.
+When you do write `new int[4]` this will instead return an `int[]` _slice_ with a length of 4, which adds
+the benefits of dynamic arrays.
 
 ```
 writeln(typeof(new int[4]).stringof); // output: "int[]"
-writeln((new int[4]).length); // output: "4"
+
+auto arr = new int[4];
+writeln(arr.length); // output: "4"
+arr ~= 42;
+writeln(arr.length); // output: "5"
 ```
 
 So far, so good. 
 
 [It gets weirder](#Type-qualifiers-and-slices-creation) whenever `shared`, `const` and `immutable` get introduced...
+
+## Do it anyway
+
+If for some reason you really need a _static_ array allocated on the heap instead of a slice, you can do it
+anyway by using `std.experimental.allocator` (or its DUB equivalent
+[stdx-allocator](https://code.dlang.org/packages/stdx-allocator)):
+
+```
+import std.experimental.allocator;
+
+void main()
+{
+    alias T = int[4];
+
+ // T* t = new T;                 // Won't work.
+    T* t = theAllocator.make!T;   // Fine!
+    assert((*t).length == 4);     // Safe too.
+
+    (*t)[1] = 42;                 // Needs pointer dereference and parentheses before use.
+    assert(*t == [0, 42, 0, 0]);  // Features default initialization.
+    
+ // (*t) ~= 43; // Error: cannot append type int to type int[4]
+}
+```
