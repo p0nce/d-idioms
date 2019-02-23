@@ -413,9 +413,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <title>d-idioms - Idioms for the D programming language</title></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-71912218-1', 'auto');ga('send', 'pageview');</script><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title-container"><div id="title">Idioms for the D Programming Language
-<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#Inside-the-D-Object-Model">Inside the D Object Model
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Feb 3<span class="sub">rd</span> 2019
-</span></div><div class="item-nav"><a href="#Contributing-back-with-money">Contributing back with money
+<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#Contributing-back-with-money">Contributing back with money
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Feb 3<span class="sub">rd</span> 2019, created Mar 1<span class="sub">st</span> 2018
 </span></div><div class="item-nav"><a href="#Working-with-files">Working with files
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Sep 25<span class="sub">th</span> 2018, created Oct 4<span class="sub">th</span> 2015
@@ -429,6 +427,8 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified May 6<span class="sub">th</span> 2018, created Jan 10<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#So-what-does--debug-do,-exactly&#63;">So what does -debug do, exactly&#63;
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Apr 18<span class="sub">th</span> 2018
+</span></div><div class="item-nav"><a href="#Inside-the-D-object-model">Inside the D object model
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Feb 9<span class="sub">th</span> 2018
 </span></div><div class="item-nav"><a href="#Differences-in-integer-handling-vs-C">Differences in integer handling vs C
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Feb 9<span class="sub">th</span> 2018, created Feb 14<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#Games-made-with-D">Games made with D
@@ -569,15 +569,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 8<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 7<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
-</span></div></nav><div class="container"><a name="Inside-the-D-Object-Model"></a><div class="idiom"><a class="permalink" href="#Inside-the-D-Object-Model">Link
-</a><h1 id="inside-the-d-object-model">Inside the D Object Model</h1>
-<p>How are inheritance and multiple interfaces implemented?
-</p>
-<p>This blog post by Mathis Beer explains the layout of "Single Inheritance Multiple Interfaces" objects, with graphics:<br/><a href="https://feepingcreature.github.io/oop.html">https://feepingcreature.github.io/oop.html</a>
-</p>
-<p><strong>TL;DR: For each interface implemented by a class instance, there is a hidden field. That field pointing to the corresponding v-table subset.</strong> 
-</p>
-</div><a name="Contributing-back-with-money"></a><div class="idiom"><a class="permalink" href="#Contributing-back-with-money">Link
+</span></div></nav><div class="container"><a name="Contributing-back-with-money"></a><div class="idiom"><a class="permalink" href="#Contributing-back-with-money">Link
 </a><h1 id="contributing-back-with-money">Contributing back with money</h1>
 <p>While the D phenomenon relies primarily on benevolent effort, a bit of money can go a long way towards enhancing documentation, supporting libraries, compilers and IDEs.
 </p>
@@ -791,6 +783,14 @@ else
 <p><strong>Breaking</strong> <code class="prettyprint">pure</code>/<code class="prettyprint">@nogc</code>/<code class="prettyprint">nothrow</code>/<code class="prettyprint">@safe</code> <strong>with</strong> <code class="prettyprint">-debug</code> <strong>is Undefined Behaviour</strong>, though in most cases it will work just fine and you don't have to worry. Just <strong>don't ship code with -debug</strong> enabled.
 </p>
 <p>Read more about <code class="prettyprint">-debug</code>: <a href="https://dlang.org/dmd-windows.html#switch-debug">https://dlang.org/dmd-windows.html#switch-debug</a>
+</p>
+</div><a name="Inside-the-D-object-model"></a><div class="idiom"><a class="permalink" href="#Inside-the-D-object-model">Link
+</a><h1 id="inside-the-d-object-model">Inside the D Object Model</h1>
+<p>How are inheritance and multiple interfaces implemented?
+</p>
+<p>This blog post by Mathis Beer explains the layout of "Single Inheritance Multiple Interfaces" objects, with graphics:<br/><a href="https://feepingcreature.github.io/oop.html">https://feepingcreature.github.io/oop.html</a>
+</p>
+<p><strong>TL;DR: For each interface implemented by a class instance, there is a hidden field. That field pointing to the corresponding v-table subset.</strong> 
 </p>
 </div><a name="Differences-in-integer-handling-vs-C"></a><div class="idiom"><a class="permalink" href="#Differences-in-integer-handling-vs-C">Link
 </a><h1 id="differences-in-integer-handling-vs-c">Differences in integer handling vs C</h1>
