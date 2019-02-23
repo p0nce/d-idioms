@@ -661,9 +661,7 @@ void main(string[] args)
 </a><h1 id="one-does-not-simply-call-new-for-static-arrays">One does not simply call <code class="prettyprint">new</code> for static arrays</h1>
 <p>It just happens that in D you can't use <code class="prettyprint">new</code> to get a pointer to a newly allocated static array.
 </p>
-<pre class="prettyprint"><code>import std.stdio;
-
-void main(string[] args)
+<pre class="prettyprint"><code>void main()
 {
     alias T = int[4];
 
@@ -675,9 +673,7 @@ void main(string[] args)
 </p>
 <p><strong>Unrelated:</strong> actually the compiler is lying a bit, since it is possible to allocate a single (builtin type) value on the heap:
 </p>
-<pre class="prettyprint"><code>import std.stdio;
-
-void main(string[] args)
+<pre class="prettyprint"><code>void main()
 {
     int* p = new int;  // Works
 }

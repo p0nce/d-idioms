@@ -5,9 +5,7 @@ One does not simply call `new` for static arrays
 It just happens that in D you can't use `new` to get a pointer to a newly allocated static array.
 
 ```
-import std.stdio;
-
-void main(string[] args)
+void main()
 {
     alias T = int[4];
 
@@ -22,9 +20,7 @@ _"You can only call new with structs, dynamic arrays, and class objects"_ says t
 **Unrelated:** actually the compiler is lying a bit, since it is possible to allocate a single (builtin type) value on the heap:
 
 ```
-import std.stdio;
-
-void main(string[] args)
+void main()
 {
     int* p = new int;  // Works
 }
