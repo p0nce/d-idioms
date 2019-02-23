@@ -589,12 +589,12 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 {
     int* p = new int;  // Works
 }
-</code></pre><p>But this can't be with static arrays, despite them being <a href="#Static-arrays-are-value-types">value types</a>.<br/>Doesn't that sound like an inconsistency? Something that would have to be <strong>explained.</strong>
+</code></pre><p>But this can't be with static arrays, despite them being <a href="#Static-arrays-are-value-types">value types</a>. Doesn't that sound like an inconsistency? Something that would have to be <strong>explained.</strong>
 </p>
 <h2 id="why"> Why?</h2>
-<p>The reasoning for <code class="prettyprint">new</code> and static arrays was probably that you rarely really want to allocate a static<br/>array on the heap; it could just as well be a slice.
+<p>The reasoning for <code class="prettyprint">new</code> and static arrays was probably that you rarely really want to allocate a static array on the heap; it could just as well be a slice.
 </p>
-<p><strong>So there is no syntax to do this</strong>.<br/>When you do write <code class="prettyprint">new int[4]</code> this will instead return an <code class="prettyprint">int[]</code> <em>slice</em> with a length of 4, which adds<br/>the benefits of dynamic arrays.
+<p><strong>So there is no syntax to do this</strong>.<br/>When you do write <code class="prettyprint">new int[4]</code> this will instead return an <code class="prettyprint">int[]</code> <em>slice</em> with a length of 4, which adds the benefits of dynamic arrays.
 </p>
 <pre class="prettyprint"><code>writeln(typeof(new int[4]).stringof); // output: "int[]"
 
@@ -607,7 +607,7 @@ writeln(arr.length); // output: "5"
 <p><a href="#Type-qualifiers-and-slices-creation">It gets weirder</a> whenever <code class="prettyprint">shared</code>, <code class="prettyprint">const</code> and <code class="prettyprint">immutable</code> get introduced...
 </p>
 <h2 id="do-it-anyway"> Do it anyway</h2>
-<p>If for some reason you really need a <em>static</em> array allocated on the heap instead of a slice, you can do it<br/>anyway by using <code class="prettyprint">std.experimental.allocator</code> (or its DUB equivalent<br/><a href="https://code.dlang.org/packages/stdx-allocator">stdx-allocator</a>):
+<p>If for some reason you really need a <em>static</em> array allocated on the heap instead of a slice, you can do it anyway by using <code class="prettyprint">std.experimental.allocator</code> (or its DUB equivalent <a href="https://code.dlang.org/packages/stdx-allocator">stdx-allocator</a>):
 </p>
 <pre class="prettyprint"><code>import std.experimental.allocator;
 

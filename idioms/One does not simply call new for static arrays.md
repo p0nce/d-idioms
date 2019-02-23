@@ -26,17 +26,14 @@ void main()
 }
 ```
 
-But this can't be with static arrays, despite them being [value types](#Static-arrays-are-value-types).
-Doesn't that sound like an inconsistency? Something that would have to be **explained.**
+But this can't be with static arrays, despite them being [value types](#Static-arrays-are-value-types). Doesn't that sound like an inconsistency? Something that would have to be **explained.**
 
 ## Why?
 
-The reasoning for `new` and static arrays was probably that you rarely really want to allocate a static
-array on the heap; it could just as well be a slice.
+The reasoning for `new` and static arrays was probably that you rarely really want to allocate a static array on the heap; it could just as well be a slice.
 
 **So there is no syntax to do this**.
-When you do write `new int[4]` this will instead return an `int[]` _slice_ with a length of 4, which adds
-the benefits of dynamic arrays.
+When you do write `new int[4]` this will instead return an `int[]` _slice_ with a length of 4, which adds the benefits of dynamic arrays.
 
 ```
 writeln(typeof(new int[4]).stringof); // output: "int[]"
@@ -53,9 +50,7 @@ So far, so good.
 
 ## Do it anyway
 
-If for some reason you really need a _static_ array allocated on the heap instead of a slice, you can do it
-anyway by using `std.experimental.allocator` (or its DUB equivalent
-[stdx-allocator](https://code.dlang.org/packages/stdx-allocator)):
+If for some reason you really need a _static_ array allocated on the heap instead of a slice, you can do it anyway by using `std.experimental.allocator` (or its DUB equivalent [stdx-allocator](https://code.dlang.org/packages/stdx-allocator)):
 
 ```
 import std.experimental.allocator;
