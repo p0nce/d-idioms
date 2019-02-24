@@ -33,7 +33,7 @@ But this can't be with static arrays, despite them being [value types](#Static-a
 The reasoning for `new` and static arrays was probably that you rarely really want to allocate a static array on the heap; it could just as well be a slice.
 
 **So there is no syntax to do this**.
-When you do write `new int[4]` this will instead return an `int[]` _slice_ with a length of 4, which adds the benefits of dynamic arrays.
+When you do write `new int[4]` this will instead return an `int[]` _slice_ with a length of 4, which adds the benefits of holding a length.
 
 ```
 writeln(typeof(new int[4]).stringof); // output: "int[]"
@@ -69,3 +69,5 @@ void main()
  // (*t) ~= 43; // Error: cannot append type int to type int[4]
 }
 ```
+
+_This idiom got some help from Bastiaan Veelo._
