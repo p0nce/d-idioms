@@ -50,4 +50,4 @@ See: [http://dlang.org/phobos/std_array.html#.array](http://dlang.org/phobos/std
 
 - [Hidden treasure in the D standard library](http://nomad.so/2014/08/hidden-treasure-in-the-d-standard-library/)
 
-- [http://nomad.so/2015/08/more-hidden-treasure-in-the-d-standard-library/](http://nomad.so/2015/08/more-hidden-treasure-in-the-d-standard-library/)
+- [http://nomad.uk.net/articles/more-hidden-treasure-in-the-d-standard-library.html](http://nomad.uk.net/articles/more-hidden-treasure-in-the-d-standard-library.html)
