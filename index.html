@@ -413,7 +413,11 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <title>d-idioms - Idioms for the D programming language</title></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-71912218-1', 'auto');ga('send', 'pageview');</script><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title-container"><div id="title">Idioms for the D Programming Language
-<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#Parallel-foreach">Parallel foreach
+<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#Don't-use-@property">Don't use @property
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created May 11<span class="sub">th</span> 2019
+</span></div><div class="item-nav"><a href="#Phobos-gems">Phobos gems
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Mar 14<span class="sub">th</span> 2019, created Jan 17<span class="sub">th</span> 2015
+</span></div><div class="item-nav"><a href="#Parallel-foreach">Parallel foreach
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Mar 3<span class="sub">rd</span> 2019
 </span></div><div class="item-nav"><a href="#Unittests-with-optimizations-&#x3A-the-Final-Frontier">Unittests with optimizations &#x3A the Final Frontier
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Mar 3<span class="sub">rd</span> 2019
@@ -431,8 +435,6 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified May 6<span class="sub">th</span> 2018, created Jan 10<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#So-what-does--debug-do,-exactly&#63;">So what does -debug do, exactly&#63;
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Apr 18<span class="sub">th</span> 2018
-</span></div><div class="item-nav"><a href="#Inside-the-D-object-model">Inside the D object model
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Feb 9<span class="sub">th</span> 2018
 </span></div><div class="item-nav"><a href="#Differences-in-integer-handling-vs-C">Differences in integer handling vs C
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Feb 9<span class="sub">th</span> 2018, created Feb 14<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#Games-made-with-D">Games made with D
@@ -467,8 +469,6 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Sep 4<span class="sub">th</span> 2016, created Jan 26<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#Optimal-AA-lookup">Optimal AA lookup
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 10<span class="sub">th</span> 2015
-</span></div><div class="item-nav"><a href="#Phobos-gems">Phobos gems
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 17<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Porting-from-C-gotchas">Porting from C gotchas
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 11<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Precomputed-tables-at-compile-time-through-CTFE">Precomputed tables at compile-time through CTFE
@@ -573,7 +573,53 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 8<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 7<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
-</span></div></nav><div class="container"><a name="Parallel-foreach"></a><div class="idiom"><a class="permalink" href="#Parallel-foreach">Link
+</span></div></nav><div class="container"><a name="Don't-use-@property"></a><div class="idiom"><a class="permalink" href="#Don't-use-@property">Link
+</a><h1 id="don-t-use-property">Don't use @property</h1>
+<p>The current agreement on best practices with regards to <code class="prettyprint">@property</code> is to <strong>not use it.</strong>
+</p>
+<p><code class="prettyprint">@property</code> does very little and you can always avoid it.
+</p>
+</div><a name="Phobos-gems"></a><div class="idiom"><a class="permalink" href="#Phobos-gems">Link
+</a><h1 id="phobos-gems">Phobos Gems</h1>
+<p>There is no shortage of useful and surprising things in the D standard library.<br/>Here is some of the most useful stuff.
+</p>
+<h2 id="check-recoverable-errors-with-std-exception-enforce"> Check recoverable errors with <code class="prettyprint">std.exception.enforce</code></h2>
+<p>It is good practice to check for unrecoverable errors with <code class="prettyprint">assert</code>, and recoverable errors with <code class="prettyprint">enforce</code>.<br/>Which means you should <a href="#Unrecoverable-vs-recoverable-errors">learn the difference</a> between those two types of errors.
+</p>
+<p>See: <a href="http://dlang.org/phobos/std_exception.html#.enforce">http://dlang.org/phobos/std_exception.html#.enforce</a>
+</p>
+<h2 id="explicit-destructor-call-with-object-destroy"> Explicit destructor call with <code class="prettyprint">object.destroy()</code></h2>
+<p>Whenever you want to destroy an object manually, <code class="prettyprint">destroy()</code> is probably what you want.<br/>As a part of <code class="prettyprint">object.d</code>, it is always available.
+</p>
+<p>See: <a href="http://dlang.org/phobos/object.html#.destroy">http://dlang.org/phobos/object.html#.destroy</a>
+</p>
+<h2 id="allocate-a-class-object-on-stack-with-std-typecons-scoped"> Allocate a class object on stack with <code class="prettyprint">std.typecons.scoped</code></h2>
+<p><code class="prettyprint">scoped</code> replaces <code class="prettyprint">new</code> and put a <code class="prettyprint">class</code> object on the stack, with the double benefit of avoiding GC and performing deterministic destruction.
+</p>
+<pre class="prettyprint"><code>import std.typecons;
+auto myClass = scoped!MyClass(); // no need for 'new', and automatic destructor call at scope exit.
+</code></pre><p>See: <a href="http://dlang.org/phobos/std_typecons.html#.scoped">http://dlang.org/phobos/std_typecons.html#.scoped</a>
+</p>
+<h2 id="remove-type-qualifiers-with-std-traits-unqual"> Remove type qualifiers with <code class="prettyprint">std.traits.Unqual</code></h2>
+<p><code class="prettyprint">Unqual</code> enables to write template and instantiate them with <code class="prettyprint">const(T)</code>, <code class="prettyprint">immutable(T)</code>, <code class="prettyprint">shared(T)</code>&hellip;
+</p>
+<p>See: <a href="http://dlang.org/phobos/std_traits.html#.Unqual">http://dlang.org/phobos/std_traits.html#.Unqual</a>
+</p>
+<h2 id="convert-a-range-to-a-dynamic-array-with-std-array-array"> Convert a range to a dynamic array with <code class="prettyprint">std.array.array</code></h2>
+<p><code class="prettyprint">array</code> is usually used to convert a range computation to a dynamic array.
+</p>
+<p>See: <a href="http://dlang.org/phobos/std_array.html#.array">http://dlang.org/phobos/std_array.html#.array</a>
+</p>
+<h2 id="more-phobos-gems"> More Phobos gems</h2>
+<ul>
+<li><p><a href="http://nomad.so/2014/08/hidden-treasure-in-the-d-standard-library/">Hidden treasure in the D standard library</a>
+</p>
+</li>
+<li><p><a href="http://nomad.uk.net/articles/more-hidden-treasure-in-the-d-standard-library.html">http://nomad.uk.net/articles/more-hidden-treasure-in-the-d-standard-library.html</a>
+</p>
+</li>
+</ul>
+</div><a name="Parallel-foreach"></a><div class="idiom"><a class="permalink" href="#Parallel-foreach">Link
 </a><h1 id="parallel-foreach">Parallel foreach</h1>
 <p>This performs a parallel loop with a default task pool.
 </p>
@@ -851,14 +897,6 @@ else
 <p><strong>Breaking</strong> <code class="prettyprint">pure</code>/<code class="prettyprint">@nogc</code>/<code class="prettyprint">nothrow</code>/<code class="prettyprint">@safe</code> <strong>with</strong> <code class="prettyprint">-debug</code> <strong>is Undefined Behaviour</strong>, though in most cases it will work just fine and you don't have to worry. Just <strong>don't ship code with -debug</strong> enabled.
 </p>
 <p>Read more about <code class="prettyprint">-debug</code>: <a href="https://dlang.org/dmd-windows.html#switch-debug">https://dlang.org/dmd-windows.html#switch-debug</a>
-</p>
-</div><a name="Inside-the-D-object-model"></a><div class="idiom"><a class="permalink" href="#Inside-the-D-object-model">Link
-</a><h1 id="inside-the-d-object-model">Inside the D Object Model</h1>
-<p>How are inheritance and multiple interfaces implemented?
-</p>
-<p>This blog post by Mathis Beer explains the layout of "Single Inheritance Multiple Interfaces" objects, with graphics:<br/><a href="https://feepingcreature.github.io/oop.html">https://feepingcreature.github.io/oop.html</a>
-</p>
-<p><strong>TL;DR: For each interface implemented by a class instance, there is a hidden field. That field pointing to the corresponding v-table subset.</strong> 
 </p>
 </div><a name="Differences-in-integer-handling-vs-C"></a><div class="idiom"><a class="permalink" href="#Differences-in-integer-handling-vs-C">Link
 </a><h1 id="differences-in-integer-handling-vs-c">Differences in integer handling vs C</h1>
@@ -1784,46 +1822,6 @@ ptr ? *ptr : ValueType.init;
 </p>
 <p>See: <a href="https://dlang.org/spec/hash-map.html">https://dlang.org/spec/hash-map.html</a>
 </p>
-</div><a name="Phobos-gems"></a><div class="idiom"><a class="permalink" href="#Phobos-gems">Link
-</a><h1 id="phobos-gems">Phobos Gems</h1>
-<p>There is no shortage of useful and surprising things in the D standard library.<br/>Here is some of the most useful stuff.
-</p>
-<h2 id="check-recoverable-errors-with-std-exception-enforce"> Check recoverable errors with <code class="prettyprint">std.exception.enforce</code></h2>
-<p>It is good practice to check for unrecoverable errors with <code class="prettyprint">assert</code>, and recoverable errors with <code class="prettyprint">enforce</code>.<br/>Which means you should <a href="#Unrecoverable-vs-recoverable-errors">learn the difference</a> between those two types of errors.
-</p>
-<p>See: <a href="http://dlang.org/phobos/std_exception.html#.enforce">http://dlang.org/phobos/std_exception.html#.enforce</a>
-</p>
-<h2 id="explicit-destructor-call-with-object-destroy"> Explicit destructor call with <code class="prettyprint">object.destroy()</code></h2>
-<p>Whenever you want to destroy an object manually, <code class="prettyprint">destroy()</code> is probably what you want.<br/>As a part of <code class="prettyprint">object.d</code>, it is always available.
-</p>
-<p>See: <a href="http://dlang.org/phobos/object.html#.destroy">http://dlang.org/phobos/object.html#.destroy</a>
-</p>
-<h2 id="allocate-a-class-object-on-stack-with-std-typecons-scoped"> Allocate a class object on stack with <code class="prettyprint">std.typecons.scoped</code></h2>
-<p><code class="prettyprint">scoped</code> replaces <code class="prettyprint">new</code> and put a <code class="prettyprint">class</code> object on the stack, with the double benefit of avoiding GC and performing deterministic destruction.
-</p>
-<pre class="prettyprint"><code>import std.typecons;
-auto myClass = scoped!MyClass(); // no need for 'new', and automatic destructor call at scope exit.
-</code></pre><p>See: <a href="http://dlang.org/phobos/std_typecons.html#.scoped">http://dlang.org/phobos/std_typecons.html#.scoped</a>
-</p>
-<h2 id="remove-type-qualifiers-with-std-traits-unqual"> Remove type qualifiers with <code class="prettyprint">std.traits.Unqual</code></h2>
-<p><code class="prettyprint">Unqual</code> enables to write template and instantiate them with <code class="prettyprint">const(T)</code>, <code class="prettyprint">immutable(T)</code>, <code class="prettyprint">shared(T)</code>&hellip;
-</p>
-<p>See: <a href="http://dlang.org/phobos/std_traits.html#.Unqual">http://dlang.org/phobos/std_traits.html#.Unqual</a>
-</p>
-<h2 id="convert-a-range-to-a-dynamic-array-with-std-array-array"> Convert a range to a dynamic array with <code class="prettyprint">std.array.array</code></h2>
-<p><code class="prettyprint">array</code> is usually used to convert a range computation to a dynamic array.
-</p>
-<p>See: <a href="http://dlang.org/phobos/std_array.html#.array">http://dlang.org/phobos/std_array.html#.array</a>
-</p>
-<h2 id="more-phobos-gems"> More Phobos gems</h2>
-<ul>
-<li><p><a href="http://nomad.so/2014/08/hidden-treasure-in-the-d-standard-library/">Hidden treasure in the D standard library</a>
-</p>
-</li>
-<li><p><a href="http://nomad.so/2015/08/more-hidden-treasure-in-the-d-standard-library/">http://nomad.so/2015/08/more-hidden-treasure-in-the-d-standard-library/</a>
-</p>
-</li>
-</ul>
 </div><a name="Porting-from-C-gotchas"></a><div class="idiom"><a class="permalink" href="#Porting-from-C-gotchas">Link
 </a><h1 id="porting-from-c-gotchas">Porting from C gotchas</h1>
 <h2 id="globals-must-be-marked-gshared"> Globals must be marked <code class="prettyprint">__gshared</code></h2>
