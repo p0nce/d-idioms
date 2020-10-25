@@ -413,7 +413,9 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <title>d-idioms - Idioms for the D programming language</title></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-71912218-1', 'auto');ga('send', 'pageview');</script><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title-container"><div id="title">Idioms for the D Programming Language
-<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#Don't-use-@property">Don't use @property
+<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#GC-proof-resource-class">GC-proof resource class
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Oct 25<span class="sub">th</span> 2020, created Aug 30<span class="sub">th</span> 2015
+</span></div><div class="item-nav"><a href="#Don't-use-@property">Don't use @property
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created May 11<span class="sub">th</span> 2019
 </span></div><div class="item-nav"><a href="#Phobos-gems">Phobos gems
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Mar 14<span class="sub">th</span> 2019, created Jan 17<span class="sub">th</span> 2015
@@ -481,8 +483,6 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jun 4<span class="sub">th</span> 2016, created Jan 24<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Eponymous-templates">Eponymous templates
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified May 25<span class="sub">th</span> 2016, created Oct 4<span class="sub">th</span> 2015
-</span></div><div class="item-nav"><a href="#GC-proof-resource-class">GC-proof resource class
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Apr 2<span class="sub">nd</span> 2016, created Aug 30<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Enumerate-fields-with-__traits(allMembers)-and-static-foreach">Enumerate fields with __traits(allMembers) and static foreach
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Mar 20<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#Automatic-attribute-inference-for-function-templates">Automatic attribute inference for function templates
@@ -573,7 +573,50 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 8<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 7<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
-</span></div></nav><div class="container"><a name="Don't-use-@property"></a><div class="idiom"><a class="permalink" href="#Don't-use-@property">Link
+</span></div></nav><div class="container"><a name="GC-proof-resource-class"></a><div class="idiom"><a class="permalink" href="#GC-proof-resource-class">Link
+</a><h1 id="gc-proof-resource-class">GC-proof resource class</h1>
+<p>Class destructors have painful <a href="#The-trouble-with-class-destructors">limitations</a> when called by the GC.
+</p>
+<p>But there is a way to make a class holding a resource that:
+</p>
+<ul>
+<li>works with scoped ownership (<code class="prettyprint">std.typecons.RefCounted</code>, <code class="prettyprint">std.typecons.Unique</code>, <code class="prettyprint">std.typecons.Scoped</code>)
+</li>
+<li>works with manual release (<code class="prettyprint">object.destroy</code>)
+</li>
+<li>warns when the GC call the destructor and then release the resource, which is <em>coincidental correctness</em> and dangerous to rely on.
+</li>
+</ul>
+<p>The general idea behind the <strong>GC-proof resource class</strong> is to check why the destructor was called and act accordingly.
+</p>
+<pre class="prettyprint"><code>class MyGCProofResource
+{
+    void* handle;
+
+    this()
+    {
+        // acquire resource
+        handle = create_handle();
+    }
+
+    ~this()
+    {
+        // Important bit.
+        // Here we verify that the GC isn't responsible
+        // for releasing the resource, which is dangerous.
+        import core.memory;
+        assert(!GC.inFinalizer, "Error: clean-up of MyGCProofResource incorrectly" ~
+                                " depends on destructors called by the GC");
+
+        // release resource
+        free_handle(handle);
+    }
+}
+</code></pre><p>You'll get a clear message whenever you rely on the GC to release resources.
+</p>
+<p>This idiom was first introduced in the <a href="https://github.com/d-gamedev-team/gfm">GFM</a> library.
+</p>
+</div><a name="Don't-use-@property"></a><div class="idiom"><a class="permalink" href="#Don't-use-@property">Link
 </a><h1 id="don-t-use-property">Don't use @property</h1>
 <p>The current agreement on best practices with regards to <code class="prettyprint">@property</code> is to <strong>not use it.</strong>
 </p>
@@ -2098,49 +2141,6 @@ static assert(!HasUniqueElements!( [1, 2, 3, 2] ));
 </code></pre><p>In symbol resolution, the template instantiation is replaced by the enclosed declaration with the same name. In a way, this is like <a href="#Extending-a-struct-with-alias-this"><code class="prettyprint">alias this</code></a>, but for templates.
 </p>
 <p>Bill Baxter came up with the eponymous name in <a href="http://forum.dlang.org/post/gpb2vd$18uf$1@digitalmars.com">this thread</a>.
-</p>
-</div><a name="GC-proof-resource-class"></a><div class="idiom"><a class="permalink" href="#GC-proof-resource-class">Link
-</a><h1 id="gc-proof-resource-class">GC-proof resource class</h1>
-<p>Class destructors have painful <a href="#The-trouble-with-class-destructors">limitations</a> when called by the GC.
-</p>
-<p>But there is a way to make a class holding a resource that:
-</p>
-<ul>
-<li>works with scoped ownership (<code class="prettyprint">std.typecons.RefCounted</code>, <code class="prettyprint">std.typecons.Unique</code>, <code class="prettyprint">std.typecons.Scoped</code>)
-</li>
-<li>works with manual release (<code class="prettyprint">object.destroy</code>)
-</li>
-<li>warns when the GC call the destructor and then release the resource, which is <em>coincidental correctness</em> and dangerous to rely on.
-</li>
-</ul>
-<p>The general idea behind the <strong>GC-proof resource class</strong> is to check why the destructor was called and act accordingly.
-</p>
-<pre class="prettyprint"><code>class MyGCProofResource
-{
-    void* handle;
-
-    this()
-    {
-        // acquire resource
-        handle = create_handle();
-    }
-
-    ~this()
-    {
-        // Important bit.
-        // Here we verify that the GC isn't responsible
-        // for releasing the resource, which is dangerous.
-        import core.memory;
-        assert(!GC.inFinalizer, "Error: clean-up of MyGCProofResource incorrectly" ~
-                                " depends on destructors called by the GC");
-
-        // release resource
-        free_handle(handle);
-    }
-}
-</code></pre><p>You'll get a clear message whenever you rely on the GC to release resources.
-</p>
-<p>This idiom was first introduced in the <a href="https://github.com/d-gamedev-team/gfm">GFM</a> library.
 </p>
 </div><a name="Enumerate-fields-with-__traits(allMembers)-and-static-foreach"></a><div class="idiom"><a class="permalink" href="#Enumerate-fields-with-__traits(allMembers)-and-static-foreach">Link
 </a><h1 id="enumerate-fields-with-traits-allmembers-and-static-foreach">Enumerate fields with <code class="prettyprint">__traits(allMembers)</code> and "static" <code class="prettyprint">foreach</code></h1>
