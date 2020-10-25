@@ -27,36 +27,12 @@ class MyGCProofResource
         // Important bit.
         // Here we verify that the GC isn't responsible
         // for releasing the resource, which is dangerous.
-        debug ensureNotInGC("MyResource");
+        import core.memory;
+        assert(!GC.inFinalizer, "Error: clean-up of MyGCProofResource incorrectly" ~
+                                " depends on destructors called by the GC");
 
         // release resource
         free_handle(handle);
-    }
-}
-```
-
-The `ensureNotInGC()` function can be implemented like this:
-
-```
-void ensureNotInGC(string resourceName) nothrow
-{
-    import core.exception;
-    try
-    {
-        // Functions that modify the GC state throw InvalidMemoryOperationError
-        // when called during a collection.
-        // Freeing memory not owned by the GC is otherwise ignored.
-        import core.memory;
-        cast(void) GC.malloc(1);
-        return;
-    }
-    catch(InvalidMemoryOperationError e)
-    {
-        import core.stdc.stdio;
-        fprintf(stderr, "Error: clean-up of %s incorrectly"
-                        " depends on destructors called by the GC.\n",
-                        resourceName.ptr);
-        assert(false); // crash
     }
 }
 ```
