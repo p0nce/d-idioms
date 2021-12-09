@@ -32,7 +32,8 @@ void main(string[] args)
 {
     string text = cast(string) std.file.read("input.md");
     text.convertMarkdownToHTML.writeln; // simply writeln the HTML
+    // CommonMark and Github Flavoured Markdown are supported.
 }
 ``` 
 
-CommonMark and Github Flavoured Markdown are supported.
+Get the source code for all DIID example [here](https://github.com/p0nce/DIID).

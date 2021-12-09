@@ -630,7 +630,7 @@ void main ()
         },
     );
 }
-</code></pre><p>See Nanovega documentation <a href="http://arsd-official.dpldocs.info/arsd.nanovega.html">here</a>.
+</code></pre><p>See Nanovega documentation <a href="http://arsd-official.dpldocs.info/arsd.nanovega.html">here</a>.<br/>Get the source code for all DIID example <a href="https://github.com/p0nce/DIID">here</a>.
 </p>
 </div><a name="DIID-#3---Convert-Markdown-to-HTML"></a><div class="idiom"><a class="permalink" href="#DIID-#3---Convert-Markdown-to-HTML">Link
 </a><h1 id="diid-3-convert-markdown-to-html"> DIID #3 - Convert Markdown to HTML</h1>
@@ -656,8 +656,9 @@ void main(string[] args)
 {
     string text = cast(string) std.file.read("input.md");
     text.convertMarkdownToHTML.writeln; // simply writeln the HTML
+    // CommonMark and Github Flavoured Markdown are supported.
 }
-</code></pre><p>CommonMark and Github Flavoured Markdown are supported.
+</code></pre><p>Get the source code for all DIID example <a href="https://github.com/p0nce/DIID">here</a>.
 </p>
 </div><a name="DIID-#2---Play-music"></a><div class="idiom"><a class="permalink" href="#DIID-#2---Play-music">Link
 </a><h1 id="diid-2-play-music"> DIID #2 - Play music</h1>
@@ -678,13 +679,14 @@ import gamemixer;
 void main(string[] args)
 {
     IMixer mixer = mixerCreate();
+    // Obviously you will need a `music.mp3` file in the working directory.
     IAudioSource music = mixer.createSourceFromFile("music.mp3");
     mixer.play(music);    
     writeln("Press ENTER to exit...");
     readln();
     mixerDestroy(mixer);
 }
-</code></pre><p>Obviously you will need a <code class="prettyprint">music.mp3</code> file in the working directory.
+</code></pre><p>Get the source code for all DIID example <a href="https://github.com/p0nce/DIID">here</a>.
 </p>
 </div><a name="DIID-#1---Parse-XML-file"></a><div class="idiom"><a class="permalink" href="#DIID-#1---Parse-XML-file">Link
 </a><h1 id="diid-1-parse-a-xml-file"> DIID #1 - Parse a XML file</h1>
@@ -759,7 +761,9 @@ Stuff[] parseStuff(string xmlpath)
 
     return result;
 }
-</code></pre></div><a name="Renaming-a-module-with-backwards-compatibility"></a><div class="idiom"><a class="permalink" href="#Renaming-a-module-with-backwards-compatibility">Link
+</code></pre><p>Get the source code for all DIID example <a href="https://github.com/p0nce/DIID">here</a>.
+</p>
+</div><a name="Renaming-a-module-with-backwards-compatibility"></a><div class="idiom"><a class="permalink" href="#Renaming-a-module-with-backwards-compatibility">Link
 </a><h1 id="renaming-a-module-with-backwards-compatibility">Renaming a module with backwards compatibility</h1>
 <p>It is easy to rename a function or object in D with the <code class="prettyprint">deprecated alias</code> idiom.
 </p>
