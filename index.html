@@ -413,13 +413,13 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <title>d-idioms - Idioms for the D programming language</title></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-71912218-1', 'auto');ga('send', 'pageview');</script><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title-container"><div id="title">Idioms for the D Programming Language
-<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#DIID-#4---Draw-an-accelerated-triangle">DIID #4 - Draw an accelerated triangle
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Dec 9<span class="sub">th</span> 2021
-</span></div><div class="item-nav"><a href="#DIID-#3---Convert-Markdown-to-HTML">DIID #3 - Convert Markdown to HTML
+<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#DIID-#1---Parse-XML-file">DIID #1 - Parse XML file
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Dec 9<span class="sub">th</span> 2021
 </span></div><div class="item-nav"><a href="#DIID-#2---Play-music">DIID #2 - Play music
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Dec 9<span class="sub">th</span> 2021
-</span></div><div class="item-nav"><a href="#DIID-#1---Parse-XML-file">DIID #1 - Parse XML file
+</span></div><div class="item-nav"><a href="#DIID-#3---Convert-Markdown-to-HTML">DIID #3 - Convert Markdown to HTML
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Dec 9<span class="sub">th</span> 2021
+</span></div><div class="item-nav"><a href="#DIID-#4---Draw-an-accelerated-triangle">DIID #4 - Draw an accelerated triangle
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Dec 9<span class="sub">th</span> 2021
 </span></div><div class="item-nav"><a href="#Renaming-a-module-with-backwards-compatibility">Renaming a module with backwards compatibility
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Sep 14<span class="sub">th</span> 2021
@@ -585,110 +585,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 8<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 7<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
-</span></div></nav><div class="container"><a name="DIID-#4---Draw-an-accelerated-triangle"></a><div class="idiom"><a class="permalink" href="#DIID-#4---Draw-an-accelerated-triangle">Link
-</a><h1 id="diid-4-draw-an-accelerated-triangle"> DIID #4 - Draw an accelerated triangle</h1>
-<p><strong>Solution:</strong> Use the <code class="prettyprint">arsd-official:nanovega</code> package.
-</p>
-<h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
-<pre class="prettyprint"><code>{
-    "name": "accelerated-triangle",
-    "dependencies":
-    {
-        "arsd-official:nanovega": "~&gt;10.0"
-    }
-}
-</code></pre><h2 id="source-main-d"> <code class="prettyprint">source/main.d</code></h2>
-<pre class="prettyprint"><code>import arsd.nanovega;
-import arsd.simpledisplay;
-
-void main () 
-{
-    auto window = new NVGWindow(800, 600, "NanoVega Simple Sample");
-
-    window.redrawNVGScene = delegate (nvg) 
-    {
-        auto W = window.width;
-        auto H = window.height;
-        nvg.beginPath();
-        nvg.moveTo(W*0.5, H*0.24);
-        nvg.lineTo(W*0.3, H*0.7);
-        nvg.lineTo(W*0.7, H*0.7);
-        nvg.fillPaint = nvg.linearGradient(W*0.3, H*0.5, W*0.7, H*0.7, 
-                                           NVGColor("#f00"), NVGColor.green);
-        nvg.fill();
-    };
-
-    window.eventLoop(0,
-        delegate (KeyEvent event) 
-        {
-            if (event == "*-Q" || event == "Escape") 
-            {
-                // quit on Q, Ctrl+Q, and so on
-                window.close(); 
-                return; 
-            }
-        },
-    );
-}
-</code></pre><p>See Nanovega documentation <a href="http://arsd-official.dpldocs.info/arsd.nanovega.html">here</a>.<br/>Get the source code for all DIID example <a href="https://github.com/p0nce/DIID">here</a>.
-</p>
-</div><a name="DIID-#3---Convert-Markdown-to-HTML"></a><div class="idiom"><a class="permalink" href="#DIID-#3---Convert-Markdown-to-HTML">Link
-</a><h1 id="diid-3-convert-markdown-to-html"> DIID #3 - Convert Markdown to HTML</h1>
-<p><strong>Solution:</strong> Use the <code class="prettyprint">commonmark-d</code> package.
-</p>
-<h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
-<pre class="prettyprint"><code>{
-    "name": "md2html",
-    "dependencies":
-    {
-        "commonmark-d": "~&gt;1.0"
-    }
-}
-</code></pre><h2 id="input-md"> <code class="prettyprint">input.md</code></h2>
-<pre class="prettyprint"><code># title
-Some **bold** text.
-</code></pre><h2 id="source-main-d"> <code class="prettyprint">source/main.d</code></h2>
-<pre class="prettyprint"><code>import std.stdio;
-import std.file;
-import commonmarkd;
-
-void main(string[] args)
-{
-    string text = cast(string) std.file.read("input.md");
-    text.convertMarkdownToHTML.writeln; // simply writeln the HTML
-    // CommonMark and Github Flavoured Markdown are supported.
-}
-</code></pre><p>Get the source code for all DIID example <a href="https://github.com/p0nce/DIID">here</a>.
-</p>
-</div><a name="DIID-#2---Play-music"></a><div class="idiom"><a class="permalink" href="#DIID-#2---Play-music">Link
-</a><h1 id="diid-2-play-music"> DIID #2 - Play music</h1>
-<p><strong>Solution:</strong> Use the <code class="prettyprint">game-mixer</code> package.
-</p>
-<h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
-<pre class="prettyprint"><code>{
-    "name": "play-music",
-    "dependencies":
-    {
-        "game-mixer": "~&gt;1.0"
-    }
-}
-</code></pre><h2 id="source-main-d"> <code class="prettyprint">source/main.d</code></h2>
-<pre class="prettyprint"><code>import std.stdio;
-import gamemixer;
-
-void main(string[] args)
-{
-    IMixer mixer = mixerCreate();
-    // Obviously you will need a `music.mp3` file in the working directory.
-    IAudioSource music = mixer.createSourceFromFile("music.mp3");
-    mixer.play(music);    
-    writeln("Press ENTER to exit...");
-    readln();
-    mixerDestroy(mixer);
-}
-</code></pre><p>Get the source code for all DIID example <a href="https://github.com/p0nce/DIID">here</a>.
-</p>
-</div><a name="DIID-#1---Parse-XML-file"></a><div class="idiom"><a class="permalink" href="#DIID-#1---Parse-XML-file">Link
+</span></div></nav><div class="container"><a name="DIID-#1---Parse-XML-file"></a><div class="idiom"><a class="permalink" href="#DIID-#1---Parse-XML-file">Link
 </a><h1 id="diid-1-parse-a-xml-file"> DIID #1 - Parse a XML file</h1>
 <p><strong>Solution:</strong> Use the <code class="prettyprint">arsd-official:dom</code> package.
 </p>
@@ -762,6 +659,109 @@ Stuff[] parseStuff(string xmlpath)
     return result;
 }
 </code></pre><p>Get the source code for all DIID example <a href="https://github.com/p0nce/DIID">here</a>.
+</p>
+</div><a name="DIID-#2---Play-music"></a><div class="idiom"><a class="permalink" href="#DIID-#2---Play-music">Link
+</a><h1 id="diid-2-play-music"> DIID #2 - Play music</h1>
+<p><strong>Solution:</strong> Use the <code class="prettyprint">game-mixer</code> package.
+</p>
+<h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
+<pre class="prettyprint"><code>{
+    "name": "play-music",
+    "dependencies":
+    {
+        "game-mixer": "~&gt;1.0"
+    }
+}
+</code></pre><h2 id="source-main-d"> <code class="prettyprint">source/main.d</code></h2>
+<pre class="prettyprint"><code>import std.stdio;
+import gamemixer;
+
+void main(string[] args)
+{
+    IMixer mixer = mixerCreate();
+    // Obviously you will need a `music.mp3` file in the working directory.
+    IAudioSource music = mixer.createSourceFromFile("music.mp3");
+    mixer.play(music);    
+    writeln("Press ENTER to exit...");
+    readln();
+    mixerDestroy(mixer);
+}
+</code></pre><p>Get the source code for all DIID example <a href="https://github.com/p0nce/DIID">here</a>.
+</p>
+</div><a name="DIID-#3---Convert-Markdown-to-HTML"></a><div class="idiom"><a class="permalink" href="#DIID-#3---Convert-Markdown-to-HTML">Link
+</a><h1 id="diid-3-convert-markdown-to-html"> DIID #3 - Convert Markdown to HTML</h1>
+<p><strong>Solution:</strong> Use the <code class="prettyprint">commonmark-d</code> package.
+</p>
+<h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
+<pre class="prettyprint"><code>{
+    "name": "md2html",
+    "dependencies":
+    {
+        "commonmark-d": "~&gt;1.0"
+    }
+}
+</code></pre><h2 id="input-md"> <code class="prettyprint">input.md</code></h2>
+<pre class="prettyprint"><code># title
+Some **bold** text.
+</code></pre><h2 id="source-main-d"> <code class="prettyprint">source/main.d</code></h2>
+<pre class="prettyprint"><code>import std.stdio;
+import std.file;
+import commonmarkd;
+
+void main(string[] args)
+{
+    string text = cast(string) std.file.read("input.md");
+    text.convertMarkdownToHTML.writeln; // simply writeln the HTML
+    // CommonMark and Github Flavoured Markdown are supported.
+}
+</code></pre><p>Get the source code for all DIID example <a href="https://github.com/p0nce/DIID">here</a>.
+</p>
+</div><a name="DIID-#4---Draw-an-accelerated-triangle"></a><div class="idiom"><a class="permalink" href="#DIID-#4---Draw-an-accelerated-triangle">Link
+</a><h1 id="diid-4-draw-an-accelerated-triangle"> DIID #4 - Draw an accelerated triangle</h1>
+<p><strong>Solution:</strong> Use the <code class="prettyprint">arsd-official:nanovega</code> package.
+</p>
+<h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
+<pre class="prettyprint"><code>{
+    "name": "accelerated-triangle",
+    "dependencies":
+    {
+        "arsd-official:nanovega": "~&gt;10.0"
+    }
+}
+</code></pre><h2 id="source-main-d"> <code class="prettyprint">source/main.d</code></h2>
+<pre class="prettyprint"><code>import arsd.nanovega;
+import arsd.simpledisplay;
+
+void main () 
+{
+    auto window = new NVGWindow(800, 600, "NanoVega Simple Sample");
+
+    window.redrawNVGScene = delegate (nvg) 
+    {
+        auto W = window.width;
+        auto H = window.height;
+        nvg.beginPath();
+        nvg.moveTo(W*0.5, H*0.24);
+        nvg.lineTo(W*0.3, H*0.7);
+        nvg.lineTo(W*0.7, H*0.7);
+        nvg.fillPaint = nvg.linearGradient(W*0.3, H*0.5, W*0.7, H*0.7, 
+                                           NVGColor("#f00"), NVGColor.green);
+        nvg.fill();
+    };
+
+    window.eventLoop(0,
+        delegate (KeyEvent event) 
+        {
+            if (event == "*-Q" || event == "Escape") 
+            {
+                // quit on Q, Ctrl+Q, and so on
+                window.close(); 
+                return; 
+            }
+        },
+    );
+}
+</code></pre><p>See Nanovega documentation <a href="http://arsd-official.dpldocs.info/arsd.nanovega.html">here</a>.<br/>Get the source code for all DIID example <a href="https://github.com/p0nce/DIID">here</a>.
 </p>
 </div><a name="Renaming-a-module-with-backwards-compatibility"></a><div class="idiom"><a class="permalink" href="#Renaming-a-module-with-backwards-compatibility">Link
 </a><h1 id="renaming-a-module-with-backwards-compatibility">Renaming a module with backwards compatibility</h1>
