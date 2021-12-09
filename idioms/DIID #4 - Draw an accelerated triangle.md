@@ -32,7 +32,8 @@ void main ()
         nvg.moveTo(W*0.5, H*0.24);
         nvg.lineTo(W*0.3, H*0.7);
         nvg.lineTo(W*0.7, H*0.7);
-        nvg.fillPaint = nvg.linearGradient(W*0.3, H*0.5, W*0.7, H*0.7, NVGColor("#f00"), NVGColor.green);
+        nvg.fillPaint = nvg.linearGradient(W*0.3, H*0.5, W*0.7, H*0.7, 
+                                           NVGColor("#f00"), NVGColor.green);
         nvg.fill();
     };
 
@@ -50,4 +51,4 @@ void main ()
 }
 ``` 
 
-Nanovega documentation: http://arsd-official.dpldocs.info/arsd.nanovega.html
+See Nanovega documentation [here](http://arsd-official.dpldocs.info/arsd.nanovega.html).
