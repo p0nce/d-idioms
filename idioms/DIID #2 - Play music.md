@@ -1,4 +1,4 @@
-# DIID #1 - Parse a XML file
+# DIID #2 - Play music
 
 **Solution:** Use the `game-mixer` package.
 
