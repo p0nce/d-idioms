@@ -589,7 +589,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 7<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
 </span></div></nav><div class="container"><a name="DIID-#5---Draw-a-triangle-in-a-PDF"></a><div class="idiom"><a class="permalink" href="#DIID-#5---Draw-a-triangle-in-a-PDF">Link
 </a><h1 id="diid-5-draw-a-triangle-in-a-pdf"> DIID #5 - Draw a triangle in a PDF</h1>
-<p><strong>Solution:</strong> Use the <code class="prettyprint">printed:canvas</code> package.
+<p><strong>Solution:</strong> Use the <code class="prettyprint">printed:canvas</code> <a href="https://code.dlang.org/packages/printed">package</a>.
 </p>
 <h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
 <pre class="prettyprint"><code>{
@@ -602,8 +602,6 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </code></pre><h2 id="source-main-d"> <code class="prettyprint">source/main.d</code></h2>
 <pre class="prettyprint"><code>import std.stdio;
 import std.file;
-import std.math;
-
 import printed.canvas;
 
 void main(string[] args)
@@ -612,58 +610,16 @@ void main(string[] args)
     IRenderingContext2D renderer = pdfDoc;
     with(renderer)
     {
-        // Fill page with light grey
-        fillStyle = brush("#eee");
-        fillRect(0, 0, pageWidth, pageHeight);
-
-        // Draw a red line
-        strokeStyle = brush("#ff0000");
-        lineWidth(4);
-        beginPath(100, 150);
-        lineTo(100, 250);
-        stroke();
-
-        // Draw a blue rect
-        lineWidth(2);
-        setLineDash([ 2, 1, 1]); // with dash pattern
-        strokeStyle = brush("lightblue");
-        strokeRect(50, 50, 40, 40);
-        setLineDash(); // without dash pattern
-        strokeRect(70, 70, 40, 40);
-
         // Draw a 50% transparent green triangle
         fillStyle = brush("rgba(0, 255, 0, 0.5)");
-        beginPath(80, 170);
-        lineTo(180, 170);
-        lineTo(105, 240);
+        beginPath(80, 70);
+        lineTo(180, 70);
+        lineTo(105, 140);
         closePath();
         fill();
 
-        // Prepare text settings
         fillStyle = brush("black");
-        fontFace("Arial");
-        fontWeight(FontWeight.bold);
-        fontStyle(FontStyle.italic);
-        fontSize(14);
-
-        // Unicode is supported
-        translate(20, 20);
-        fillText("çéù%ù»", 0, 0);
-        
-        // Go to the next page
-        newPage();
-
-        // Draw rotated text
-        fontStyle(FontStyle.normal);
-        save();
-            translate(20, 20);
-            fillText("Straight", 15, 0);
-            rotate(PI / 4);
-            fillText("Rotated 45°", 15, 0);
-
-            rotate(PI / 4);
-            fillText("Rotated 90°", 15, 0);
-        restore();
+        fillText("That was easy.", 20, 20);        
     }
     std.file.write("output.pdf", pdfDoc.bytes);
 }
@@ -671,7 +627,7 @@ void main(string[] args)
 </p>
 </div><a name="DIID-#1---Parse-XML-file"></a><div class="idiom"><a class="permalink" href="#DIID-#1---Parse-XML-file">Link
 </a><h1 id="diid-1-parse-a-xml-file"> DIID #1 - Parse a XML file</h1>
-<p><strong>Solution:</strong> Use the <code class="prettyprint">arsd-official:dom</code> package.
+<p><strong>Solution:</strong> Use the <code class="prettyprint">arsd-official:dom</code> <a href="https://code.dlang.org/packages/arsd-official">package</a>.
 </p>
 <h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
 <pre class="prettyprint"><code>{
@@ -746,7 +702,7 @@ Stuff[] parseStuff(string xmlpath)
 </p>
 </div><a name="DIID-#2---Play-music"></a><div class="idiom"><a class="permalink" href="#DIID-#2---Play-music">Link
 </a><h1 id="diid-2-play-music"> DIID #2 - Play music</h1>
-<p><strong>Solution:</strong> Use the <code class="prettyprint">game-mixer</code> package.
+<p><strong>Solution:</strong> Use the <code class="prettyprint">game-mixer</code> <a href="https://code.dlang.org/packages/game-mixer">package</a>.
 </p>
 <h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
 <pre class="prettyprint"><code>{
@@ -774,7 +730,7 @@ void main(string[] args)
 </p>
 </div><a name="DIID-#3---Convert-Markdown-to-HTML"></a><div class="idiom"><a class="permalink" href="#DIID-#3---Convert-Markdown-to-HTML">Link
 </a><h1 id="diid-3-convert-markdown-to-html"> DIID #3 - Convert Markdown to HTML</h1>
-<p><strong>Solution:</strong> Use the <code class="prettyprint">commonmark-d</code> package.
+<p><strong>Solution:</strong> Use the <code class="prettyprint">commonmark-d</code> <a href="https://code.dlang.org/packages/commonmark-d">package</a>.
 </p>
 <h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
 <pre class="prettyprint"><code>{
@@ -802,7 +758,7 @@ void main(string[] args)
 </p>
 </div><a name="DIID-#4---Draw-an-accelerated-triangle"></a><div class="idiom"><a class="permalink" href="#DIID-#4---Draw-an-accelerated-triangle">Link
 </a><h1 id="diid-4-draw-an-accelerated-triangle"> DIID #4 - Draw an accelerated triangle</h1>
-<p><strong>Solution:</strong> Use the <code class="prettyprint">arsd-official:nanovega</code> package.
+<p><strong>Solution:</strong> Use the <code class="prettyprint">arsd-official:nanovega</code> <a href="https://code.dlang.org/packages/arsd-official">package</a>.
 </p>
 <h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
 <pre class="prettyprint"><code>{

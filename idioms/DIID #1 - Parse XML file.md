@@ -1,6 +1,6 @@
 # DIID #1 - Parse a XML file
 
-**Solution:** Use the `arsd-official:dom` package.
+**Solution:** Use the `arsd-official:dom` [package](https://code.dlang.org/packages/arsd-official).
 
 ## `dub.json`
 

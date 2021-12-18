@@ -1,6 +1,6 @@
 # DIID #3 - Convert Markdown to HTML
 
-**Solution:** Use the `commonmark-d` package.
+**Solution:** Use the `commonmark-d` [package](https://code.dlang.org/packages/commonmark-d).
 
 ## `dub.json`
 

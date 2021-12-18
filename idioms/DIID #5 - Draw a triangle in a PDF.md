@@ -1,6 +1,6 @@
 # DIID #5 - Draw a triangle in a PDF
 
-**Solution:** Use the `printed:canvas` package.
+**Solution:** Use the `printed:canvas` [package](https://code.dlang.org/packages/printed).
 
 ## `dub.json`
 

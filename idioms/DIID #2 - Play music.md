@@ -1,6 +1,6 @@
 # DIID #2 - Play music
 
-**Solution:** Use the `game-mixer` package.
+**Solution:** Use the `game-mixer` [package](https://code.dlang.org/packages/game-mixer).
 
 ## `dub.json`
 

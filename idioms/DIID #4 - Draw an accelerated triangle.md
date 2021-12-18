@@ -1,6 +1,6 @@
 # DIID #4 - Draw an accelerated triangle
 
-**Solution:** Use the `arsd-official:nanovega` package.
+**Solution:** Use the `arsd-official:nanovega` [package](https://code.dlang.org/packages/arsd-official).
 
 ## `dub.json`
 
