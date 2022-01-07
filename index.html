@@ -525,8 +525,6 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Jan 5<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#Never-use-&gt;=-for-dependencies">Never use &gt;= for dependencies
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 4<span class="sub">th</span> 2016, created Jan 28<span class="sub">th</span> 2015
-</span></div><div class="item-nav"><a href="#Throwing-despite-@nogc">Throwing despite @nogc
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 4<span class="sub">th</span> 2016, created Jun 8<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#What-is-the-difference-between-out-and-ref-parameters&#x3F">What is the difference between out and ref parameters&#x3F
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Jan 4<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#How-does-D-improve-on-C++17&#63;">How does D improve on C++17&#63;
@@ -537,8 +535,6 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Dec 19<span class="sub">th</span> 2015, created Jan 15<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Extend-a-struct-with-alias-this">Extend a struct with alias this
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Nov 28<span class="sub">th</span> 2015
-</span></div><div class="item-nav"><a href="#Embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Nov 28<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Custom-format()-for-builtin-types">Custom format() for builtin types
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Nov 28<span class="sub">th</span> 2015, created Jun 8<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Bypassing-@nogc">Bypassing @nogc
@@ -2882,45 +2878,7 @@ inout(int)[] lastItems(inout(int)[] arr, size_t pivot)
 </p>
 <p>See: <a href="http://code.dlang.org/package-format#version-specs">http://code.dlang.org/package-format#version-specs</a>
 </p>
-</div><a name="Throwing-despite-@nogc"></a><div class="idiom"><a class="permalink" href="#Throwing-despite-@nogc">Link
-</a><h1 id="throwing-despite-nogc">Throwing despite <code class="prettyprint">@nogc</code></h1>
-<p> <strong>This trick is a dirty Proof Of Concept. Just never do it.</strong>
-</p>
-<p>The major limitation of <code class="prettyprint">@nogc</code> is that you can't throw exceptions allocated with <code class="prettyprint">new</code>.
-</p>
-<p>But if you really want it, exceptions can be pre-allocated to be thrown later:
-</p>
-<pre class="prettyprint"><code>// Statically initialize an exception instance.
-static immutable Exception g_Exception = new Exception("This message won't be helpful");
-
-// Function that throws despite being @nogc
-void nogcFunction() @nogc
-{
-    throw g_Exception;
-}
-
-try
-{
-    nogcFunction();
-}
-catch(const(Exception) e)
-{
-    // Message, file and line number won't be given though
-    import std.stdio;
-    writefln("Received an exception: %s", e.msg);
-}
-</code></pre><p>Such a pre-allocated exception won't hold any information other than <em>"something went wrong"</em>. And it breaks the type system badly.
-</p>
-<p>Note from <a href="https://github.com/JakobOvrum">Jakob Ovrum</a>:
-</p>
-<pre class="prettyprint"><code>I really don't think you should promote that hack anywhere.
-Even the druntime internal exception code will mutate it post-allocation regardless of mutability.
-The compiler is even allowed to put the exception in ROM which would of course break everything.
-You can also throw a mutable exception and catch it as immutable(Exception),
-the whole thing is completely unintegrated with D2's type system.
-Again, it doesn't matter if you catch it or not because the unwinding code will mutate it.
-It's just straight up bad code.
-</code></pre></div><a name="What-is-the-difference-between-out-and-ref-parameters&#x3F"></a><div class="idiom"><a class="permalink" href="#What-is-the-difference-between-out-and-ref-parameters&#x3F">Link
+</div><a name="What-is-the-difference-between-out-and-ref-parameters&#x3F"></a><div class="idiom"><a class="permalink" href="#What-is-the-difference-between-out-and-ref-parameters&#x3F">Link
 </a><h1 id="what-is-the-difference-between-out-and-ref-parameters">What is the difference between <code class="prettyprint">out</code> and <code class="prettyprint">ref</code> parameters?</h1>
 <p>Both pass parameters by reference. But <code class="prettyprint">out</code> parameters are initialized with <code class="prettyprint">.init</code> at function startup, while <code class="prettyprint">ref</code> parameters aren't.
 </p>
@@ -3177,29 +3135,6 @@ void main(string[]ags)
          + g(b); // b implicitely converted to a ref A
 }
 </code></pre><p>As <a href="http://www.amazon.fr/The-Programming-Language-Andrei-Alexandrescu/dp/0321635361">TDPL</a> says it, using <code class="prettyprint">alias this</code> is subtyping.
-</p>
-</div><a name="Embed-a-dynamic-library-in-an-executable"></a><div class="idiom"><a class="permalink" href="#Embed-a-dynamic-library-in-an-executable">Link
-</a><h1 id="embed-a-dynamic-library-in-an-executable">Embed a dynamic library in an executable</h1>
-<p>Let's say we want to distribute a standalone executable that doesn't need any installation.<br/>Here we'll see how to embed SDL.dll into an executable.
-</p>
-<pre class="prettyprint"><code>import std.uuid;
-import std.file;
-import std.path;
-import std.string;
-
-ubyte[] sdlBytes = cast(ubyte[]) import("SDL2.dll");   // SDL2.dll contents
-
-void main(string[] args)
-{
-    string uuid = randomUUID().toString();
-    string filename = format("SDL2-%s.dll", uuid);     // Making an unique file name.
-    string depacked = buildPath(tempDir(), filename);
-    
-    std.file.write(depacked, sdlBytes);                // Writing the library to a temporary file.
-    
-    DerelictSDL2.load(depacked);                       // Use the depacked library and load its symbols.
-}
-</code></pre><p>A similar trick can be used for embedding fonts, images, etc. without having to deal with a resource compiler.
 </p>
 </div><a name="Custom-format()-for-builtin-types"></a><div class="idiom"><a class="permalink" href="#Custom-format()-for-builtin-types">Link
 </a><h1 id="custom-format-for-builtin-types">Custom <code class="prettyprint">format()</code> for builtin types</h1>
