@@ -1,6 +1,6 @@
 # DIID #7 - GET a file from the Internet
 
-**Solution:** Use the `requests` [package](https://github.com/ikod/dlang-requests).
+**Solution:** Use the `requests` [package](https://code.dlang.org/packages/requests).
 
 ## `dub.json`
 
