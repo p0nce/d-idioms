@@ -22,6 +22,11 @@ You can contribute for free through Amazon Smile! [https://forum.dlang.org/threa
 If you are one of them, consider giving back to this critical piece of infrastructure...
 
 
+## GDC
+
+[The GDC project](https://gdcproject.org/) is also pivotal to high-performance D. As part of GCC, GDC is the D compiler with the most platform reach, so funding GDC is a great technology hedge.
+
+
 ## Solo developers
 
 - Adam D. Ruppe is the creator of [http://dpldocs.info/](http://dpldocs.info/) (online and fast documentation for any DUB package) and author of D Cookbook. [https://www.patreon.com/adam_d_ruppe/overview](https://www.patreon.com/adam_d_ruppe/overview)
