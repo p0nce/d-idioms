@@ -1,4 +1,3 @@
-======================
 @nogc Array Literals: Breaking the Limits
 ======================
 

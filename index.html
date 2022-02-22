@@ -413,7 +413,11 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <title>d-idioms - Idioms for the D programming language</title></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-71912218-1', 'auto');ga('send', 'pageview');</script><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title-container"><div id="title">Idioms for the D Programming Language
-<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#Contributing-back-with-money">Contributing back with money
+<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#Unittests-with-optimizations-&#x3A;-the-Final-Frontier">Unittests with optimizations &#x3A; the Final Frontier
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Feb 22<span class="sub">th</span> 2022
+</span></div><div class="item-nav"><a href="#What-is-the-difference-between-out-and-ref-parameters&#x3F;">What is the difference between out and ref parameters&#x3F;
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Feb 22<span class="sub">th</span> 2022
+</span></div><div class="item-nav"><a href="#Contributing-back-with-money">Contributing back with money
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 29<span class="sub">th</span> 2022, created Mar 1<span class="sub">st</span> 2018
 </span></div><div class="item-nav"><a href="#DIID-#8---Your-own-tree-walk-interpreter">DIID #8 - Your own tree-walk interpreter
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Jan 29<span class="sub">th</span> 2022
@@ -444,8 +448,6 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </span></div><div class="item-nav"><a href="#Phobos-gems">Phobos gems
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Mar 14<span class="sub">th</span> 2019, created Jan 17<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Parallel-foreach">Parallel foreach
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Mar 3<span class="sub">rd</span> 2019
-</span></div><div class="item-nav"><a href="#Unittests-with-optimizations-&#x3A-the-Final-Frontier">Unittests with optimizations &#x3A the Final Frontier
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Mar 3<span class="sub">rd</span> 2019
 </span></div><div class="item-nav"><a href="#One-does-not-simply-call-new-for-static-arrays">One does not simply call new for static arrays
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Feb 24<span class="sub">th</span> 2019, created May 6<span class="sub">th</span> 2018
@@ -531,8 +533,6 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Jan 5<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#Never-use-&gt;=-for-dependencies">Never use &gt;= for dependencies
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 4<span class="sub">th</span> 2016, created Jan 28<span class="sub">th</span> 2015
-</span></div><div class="item-nav"><a href="#What-is-the-difference-between-out-and-ref-parameters&#x3F">What is the difference between out and ref parameters&#x3F
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Jan 4<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#How-does-D-improve-on-C++17&#63;">How does D improve on C++17&#63;
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 2<span class="sub">nd</span> 2016, created Apr 26<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Friends-don't-let-friends-use-the-default-struct-postblit">Friends don't let friends use the default struct postblit
@@ -591,7 +591,71 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 8<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#Inheriting-from-Exception">Inheriting from Exception
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 7<span class="sub">th</span> 2015, created Jan 4<span class="sub">th</span> 2015
-</span></div></nav><div class="container"><a name="Contributing-back-with-money"></a><div class="idiom"><a class="permalink" href="#Contributing-back-with-money">Link
+</span></div></nav><div class="container"><a name="Unittests-with-optimizations-&#x3A;-the-Final-Frontier"></a><div class="idiom"><a class="permalink" href="#Unittests-with-optimizations-&#x3A;-the-Final-Frontier">Link
+</a><h1 id="unittests-with-optimizations-the-final-frontier">Unittests with optimizations: the Final Frontier</h1>
+<p>DUB is an essential piece of the modern D language experience. <strong>However,</strong> that experience doesn't include <em>"Running unit tests with optimizations"</em> by default.
+</p>
+<p>So, how do you avoid surprises in production? What would Kent Beck do?
+</p>
+<p><strong>In this post, we unleash the jaleously-guarded secret behind the most successful organizations in the world: running unittests with optimizations ON and OFF.</strong> 
+</p>
+<h2 id="changes-to-dub-json"> Changes to <code class="prettyprint">dub.json</code></h2>
+<p>Create a new build type with the proper flags. This is also a good way to get to know the discreet <code class="prettyprint">"buildTypes"</code>.
+</p>
+<pre class="prettyprint"><code>"buildTypes": 
+{
+    "unittest-opt": 
+    {
+        "buildOptions": ["unittests", "optimize", "inline"]
+    }
+}
+</code></pre><p><strong>Because it doesn't have a</strong> <code class="prettyprint">-release</code> <strong>flag</strong>, <a href="#So-what-does--release-do,-exactly?">asserts will still be enabled</a>. Hence, the <code class="prettyprint">unittest</code> content is here.
+</p>
+<p>(Please, don't call this configuration <code class="prettyprint">unittest-release</code>. Because flag <code class="prettyprint">-release</code> not being there is the one important thing. This increase the confusion between "release" and "optimizations").
+</p>
+<h2 id="run-both-versions"> Run both versions</h2>
+<pre class="prettyprint"><code>$ dub test 
+$ dub test -b unittest-opt
+</code></pre><p>You are now listed in Forbes.
+</p>
+</div><a name="What-is-the-difference-between-out-and-ref-parameters&#x3F;"></a><div class="idiom"><a class="permalink" href="#What-is-the-difference-between-out-and-ref-parameters&#x3F;">Link
+</a><h1 id="what-is-the-difference-between-out-and-ref-parameters">What is the difference between <code class="prettyprint">out</code> and <code class="prettyprint">ref</code> parameters?</h1>
+<p>Both pass parameters by reference. But <code class="prettyprint">out</code> parameters are initialized with <code class="prettyprint">.init</code> at function startup, while <code class="prettyprint">ref</code> parameters aren't.
+</p>
+<pre class="prettyprint"><code>import std.stdio;
+import std.math;
+
+void functionUsingRef(ref float refParam)
+{
+    writeln(refParam);
+}
+
+void functionUsingOut(out float outParam)
+in
+{
+    // Initialization for out parameters happens
+    // before function pre-conditions.
+    assert(isNaN(outParam));
+}
+body
+{
+    writeln(outParam);
+    // Nothing actually forces you to write outParam
+    // but that's what you should normally do.
+    // You can also read it's value.
+}
+
+void main()
+{
+    float x = 2.5f;
+    functionUsingRef(x); // Output: 2.5
+    functionUsingOut(x); // Output: nan
+    writeln(x);          // Output: nan
+}
+
+</code></pre><p><code class="prettyprint">ref</code> and <code class="prettyprint">out</code> are <strong>storage classes</strong>, not <strong>type qualifiers</strong>. They don't belong to the parameter's type.
+</p>
+</div><a name="Contributing-back-with-money"></a><div class="idiom"><a class="permalink" href="#Contributing-back-with-money">Link
 </a><h1 id="contributing-back-with-money">Contributing back with money</h1>
 <p>While the D phenomenon relies primarily on benevolent effort, a bit of money can go a long way towards enhancing documentation, supporting libraries, compilers and IDEs.
 </p>
@@ -1166,34 +1230,7 @@ void main()
     }
     assert(A == 2000);
 }
-</code></pre></div><a name="Unittests-with-optimizations-&#x3A-the-Final-Frontier"></a><div class="idiom"><a class="permalink" href="#Unittests-with-optimizations-&#x3A-the-Final-Frontier">Link
-</a><h1 id="unittests-with-optimizations-the-final-frontier">Unittests with optimizations: the Final Frontier</h1>
-<p>DUB is an essential piece of the modern D language experience. <strong>However,</strong> that experience doesn't include <em>"Running unit tests with optimizations"</em> by default.
-</p>
-<p>So, how do you avoid surprises in production? What would Kent Beck do?
-</p>
-<p><strong>In this post, we unleash the jaleously-guarded secret behind the most successful organizations in the world: running unittests with optimizations ON and OFF.</strong> 
-</p>
-<h2 id="changes-to-dub-json"> Changes to <code class="prettyprint">dub.json</code></h2>
-<p>Create a new build type with the proper flags. This is also a good way to get to know the discreet <code class="prettyprint">"buildTypes"</code>.
-</p>
-<pre class="prettyprint"><code>"buildTypes": 
-{
-    "unittest-opt": 
-    {
-        "buildOptions": ["unittests", "optimize", "inline"]
-    }
-}
-</code></pre><p><strong>Because it doesn't have a</strong> <code class="prettyprint">-release</code> <strong>flag</strong>, <a href="#So-what-does--release-do,-exactly?">asserts will still be enabled</a>. Hence, the <code class="prettyprint">unittest</code> content is here.
-</p>
-<p>(Please, don't call this configuration <code class="prettyprint">unittest-release</code>. Because flag <code class="prettyprint">-release</code> not being there is the one important thing. This increase the confusion between "release" and "optimizations").
-</p>
-<h2 id="run-both-versions"> Run both versions</h2>
-<pre class="prettyprint"><code>$ dub test 
-$ dub test -b unittest-opt
-</code></pre><p>You are now listed in Forbes.
-</p>
-</div><a name="One-does-not-simply-call-new-for-static-arrays"></a><div class="idiom"><a class="permalink" href="#One-does-not-simply-call-new-for-static-arrays">Link
+</code></pre></div><a name="One-does-not-simply-call-new-for-static-arrays"></a><div class="idiom"><a class="permalink" href="#One-does-not-simply-call-new-for-static-arrays">Link
 </a><h1 id="one-does-not-simply-call-new-for-static-arrays">One does not simply call <code class="prettyprint">new</code> for static arrays</h1>
 <p>It just happens that in D you can't use <code class="prettyprint">new</code> to get a pointer to a newly allocated static array.
 </p>
@@ -3003,43 +3040,6 @@ inout(int)[] lastItems(inout(int)[] arr, size_t pivot)
 <p><strong>TL;DR Do not depend on APIs that will break in the future. Use</strong> <code class="prettyprint">~&gt;</code> <strong>or</strong> <code class="prettyprint">==</code> <strong>instead.</strong>
 </p>
 <p>See: <a href="http://code.dlang.org/package-format#version-specs">http://code.dlang.org/package-format#version-specs</a>
-</p>
-</div><a name="What-is-the-difference-between-out-and-ref-parameters&#x3F"></a><div class="idiom"><a class="permalink" href="#What-is-the-difference-between-out-and-ref-parameters&#x3F">Link
-</a><h1 id="what-is-the-difference-between-out-and-ref-parameters">What is the difference between <code class="prettyprint">out</code> and <code class="prettyprint">ref</code> parameters?</h1>
-<p>Both pass parameters by reference. But <code class="prettyprint">out</code> parameters are initialized with <code class="prettyprint">.init</code> at function startup, while <code class="prettyprint">ref</code> parameters aren't.
-</p>
-<pre class="prettyprint"><code>import std.stdio;
-import std.math;
-
-void functionUsingRef(ref float refParam)
-{
-    writeln(refParam);
-}
-
-void functionUsingOut(out float outParam)
-in
-{
-    // Initialization for out parameters happens
-    // before function pre-conditions.
-    assert(isNaN(outParam));
-}
-body
-{
-    writeln(outParam);
-    // Nothing actually forces you to write outParam
-    // but that's what you should normally do.
-    // You can also read it's value.
-}
-
-void main()
-{
-    float x = 2.5f;
-    functionUsingRef(x); // Output: 2.5
-    functionUsingOut(x); // Output: nan
-    writeln(x);          // Output: nan
-}
-
-</code></pre><p><code class="prettyprint">ref</code> and <code class="prettyprint">out</code> are <strong>storage classes</strong>, not <strong>type qualifiers</strong>. They don't belong to the parameter's type.
 </p>
 </div><a name="How-does-D-improve-on-C++17&#63;"></a><div class="idiom"><a class="permalink" href="#How-does-D-improve-on-C++17&#63;">Link
 </a><h1 id="how-does-d-improve-on-c-17">How does D improve on C++17?</h1>

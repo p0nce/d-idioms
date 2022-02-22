@@ -1,4 +1,3 @@
-=========================
 What is the difference between `out` and `ref` parameters?
 =========================
 
