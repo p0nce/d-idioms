@@ -414,7 +414,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title-container"><div id="title">Idioms for the D Programming Language
 <br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#DIID-#10---Colorize-console-output">DIID #10 - Colorize console output
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Mar 14<span class="sub">th</span> 2022
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Mar 20<span class="sub">th</span> 2022, created Mar 14<span class="sub">th</span> 2022
 </span></div><div class="item-nav"><a href="#DIID-#9---Parse-command-line-arguments">DIID #9 - Parse command-line arguments
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Mar 14<span class="sub">th</span> 2022
 </span></div><div class="item-nav"><a href="#&#x2F;+-+&#x2F;-nestable-comments-and-version(none)">&#x2F;+ +&#x2F; nestable comments and version(none)
@@ -597,28 +597,25 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Oct 19<span class="sub">th</span> 2016
 </span></div></nav><div class="container"><a name="DIID-#10---Colorize-console-output"></a><div class="idiom"><a class="permalink" href="#DIID-#10---Colorize-console-output">Link
 </a><h1 id="diid-10-colorize-console-output"> DIID #10 - Colorize console output</h1>
-<p><strong>Solution:</strong> Use the <code class="prettyprint">colorize</code> <a href="https://code.dlang.org/packages/colorize">package</a>.
+<p><strong>Solution:</strong> Use the <code class="prettyprint">console-colors</code> <a href="https://code.dlang.org/packages/console-colors">package</a>.
 </p>
 <h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
 <pre class="prettyprint"><code>{
     "name": "colorize-text-output",
     "dependencies": 
     {
-        "colorize": "~&gt;1.0"
+        "console-colors": "~&gt;1.0"
     }
 }
 </code></pre><h2 id="source-main-d"> <code class="prettyprint">source/main.d</code></h2>
-<pre class="prettyprint"><code>import std.getopt;
-
-import colorize;
+<pre class="prettyprint"><code>import consolecolors;
 
 void main()
 {
-    cwriteln("This is light_blue".color(fg.light_blue));
-    auto c = "light_red";
-    cwritefln("This is %s in this nested coloured text".color("red"), c.color(c));
+    cwriteln("This is light blue on orange".lblue.on_orange);    
+    cwritefln("This is a &lt;red&gt;%s&lt;/red&gt;.", "nested &lt;yellow&gt;color&lt;/yellow&gt; string");
 }
-</code></pre><p>Get <code class="prettyprint">colorize</code> documentation <a href="https://code.dlang.org/packages/colorize">here</a>.<br/>Get the source code for all DIID examples <a href="https://github.com/p0nce/DIID">here</a>.
+</code></pre><p>Get <code class="prettyprint">console-colors</code> documentation <a href="https://github.com/p0nce/console-colors">here</a>.<br/>Get the source code for all DIID examples <a href="https://github.com/p0nce/DIID">here</a>.
 </p>
 </div><a name="DIID-#9---Parse-command-line-arguments"></a><div class="idiom"><a class="permalink" href="#DIID-#9---Parse-command-line-arguments">Link
 </a><h1 id="diid-9-parse-command-line-arguments"> DIID #9 - Parse command-line arguments</h1>
