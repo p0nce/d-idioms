@@ -1,6 +1,6 @@
 # DIID #10 - Colorize console output
 
-**Solution:** Use the `colorize` [package](https://code.dlang.org/packages/colorize).
+**Solution:** Use the `console-colors` [package](https://code.dlang.org/packages/console-colors).
 
 ## `dub.json`
 
@@ -9,7 +9,7 @@
     "name": "colorize-text-output",
     "dependencies": 
     {
-        "colorize": "~>1.0"
+        "console-colors": "~>1.0"
     }
 }
 ```
@@ -17,17 +17,14 @@
 ## `source/main.d`
 
 ```d
-import std.getopt;
-
-import colorize;
+import consolecolors;
 
 void main()
 {
-    cwriteln("This is light_blue".color(fg.light_blue));
-    auto c = "light_red";
-    cwritefln("This is %s in this nested coloured text".color("red"), c.color(c));
+    cwriteln("This is light blue on orange".lblue.on_orange);    
+    cwritefln("This is a <red>%s</red>.", "nested <yellow>color</yellow> string");
 }
 ``` 
 
-Get `colorize` documentation [here](https://code.dlang.org/packages/colorize).
+Get `console-colors` documentation [here](https://github.com/p0nce/console-colors).
 Get the source code for all DIID examples [here](https://github.com/p0nce/DIID).
