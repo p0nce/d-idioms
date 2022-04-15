@@ -223,15 +223,8 @@ pre
     font-weight: normal;
     color: #b37777;
 }
-/*
-#contributors ul
-{
-    margin: 0rem 0rem 5rem 5rem;
-    color: white;
-}
 
-#contributors li
+img
 {
-    color: white;
+    max-width: 100%;
 }
-*/
