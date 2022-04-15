@@ -24,7 +24,7 @@ Before starting the D language installation, we recommend you to install FIRST t
 
 2. Once you have downloaded this executable and installed it on your PC, launch it and install the free **Microsoft Visual Studio Community Edition** (2019 version or above).
 
-![](assets/Installing_Dlang_Windows_10-9d59bf01.png)
+![](assets/vs-community.png)
 
 3. **IMPORTANT:** Once installed, you need to install Windows SDK and C/C++ libs.
 
@@ -35,15 +35,15 @@ Before starting the D language installation, we recommend you to install FIRST t
 
 1. Open again the Microsoft Visual Installer & in Microsoft Visual Studio Community area, click on the "MODIFY" option
 
-![](assets/Getting-Started-7b4d3f64.png)
+![](assets/vs-modify.png)
 
 2. Choose the thumbnail called "Individual component':
 
-![](assets/Getting-Started-21ffa1ae.png)
+![](assets/all-kits.png)
 
 3. In the SEARCH toolbar, write "Windows SDK" and press ENTER:
 
-![](assets/Getting-Started-093e09bb.png)
+![](assets/windows-sdk.png)
 
 4. The program will show you all the Windows SDK libraries that you can install on your system.
 
@@ -58,7 +58,7 @@ Before starting the D language installation, we recommend you to install FIRST t
 3. The program will show you all the libraries that you can install on your system.
 4. Install ALL OF THEM...
 
-![](assets/Getting-Started-1918c49e.png)
+![](assets/vs-search.png)
 
 5. Now you have an IDE & libs installed. Perfect!
 
@@ -78,7 +78,7 @@ Normally, the Visual D installer should have already set up the `PATH` environme
 
 1. You can check this by opening the environment variable setup in your system:
 
-![](assets/Installing_Dlang_Windows_10-dd21feca.png)
+![](assets/envvars.png)
 
 **If you have the LDC path in your PATH variable: nothing else to do!**
 
@@ -94,7 +94,7 @@ If you don't want to do this (you are not lazy) :
 
 1. Go the the Windows Configuration Panel, search for "environment variables" & add into the PATH the path to the LDC root folder:
 
-![](assets/Getting-Started-aea07c48.png)
+![](assets/ldc-path.png)
 
 **Here is a detailed guide to set your environment variables:** [https://www.computerhope.com/issues/ch000549.htm](https://www.computerhope.com/issues/ch000549.htm)
 
