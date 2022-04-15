@@ -239,6 +239,7 @@ void main(string[] args)
                             Contributor("Basile Burg", "https://github.com/BBasile"),
                             Contributor("Dmitry Bubnenkov", "https://github.com/bubnenkoff"),
                             Contributor("Yannick Koechlin", "https://github.com/yannick"),
+                            Contributor("Stephane Ribas", "https://smaolab.org/"),
                             Contributor("Bastiaan Veelo", "https://github.com/veelo"),
                         ];
 
