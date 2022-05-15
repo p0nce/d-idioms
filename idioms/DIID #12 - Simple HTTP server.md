@@ -63,9 +63,14 @@ void myHTTPServer(Cgi cgi)
 mixin GenericMain!myHTTPServer;
 ``` 
 
+## How to run
+
+`dub -- --port 8080` then open `http://localhost:8080/`.
+
 Get `cgi.d` documentation [here](https://arsd-official.dpldocs.info/arsd.cgi.html).
 Get the source code for all DIID examples [here](https://github.com/p0nce/DIID).
-**Alternatives:** 
+
+## Alternatives:
   - [vibe.d](https://vibed.org/)
   - [serverino](https://code.dlang.org/packages/serverino)
   - [archttp](https://code.dlang.org/packages/archttp)

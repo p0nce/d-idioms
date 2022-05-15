@@ -407,7 +407,9 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title-container"><div id="title">Idioms for the D Programming Language
 <br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#DIID-#11---Write-current-date-on-a-PNG">DIID #11 - Write current date on a PNG
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Apr 27<span class="sub">th</span> 2022
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created May 15<span class="sub">th</span> 2022
+</span></div><div class="item-nav"><a href="#DIID-#12---Simple-HTTP-server">DIID #12 - Simple HTTP server
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created May 15<span class="sub">th</span> 2022
 </span></div><div class="item-nav"><a href="#Installing-Dlang-on-Windows">Installing Dlang on Windows
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Apr 15<span class="sub">th</span> 2022
 </span></div><div class="item-nav"><a href="#DIID-#10---Colorize-console-output">DIID #10 - Colorize console output
@@ -634,6 +636,72 @@ void main(string[] args)
 }
 </code></pre><p>Get <code class="prettyprint">dplug:graphics</code> documentation <a href="http://dplug.dpldocs.info/dplug.graphics.html">here</a>.<br/>Get the source code for all DIID examples <a href="https://github.com/p0nce/DIID">here</a>.<br/><strong>Alternative:</strong> <a href="https://forum.dlang.org/post/khfkwerastkiijdrslzt@forum.dlang.org">arsd solution</a>.
 </p>
+</div><a name="DIID-#12---Simple-HTTP-server"></a><div class="idiom"><a class="permalink" href="#DIID-#12---Simple-HTTP-server">Link
+</a><h1 id="diid-12-simple-http-server"> DIID #12 - Simple HTTP server</h1>
+<p><strong>Solution:</strong> Use the <code class="prettyprint">arsd-occicial:cgi</code> <a href="https://code.dlang.org/packages/arsd-official%3Acgi">package</a>.
+</p>
+<h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
+<pre class="prettyprint"><code>{
+    "name": "simple-HTTP-server",
+    "dependencies":
+    {
+        "arsd-official:cgi": "~&gt;10.0"
+    }
+}
+</code></pre><h2 id="index-html"> <code class="prettyprint">index.html</code></h2>
+<pre class="prettyprint"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello&lt;/h1&gt;
+    &lt;p&gt;This page brought to you by D.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h2 id="source-main-d"> <code class="prettyprint">source/main.d</code></h2>
+<pre class="prettyprint"><code>static import std.file;
+import arsd.cgi;
+import std.format;
+import std.stdio;
+
+void myHTTPServer(Cgi cgi) 
+{
+    string url = cgi.pathInfo;
+    writefln("GET %s", url);
+    switch(cgi.pathInfo) 
+    {
+        case "/style.css":
+            cgi.setResponseContentType("text/css");
+            cgi.write("body { color: red; }");
+            break;
+
+        case "/":
+            cgi.setResponseContentType("text/html");
+            cgi.write(std.file.read("index.html"));
+            break;
+
+        default:
+            cgi.setResponseStatus(404);
+    }
+    cgi.close();
+}
+
+mixin GenericMain!myHTTPServer;
+</code></pre><h2 id="how-to-run"> How to run</h2>
+<p><code class="prettyprint">dub -- --port 8080</code> then open <code class="prettyprint">http://localhost:8080/</code>.
+</p>
+<p>Get <code class="prettyprint">cgi.d</code> documentation <a href="https://arsd-official.dpldocs.info/arsd.cgi.html">here</a>.<br/>Get the source code for all DIID examples <a href="https://github.com/p0nce/DIID">here</a>.
+</p>
+<h2 id="alternatives"> Alternatives:</h2>
+<ul>
+<li><a href="https://vibed.org/">vibe.d</a>
+</li>
+<li><a href="https://code.dlang.org/packages/serverino">serverino</a>
+</li>
+<li><a href="https://code.dlang.org/packages/archttp">archttp</a>
+</li>
+</ul>
 </div><a name="Installing-Dlang-on-Windows"></a><div class="idiom"><a class="permalink" href="#Installing-Dlang-on-Windows">Link
 </a><h1 id="installing-dlang-on-windows"> Installing Dlang on Windows</h1>
 <p><em>This idiom by Stephane Ribas.</em>
