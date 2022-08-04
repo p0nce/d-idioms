@@ -2,8 +2,7 @@
 
 _It is my 3rd DConf, a cherished part of the year._
 
-_But right now I'm in a pretty bad mood. Slept only 3 hours after a day in transport. Airplane ticket reseller apparently scammed me and I was 
-denied the flight, had to get to London in Eurostar. All this trip is already more expensive than I wish it was._
+_But right now I'm in a pretty bad mood. Slept only 3 hours after a day in transport. Airplane ticket reseller apparently scammed me and I was denied the flight, had to get to London in posh Eurostar. All this trip is already more expensive than I wish it was._
 
 _DConf location is super nice with good food like always. Food is a huge reason to come to DConf. Air conditionning is efficient, it's much colder than in southern France but it turns out you can put your Dconf tshirt as an additional layer against the cold._
 
@@ -11,7 +10,7 @@ _DConf location is super nice with good food like always. Food is a huge reason 
 
 _Speaking to Weka:_
 - _Weka is recruiting, if you want to work on a very fast distributed, compressed file-system. Big meta-programming users, R&D is expanding, new protocols to implement, not just maintenance at all from what I gather._
-- _apparently they all know this very website `d-idioms`, to them I'm the `d-idioms` guy and they suggest I write their own tip. I say to contribute their tips._
+- _apparently they all know this very website _`d-idioms`_, to them I'm the_ `d-idioms` _guy and they suggest I write their own tip. I say to contribute their tips._
 
 
 
@@ -101,8 +100,7 @@ _Speaking to Manu: he was trapped in Australia during COVID, and created an Autr
                     It's reassuring that there are way to bend immutable and don't break the type
                     system. People seemed to realy like that talk.
 
-_Speaking to more Symmetry people at lunch. They came in great numbers, perhaps 25.
-   I need to speak more about `gamut`._
+_Speaking to more Symmetry people at lunch. They came in great numbers, perhaps 25. I need to speak more about_ `gamut`_._
 
 ## Ali's talk:
   - D is pragmatic, refactorable, fun, sane, emergent, moldable, etc. let's get this out of the way
@@ -160,7 +158,7 @@ _Speaking to more Symmetry people at lunch. They came in great numbers, perhaps 
   - "using D, small teams can match the productivity of bigger organizations"
     interesting devops tidbits for those of use that don't understand that domain
 
->Personal takeaway: My favourite talk of the day. Because I learned tons of thing about a
+> Personal takeaway: My favourite talk of the day. Because I learned tons of thing about a
                    particular domain I know nothing about.
                    A real-worldey talk.
 
@@ -169,19 +167,16 @@ _Speaking to more Symmetry people at lunch. They came in great numbers, perhaps 
   - was too tired to write about things.
 
 
+&nbsp;  
+
+
 # Dconf subjective report Day 2 (02/08/2022):
 
 
-_I finally slept a while 5h so I'm well rested. You can get a bit more sleep if you skip the 
-breakfast. Couldn't go to BeerConf the day before. London tube is superb._
+_I finally slept a while 5h so I'm well rested. You can get a bit more sleep if you partly skip the breakfast. Couldn't go to BeerConf the day before. London tube has interesting design, round trains in round tunnels._
 
 
-_Breakfast with Eyal from Weka is building. I show him Markov things and think the visual markov
-description language are maybe easy for children to grasp. Weka doesn't use Image so no `gamut`
- requirements there. He's working on a half-text, half-visual multilingual language inspired by 
-D and Haskell.
-He has a D "at large" tip for d-idioms which is to run unittests at CTFE to avoid link times(!) 
-save lots of time with that tip._
+_Breakfast with Eyal from Weka is building. I show him Markov things and argue that visual markov description languages are may be easier for children to grasp than proglangs. Weka doesn't use Image so no_ `gamut` _requirements there. He's working on a half-text, half-visual multilingual language inspired by D and Haskell. I advise to present a lightning talk._
 
 
 
@@ -265,7 +260,7 @@ model expert. In these times of ARM64-only bugs, it is always good to know. I lo
 - question: TLS defeats moving things across threads
 - `shared` not creating problems, according to Sebastiaan. Want to use the keyword.
 
-> Personal takeaway: **Futuristic talk, absolute must-see.** Even the type of D used is new and 
+> Personal takeaway: **Futuristic talk, must-see.** Even the type of D used is new and 
   interesting. This is like the talk "std::allocator is to allocation what std::vector is to 
   vexation" except this time with concurrency. Library is here: 
   https://github.com/symmetryinvestments/concurrency
@@ -341,8 +336,11 @@ for years.
 > None of the language designer here had a life plan to become language designers. Life just 
 happens. Day 2 was super interesting.
 
-_BeerConf happens. I have to explain in great details why I don't like `@safe`, I didn't 
-realized before having to explain. Met a HDL Danish engineer doing rightful D._
+_BeerConf happens. I have to explain in great details why I don't like `@safe`, I didn't realized before having to explain._
+
+
+&nbsp;
+
 
 # Dconf subjective report Day 3 (03/08/2022):
 
@@ -390,10 +388,7 @@ UI you'd want to prefer push parsers. I remember that in video processing that d
 big one. I'm not myself a parser expert so the talk went a bit over my head. People are really 
 sharp at Dconf as always.
 
-_I try to submit my checked TODO proposal to Walter, who doesn't seem interested. "Just use grep 
-in your Makefile". I'm not using either. I could use a UDA and make a DUB package 
-to highlight the point, because what's the thing you grep in your code most often? I think 
-mechanically checked TODO annotations has a lot of unrealized value!_
+_I try to submit my checked TODO proposal to Walter, who doesn't seem interested. "Just use grep in your Makefile". I'm not using either. I could use a UDA and make a DUB package to highlight the point, because what's the thing you grep in your code most often? I think mechanically checked TODO annotations has a lot of unrealized value!_
 
 
 ## Lucian Danescu 
@@ -515,6 +510,8 @@ I wish there was more lightning talks.
 > Personal takeaway: Mike is the man. Wouldn't be in D without him (and Kenta Cho). Cause he wrote dependable Derelict.
 
 **Conclusion:**
+
+Always learning a lot when coming to DConf.
 D usage seems slightly augmenting, but contributors are dearly needed.
-I'd much prefer if there were 30 corporate sponsors, not 3 sponsors.
-3 days of interesting talks and high-intensity thinking takes a toll on me, along with short sleep, and I decide to skip the Hackathon day and go visit London.
+
+3 days of interesting talks and high-intensity thinking takes a toll on me, along with short sleep, and I decided to skip the Hackathon day and go visit London instead. See you next time?
