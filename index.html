@@ -406,9 +406,11 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <title>d-idioms - Idioms for the D programming language</title></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-71912218-1', 'auto');ga('send', 'pageview');</script><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title-container"><div id="title">Idioms for the D Programming Language
-<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#DIID-#11---Write-current-date-on-a-PNG">DIID #11 - Write current date on a PNG
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created May 15<span class="sub">th</span> 2022
+<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#DConf-2022-Subjective-Report">DConf 2022 Subjective Report
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Aug 4<span class="sub">th</span> 2022
 </span></div><div class="item-nav"><a href="#DIID-#12---Simple-HTTP-server">DIID #12 - Simple HTTP server
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created May 15<span class="sub">th</span> 2022
+</span></div><div class="item-nav"><a href="#DIID-#11---Write-current-date-on-a-PNG">DIID #11 - Write current date on a PNG
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created May 15<span class="sub">th</span> 2022
 </span></div><div class="item-nav"><a href="#Installing-Dlang-on-Windows">Installing Dlang on Windows
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Apr 15<span class="sub">th</span> 2022
@@ -594,47 +596,740 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Dec 18<span class="sub">th</span> 2021
 </span></div><div class="item-nav"><a href="#Smallest-valid-D-program">Smallest valid D program
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Oct 19<span class="sub">th</span> 2016
-</span></div></nav><div class="container"><a name="DIID-#11---Write-current-date-on-a-PNG"></a><div class="idiom"><a class="permalink" href="#DIID-#11---Write-current-date-on-a-PNG">Link
-</a><h1 id="diid-11-write-current-date-on-a-png"> DIID #11 - Write current date on a PNG</h1>
-<p><strong>Solution:</strong> Use the <code class="prettyprint">dplug:graphics</code> <a href="https://code.dlang.org/packages/dplug%3Agraphics">package</a>.
+</span></div></nav><div class="container"><a name="DConf-2022-Subjective-Report"></a><div class="idiom"><a class="permalink" href="#DConf-2022-Subjective-Report">Link
+</a><h1 id="dconf-subjective-report-day-1-01-08-2022"> Dconf subjective report Day 1 (01/08/2022):</h1>
+<p><em>Slept only 3 hours after a day in transport. Airplane ticket reseller apparently scammed me and I was &lt;br&gt;denied the flight, had to get to London in Eurostar. All this trip is already more expensive than I wish it was.</em>
 </p>
-<h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
-<pre class="prettyprint"><code>{
-    "name": "write-current-date-on-png",
-    "dependencies":
-    {
-        "dplug:graphics": "~&gt;12.0"      
-    }
-}
-</code></pre><h2 id="input-image-and-font-file"> Input image and font file</h2>
-<p>This program assumes <code class="prettyprint">input.png</code> and <code class="prettyprint">VeraBd.ttf</code> in the project directory.
+<p><em>DConf location is super nice with good food like always. Food is a huge reason to come to DConf. Air conditionning is efficient, it's much colder than in southern France but it turns out you can put your Dconf tshirt as an additional layer against the cold.</em>
 </p>
-<h2 id="source-main-d"> <code class="prettyprint">source/main.d</code></h2>
-<pre class="prettyprint"><code>static import std.file;
-import std.datetime;
-import dplug.graphics;
-
-
-void main(string[] args)
-{
-    // Load image.
-    auto image = loadOwnedImage( std.file.read("input.png") );
-
-    // Load font.
-    auto font = new Font( cast(ubyte[]) std.file.read("VeraBd.ttf") );
-
-    // Write text.
-    RGBA red = RGBA(255, 0, 0, 255);
-    float textX = 20;
-    float textY = 20;
-    float fontSize = 16;
-    string timeStr = Clock.currTime().toISOExtString();
-    image.toRef.fillText(font, timeStr, fontSize, 0.0, red, textX, textY, HorizontalAlignment.left);
-
-    // Save image.
-    std.file.write("output.png", image.toRef.convertImageRefToPNG);
-}
-</code></pre><p>Get <code class="prettyprint">dplug:graphics</code> documentation <a href="http://dplug.dpldocs.info/dplug.graphics.html">here</a>.<br/>Get the source code for all DIID examples <a href="https://github.com/p0nce/DIID">here</a>.<br/><strong>Alternative:</strong> <a href="https://forum.dlang.org/post/khfkwerastkiijdrslzt@forum.dlang.org">arsd solution</a>.
+<p><em>Speaking to Weka:</em>
+</p>
+<ul>
+<li><em>Weka is recruiting, if you want to work on a very fast distributed, compressed file-system. Big meta-programming users, R&amp;D is expanding, new protocols to implement, not just maintenance at all from what I gather.</em>
+</li>
+<li><em>apparently they all know this very website `d-idioms`, to them I'm the `d-idioms` guy and they suggest I write their own tip. I say I'd rather have them open a PR.</em>
+</li>
+</ul>
+<h2 id="walter-s-talk"> Walter's talk:</h2>
+<ul>
+<li>says template syntax being able to make literal is emergent (the eponymous template thing), <br/>  so no use for language support
+</li>
+<li>D had binary and octal literals, removed in favor of template literals
+</li>
+<li>present again his small buffer stack optimization, this time with a delegate to avoid alloca
+</li>
+<li>2 liner instead of 4 without the delegate, interesting. I could certainly use it.
+</li>
+<li>Walter prefers to encapsulate the logic that way
+</li>
+<li>Walter can concatenates strings with lazy ranges voldemort instead of appending.
+</li>
+<li>example of concatenating literals in a single allocation
+</li>
+<li>std.path uses that to allocate less memory
+</li>
+<li>praise invalid values (like NaN or empty string) as alternative to exceptions and error codes
+</li>
+<li>example of poisonned values (error nodes) in DMDFE
+</li>
+<li>bad Unicode data should be replaced by replacement char, not halt everything.
+</li>
+<li>so a bit of a Markdown situation
+</li>
+<li>if I'm being precise, this reasoning applies to Unicode that will be displayed only <br/>(eg: file name =&gt; doesn't work)
+</li>
+<li>Guard bit vs Sticky bit vs Hidden bit in float implementation: it's complicated and noone <br/>  explains that.
+</li>
+<li>encourages Max for the 80-bit "easy" topic (I tried it and recoiled in horror)
+</li>
+<li>the tired old CTFE array initialization
+</li>
+<li>example of bitfield generation mixin
+</li>
+<li>emergent features of ImportC
+</li>
+<li>__import
+</li>
+<li>ImportC can use templates D function as long as the type parameters are implicit
+</li>
+<li>also overloading
+</li>
+</ul>
+<blockquote><p>Personal takeaway: a talk that I found a bit lacking in new stuff, would have loved to hear more 
+</p>
+</blockquote>
+<p>about the mentionned floating-point details, or to expand on the Unicode case._
+</p>
+<p><em>Speaking to Manu: he was trapped in Australia during COVID, and created an Autralian ISP. An endeavour that is made extra difficult by the upside-down nature of Australia.</em>
+</p>
+<h2 id="john-colvin-s-talk"> John Colvin's talk:</h2>
+<ul>
+<li>also works for Symmetry, Jan too, I'm literally surrounded by people that actually <br/>   want to make money
+</li>
+<li>John says to make your code easy to change rather than predict the future (mostly "YAGNI")
+</li>
+<li>small &gt; decoupled and composable
+</li>
+<li>we should be afraid of code, but not of changing code
+</li>
+<li>but that's not free
+</li>
+<li>easiest to do that is keep code small
+</li>
+<li>not easy either, since we again want to predict the future
+</li>
+<li>be "adaptable", prepare for anything by being able to change, rather than<br/>   being "flexible" and predict the future
+</li>
+<li>more D praise. It turns out D is good.
+</li>
+<li>uses template to reduce coupling between different parts of the files
+</li>
+<li>do not overdo it, because it's clever
+</li>
+<li>D culture being "isolated" because people barely communicate so you get a defensive style,<br/>   not breaking people code, exagerated decoupling, few reports. Versus product companies that <br/>   have more cohesive codebase and downstream provides feedback =&gt; hence monorepos.<br/>   I don't think that's new, product companies have monorepos because of the higher control on <br/>   the end result. If I'm being extra snarky, "all the code can be modified by me" may lead to<br/>   ill-defined interfaces, and even in my solo biz I need superbly defined interfaces.<br/>   To me, small interfaces (that exist) is the one thing that leads to easy-to-change code.<br/>   I think it rejoin the "framework" problematic when you want a consistent codebase and in the end<br/>   have to maintain everything, not just bolt different libraries together.<br/>   Within a big company, codebase must be a framework / easy to learn.
+</li>
+<li>Symmetry is recruiting.
+</li>
+<li>fun question: "how do you stop your team to create more repositery?"
+</li>
+<li>I don't understand the answer. Everyone speaking better english than me.
+</li>
+<li>Phobos and druntime should be one repo
+</li>
+<li>monorepos, according to audience, reduce the cost of breaking an interface
+</li>
+<li>hence making it more likely to refactor
+</li>
+<li>hence easier-to-change
+</li>
+</ul>
+<blockquote><p> Personal takeaway: A talk with opinions and even metaphors, that I enjoyed. It's like <br/>               using D for a sufficiently long time leads people to think like that, because <br/>               I mostly share equivalent feelings about things.
+</p>
+</blockquote>
+<h2 id="mathis-s-talk-aka-feepingcreature"> Mathis's talk: (aka FeepingCreature)</h2>
+<ul>
+<li>works at Funkwerk
+</li>
+<li>code at funkwerk uses purity, called "domain-driven design"
+</li>
+<li>Unqual on a immutable struct only lifts immutable on the aggregate, leading to an unnamed type<br/>   in the compiler, with immutable fields
+</li>
+<li>breaking immutable in normal dlang
+</li>
+<li>introduce Rebindable!T, a boxed T type that is a rebindable immutable(T)
+</li>
+<li>stored data is mutable with a DeepUnqual, so it doesn't break the type system
+</li>
+<li>you cannot observe the value changing
+</li>
+<li>some restrictions in copy ctor and stuff, but mostly works
+</li>
+<li>used by Funkwerk to have a better Nullable!T
+</li>
+<li>nice align(T.sizeof) pattern for the wrapper type
+</li>
+<li>Mathis says that rvalue are even stricter than immutable
+</li>
+</ul>
+<blockquote><p> Personal takeaway: Super cool talk a bit hard to follow, sleep would help.<br/>                It's reassuring that there are way to bend immutable and don't break the type<br/>                system. People seemed to realy like that talk.
+</p>
+</blockquote>
+<p><em>Speaking to more Symmetry people at lunch. They came in great numbers, perhaps 25.&lt;br&gt;   I need to speak more about `gamut`.</em>
+</p>
+<h2 id="ali-s-talk"> Ali's talk:</h2>
+<ul>
+<li>D is pragmatic, refactorable, fun, sane, emergent, moldable, etc. let's get this out of the way
+</li>
+<li>explain the iota signatures in great details, including is(typeof(stuff))
+</li>
+<li>show std.parallel and notably, explains how it works in great detail
+</li>
+<li>Note: there is threadsafe single-init function in std.concurrency named initOnce!T
+</li>
+<li>shows a full range chain that support random access by DbI, super cool slide
+<ul>
+<li>actual DbI example with forwarding of being random-access
+</li>
+</ul>
+</li>
+<li>Walter: people weren't supposed to use __traits directly but std.traits
+</li>
+</ul>
+<blockquote><p> Personal takeaway: This accessible talk is useful to point people that have trouble with Phobos 
+</p>
+</blockquote>
+<p>  signatures. I particularly liked the <code class="prettyprint">.parallel</code> deep explanation.
+</p>
+<h2 id="mathias-lang-s-talk"> Mathias Lang's talk:</h2>
+<ul>
+<li>Go didn't go so well at BPFK
+</li>
+<li>BPFK D usage began as Mathias skunkworks
+</li>
+<li>D C++ interop supports a lot (two ways exceptions for example, classes, structs, v-table...)
+</li>
+<li>"It is D code: follow D rules"
+</li>
+<li>helpful tips for actually binding to C++
+</li>
+<li>recommends not attempting to bind to lifetime things, such as ctor, dtor, move ctor, copy ctor
+</li>
+<li>introduce ways to test that layout, size of types match between D and C++
+</li>
+<li>more advice: instantiate C++ templates explicitely, so that the linker get the definitions
+</li>
+<li>Manu contributed a lot to that. The speaker thank me but I don't remember doing anything in<br/>that direction.
+</li>
+<li>core.stdcpp will be separated from druntime, to not tie with a specific C++ runtime
+</li>
+<li>apparently this is coming to a D compiler near you
+</li>
+<li>you can convert C++ to D using that, gradually
+</li>
+<li>they avoid some extern(C++) bugs by avoiding DMD, perhaps fixed nowadays
+</li>
+<li>Walter asks for Mathias to also rewrite the 15yo documentation on the site, this video now<br/>being the best reference
+</li>
+</ul>
+<blockquote><p> Personal takeaway: A talk about a relatively niche, but important, part of D.  <br/>               If you plan to use C++ interop, you need to watch this talk. Audience is happy.<br/>               I'm beginning to feel a bit tired with the D praise today.
+</p>
+</blockquote>
+<h2 id="vijay-nayar-s-talk"> Vijay Nayar's talk:</h2>
+<ul>
+<li>microservices can be synchronous or asynchronous
+</li>
+<li>microservices can be implemented in anything, differet codebases (not mandatory), handle <br/>failure more reliably, can be built by different teams, forces a clear interface to exist<br/>=&gt; so, a division of work advantage
+</li>
+<li>container orchestration like Kubernetes, AWS ECS, OpenShift exist to increase performance of<br/>microservices
+</li>
+<li>because of huge cost, system-level languages have a place in the microservices space
+<ul>
+<li>a lot of company there are first-to-market, and think about cost later
+</li>
+<li>native language best at speed, as we know
+</li>
+</ul>
+</li>
+<li>vibe.d beats a simple Java HTTP server with 2x the throughput, 5% te memory usage, etc.
+</li>
+<li>more D praise
+</li>
+<li>want more D libraries: database ORMs, rule engines, AWS SQS, SNS, Apacha Kafka, Security <br/>(eg: Vault)
+</li>
+<li>wants a visual memory debugger
+</li>
+<li>-profile=gc agreed to be useful
+</li>
+<li>-profile though doesn't work well enough
+</li>
+<li>tips for porting to D.
+</li>
+<li>Vojay creates a high-performance car hailing system in D (for eg. taxi cab)
+</li>
+<li>"using D, small teams can match the productivity of bigger organizations"<br/>interesting devops tidbits for those of use that don't understand that domain
+</li>
+</ul>
+<blockquote><p>Personal takeaway: My favourite talk of the day. Because I learned tons of thing about a<br/>               particular domain I know nothing about.<br/>               A real-worldey talk.
+</p>
+</blockquote>
+<h2 id="q-a-sessions"> Q & A sessions:</h2>
+<ul>
+<li>people of D should write more blogs.
+</li>
+<li>was too tired to write about things.
+</li>
+</ul>
+<h1 id="dconf-subjective-report-day-2-02-08-2022"> Dconf subjective report Day 2 (02/08/2022):</h1>
+<p><em>I finally slept a while 5h so I'm well rested. You can get a bit more sleep if you skip the &lt;br&gt;breakfast. Couldn't go to BeerConf the day before. London tube is superb.</em>
+</p>
+<p><em>Breakfast with Eyal from Weka is building. I show him Markov things and think the visual markov&lt;br&gt;description language are maybe easy for children to grasp. Weka doesn't use Image so no `gamut`&lt;br&gt; requirements there. He's working on a half-text, half-visual multilingual language inspired by &lt;br&gt;D and Haskell.&lt;br&gt;He has a D "at large" tip for d-idioms which is to run unittests at CTFE to avoid link times(!) &lt;br&gt;save lots of time with that tip.</em>
+</p>
+<h2 id="robert-ierusalimschy-talk-lua-pallene"> Robert Ierusalimschy talk (Lua & Pallene)</h2>
+<ul>
+<li>Lua is a mature language with lots of small details.
+</li>
+<li>Pallene is a restricted, system language.
+</li>
+<li>Lua (10k SLOC) runs almost eveverywhere since based on ANSI C.
+</li>
+<li>they are very concerned by smallness of Lua and total complexity.
+</li>
+<li>everything is a table in lua: modules, records, arrays, objects...
+</li>
+<li>lots of closures in Lua, for example modules are tables of anonymous functions.
+</li>
+<li>exceptions are done with <em>protected calls</em>, a special way to call a function: <code class="prettyprint">pcall</code>.
+</li>
+<li>problems they are having: rewriting slow parts in C is not always easy for Lua users.
+</li>
+<li><strong>Pallene</strong> has gradual typing. Goal = act on Lua types directly, be faster.
+</li>
+<li>Design goal: translating a Lua function to Pallene should not worsen the performance.
+<ul>
+<li>they even check this with performance graphs that change one function only
+</li>
+</ul>
+</li>
+<li>Pallene syntax is roughly Lua with types.
+</li>
+<li>performance numbers: often same as LuaJIT, 2x to 4 slower than C (instead of much slower in Lua <br/>  case)
+</li>
+<li>better to just give the type than to have a JIT. JIT must deoptimize when wrong types are given, <br/>  super complex.
+</li>
+<li>Lua is portable C and following all the constraints is incredibly hard
+</li>
+<li>LuaJIT is very good but a lot more complex than Pallene
+</li>
+<li>allows unboxing things
+</li>
+<li>question about 1-based arrays "there are 2 kinds of languages: 1 = languages that index from one". <br/>  Basing arrays on 1 was more natural for non-programmers. Also FORTRAN, etc. Nobody asked at these<br/>  times.
+</li>
+<li>The Pallene and Lua compiler are separate, so I guess you pay double the code size.
+</li>
+<li>the audience remark that Pallene often beat LuaJIT and asks why. Well we won't know.
+</li>
+<li>apparently Lua can't use NaN tagging, but LuaJIT can
+</li>
+</ul>
+<blockquote><p> Personal takeaway: You can see how Robert exudes simplicity and makes things seem easy when they 
+</p>
+</blockquote>
+<p>are not. A very topdown talk, helpful lesson for the sometimes detail-oriented D community.
+</p>
+<p><em>Speaking with Funkwerk, thanks for the BeerConf! At least 3 of them here.</em>
+</p>
+<h2 id="roy-s-talk"> Roy's talk</h2>
+<ul>
+<li>live-demo of good cache matrix sum, and bad cache matrix sum
+</li>
+<li><code class="prettyprint">volatileLoad</code> can act as optimization barrier
+</li>
+<li>full sequential consistency is slow than more relaxed modes
+</li>
+<li>nice explanations of different memory models of atomics
+</li>
+<li>live-demo of super rare races
+</li>
+<li>live-demo of an arm-only race, since its memory-model is less strong than acquire-release and x86<br/>  memory model is stronger
+</li>
+<li>"things before the release happened before the acquire
+</li>
+<li>any time you deviante from sequential consistency, you are asking for problems
+</li>
+<li>Roy works on verifying program under weak memory models, a good presenter
+</li>
+<li><code class="prettyprint">Rocker</code>, a tool to check semantics of your atomics program
+</li>
+<li>can check Peterson algorithm implementation and break them in one second
+</li>
+<li>found bugs in all of them
+</li>
+<li>much easier to find race
+</li>
+<li>https://github.com/rymrg/rocker
+</li>
+</ul>
+<blockquote><p> Personal takeaway: Always interesting to learn more about atomics, <em>especially</em> from a memory 
+</p>
+</blockquote>
+<p>model expert. In these times of ARM64-only bugs, it is always good to know. I love the more complex<br/> talks, so all positives. Rocker builds on first try. Cool.
+</p>
+<h2 id="sebastiaan-s-talk-tip-watch-this"> Sebastiaan's talk (Tip: watch this)</h2>
+<ul>
+<li>concurrency bugs harder to track down, and hidden a long time, waiting to pop up
+</li>
+<li>in D, most concurrent API has unclear lifetime, unstructured, lacks cancellation, all have no <br/>  error handling, and not composable. Similar to unstructured <em>programming</em> of old, in a way.
+</li>
+<li>the Structured Program Theorem states that 3 composable base statement can build any computable <br/>  function.
+</li>
+<li>makes a giant analogy with presumably the content of the talk being like structured programming <br/>  vs unstructured programming
+</li>
+<li>at the times it wasn't generally admitted than all programs could be stuctured!
+</li>
+<li>design goals of Structured Concurrency: propagates errors, allow cancellation (else not <br/>  composable), all async computations have an owner.
+</li>
+<li>design: inspired by a C++ proposal:
+</li>
+<li>senders, a UFCS voldemort lazy chain thing
+</li>
+<li>if you wait for both A and B, and A has an error, then you need to <em>cancel</em> B, so cancellation <br/>  belongs to this monadic contraption =&gt; avoid leaky tasks
+</li>
+<li>end indeed in Dplug, tasks are just not allowed to fail...
+</li>
+<li>likes shared, DIP 1000, and @safe, wants more of it!
+</li>
+<li>question: TLS defeats moving things across threads
+</li>
+<li><code class="prettyprint">shared</code> not creating problems, according to Sebastiaan. Want to use the keyword.
+</li>
+</ul>
+<blockquote><p> Personal takeaway: <strong>Futuristic talk, absolute must-see.</strong> Even the type of D used is new and 
+</p>
+</blockquote>
+<p>  interesting. This is like the talk "std::allocator is to allocation what std::vector is to <br/>  vexation" except this time with concurrency. Library is here: <br/>  https://github.com/symmetryinvestments/concurrency
+</p>
+<h2 id="mike-shah-s-talk"> Mike Shah's talk</h2>
+<ul>
+<li>a raytracer can be done in 24 hours.
+</li>
+<li>you can actually use the math you were taught.
+</li>
+<li>didn't really followed, since I implemented toy raytracers a few times. Important email to answer<br/>  to.
+</li>
+</ul>
+<blockquote><p> Personal takeaway: I should probably read the PBRT book that was so expensive.
+</p>
+</blockquote>
+<h2 id="dennis-korpel-s-talk"> Dennis Korpel's talk</h2>
+<ul>
+<li>he made plenty with D after discovering it
+</li>
+<li>is it better to have a Big Language or mixed language? Big Language
+</li>
+<li>I already knew it, but Dennis is a super strong programmer and way younger than I expected
+</li>
+<li>live-demo of a hacked Super Mario 64 rom that says "D ROCKS", LDC generating the MIPS assembly
+</li>
+<li>lots of other stuff
+</li>
+</ul>
+<blockquote><p> Personal takeaway: Yeah, D is good you can do it all with it.
+</p>
+</blockquote>
+<h2 id="max-s-talk"> Max's talk</h2>
+<ul>
+<li>performance is mostly about memory
+</li>
+<li>specific d-cache and i-cache optimization advices
+</li>
+<li>memory bandwidth has gone up but memory latency is terrible
+</li>
+</ul>
+<blockquote><p> Personal takeaway: Good reminder that the best optimizations are often about memory bandwidth and
+</p>
+</blockquote>
+<p> layout. To this day I still remember the boss coming to my desk and congratulating me for a 11% <br/> speed-up that only involved memory layout and rearranging things in a single allocation. <br/> I got a giant pat on the back that day. It was very satisfying as an employee. <br/> The Man actually wanted more such optimizations like that, but there were none I could think of.
+</p>
+<h2 id="language-design-panel"> Language design panel</h2>
+<ul>
+<li>What a language you really admire but doesn't work on:
+</li>
+<li>Scheme, CL, Haskell, Forth gets a mention. Walter prefers PDP Assembly :)
+</li>
+<li>Are dependent types overhyped?
+</li>
+<li>Atila doesn't think it will be widespread.
+</li>
+<li>Roberto think memory-safety is not considered super crucial by people
+</li>
+<li>Roberto thinks economics of software quality are pareto-like, and most kind of software must be <br/>kept in cost, reasonable, not too high-quality. Cost is very low for bad software. Hasn't change<br/>for years. 
+</li>
+<li>Walter think C ABI will survive and nothing will be implemented in C in the future.
+</li>
+<li>Walter: GC lets you get it done
+</li>
+<li>Robert would add desctructuring pattern-patching in Lua if that was possible, but no types
+</li>
+<li>macros = inevitable doom discourse
+</li>
+<li>more first class features that comes from annotations? (like unittest). Walter wants examples.
+</li>
+<li>I was thinking first class TODO, FIXME, BUG HERE, made first class copyright and the compiler <br/>would check that
+</li>
+<li>Atila: most people that can't afford a GC actually can.
+</li>
+<li>question: what current best practice are worse practice?
+</li>
+<li>panel agrees that code using single assignment is easier
+</li>
+<li>Walter: a lot of the principles are contradictory
+</li>
+<li>Walter: macro rant, airplane analogies
+</li>
+<li>Atile: we will find a way [to use macros anyway] 
+</li>
+<li>everyone pretends not to know Haxe
+</li>
+<li>Walter really tried to reduce complexity but it's hard
+</li>
+<li>Roberto sometimes had to sacrifice simplicity
+</li>
+<li>first Lua version linearly searched all its members
+</li>
+<li>Roberto: "I don't think I could change Coq for D"
+</li>
+<li>Roberto: speaks about his C experience, strange realloc tricky to avoid <br/>  <em>I need to check that one later</em>
+</li>
+</ul>
+<blockquote><p> None of the language designer here had a life plan to become language designers. Life just 
+</p>
+</blockquote>
+<p>happens. Day 2 was super interesting.
+</p>
+<p><em>BeerConf happens. I have to explain in great details why I don't like `@safe`, I didn't &lt;br&gt;realized before having to explain. Met a HDL Danish engineer doing rightful D.</em>
+</p>
+<h1 id="dconf-subjective-report-day-3-03-08-2022"> Dconf subjective report Day 3 (03/08/2022):</h1>
+<p><em>Some guy came to the conference breakfast but doesn't know D. Works in C++ finance.</em>
+</p>
+<h2 id="atila-s-talk"> Atila's talk</h2>
+<ul>
+<li>Future of D: compilation deamon, more inference
+</li>
+<li>Proposes to increase rate of adoption of -preview (I agree, as they accumulate)
+</li>
+<li>enumerates all the DIP
+</li>
+<li>not sure why community says <code class="prettyprint">shared</code> is unfinished, and people should use libraries that uses it,<br/>  like <code class="prettyprint">concurrency</code>. <code class="prettyprint">shared</code> is just a building block, and an OK one, as stated by Sebastiaan in <br/>  his talk. 
+</li>
+<li>wants structured concurrency in Phobos, DIP 1000 is important
+</li>
+<li>because noone is using <code class="prettyprint">fearless</code>, inspired by Rust <code class="prettyprint">std::sync::Mutex</code>
+</li>
+<li>Phobos won't be on DUB, but some parts maybe?
+</li>
+<li>move std.experimental.typecons to <code class="prettyprint">std.typecons</code>
+</li>
+<li><code class="prettyprint">std.experimental.logger</code> is now <code class="prettyprint">std.logger</code>
+</li>
+<li><code class="prettyprint">std.experimental.allocator</code> causing lots of questions. In particular, they haven't scoped.<br/>Focus should be on high-level API, so that people don't need to care about <code class="prettyprint">malloc</code>/<code class="prettyprint">free</code>.
+</li>
+<li>noone use manual MM in C++ so we shouldn't tell people to use <code class="prettyprint">malloc</code>/<code class="prettyprint">free</code>.
+</li>
+<li>noone works on Phobos v2 (remove auto-decoding) and Atila needs to take ownership of this. <br/>  Remove support for 3 different types of strings.
+</li>
+<li>dlang "Editions"? Considering the question. Atila think of this positively.
+</li>
+<li>Goals: quality, then expand, focus on high-level usage, help needed foxing bugs.
+</li>
+</ul>
+<blockquote><p> Personal takeaway: There is a nice continuity from Andrei's talk in 2018 and this one. I'm happy 
+</p>
+</blockquote>
+<p>the problems in allocators are recognized because frankly they are impossible to use without a <br/>runtime. I think there is a problem with template-fu that are supposed to be best at something but Direction is clear and well communicated. In Atila's talk there is an implicit admission <br/>that there will be a separation between library writers and regular D users, and that we don't need<br/> to fix everything, and I like that development. I loudly complain about TLS for apparently no <br/> reason. No talk about WebASM, to my regret. But, structured concurrency from earlier may enter <br/> Phobos, and this would be presumably a good thing. Generally I think the leadership style of Atila is more discreet versus the Adnrei style, but I end up agreeing with the decisions more.
+</p>
+<h2 id="adela-vais-s-talk"> Adela Vais's talk</h2>
+<ul>
+<li>Bison modified to output D
+</li>
+<li>LALR(1) vs GLR parser in input code
+</li>
+<li>interstingly, Adela implemented a push parser
+</li>
+<li>show some Bison parser code,
+</li>
+<li>says M4 code that is indeed challenging
+</li>
+<li>scope had to be reduced for that SAoC
+</li>
+</ul>
+<blockquote><p> Personal takeaway: I wonder if IDEs use push parsers more. And indeed that's what Adela says, in 
+</p>
+</blockquote>
+<p>UI you'd want to prefer push parsers. I remember that in video processing that distinction was a <br/>big one. I'm not myself a parser expert so the talk went a bit over my head. People are really <br/>sharp at Dconf as always.
+</p>
+<p><em>I try to submit my checked TODO proposal to Walter, who doesn't seem interested. "Just use grep &lt;br&gt;in your Makefile". I'm not using either grep or Makefile. I could use a UDA and make a DUB package &lt;br&gt;to highlight the point, because what's the thing you grep in your code most often? I think &lt;br&gt;mechanically checked TODO annotations has a lot of unrealized value, but maybe that's just me.</em>
+</p>
+<h2 id="lucian-danescu"> Lucian Danescu</h2>
+<ul>
+<li><p>Worked on DMD as a library
+</p>
+</li>
+</ul>
+<blockquote><p> Personal takeaway: I'm not really a D tooling person, more a library writer / industry "dumb D" 
+</p>
+</blockquote>
+<p>proponent.
+</p>
+<p><em>Had great fun at lunch talking to people.</em>
+</p>
+<h2 id="lightning-talks"> Lightning talks!</h2>
+<p>My favourite DConf feature. :)<br/>I wish there was more lightning talks.
+</p>
+<h3 id="snazzy-d-compiler"> Snazzy D Compiler</h3>
+<ul>
+<li>an unexpected development in the D world
+</li>
+<li>SDC lexer is reusable for other language (!), sounds interesting
+</li>
+<li>development seems to be ongoing again
+</li>
+<li>needs to be more advanced for Phobos, for now = formatter
+</li>
+<li>its architecture learned from DMDFE
+</li>
+</ul>
+<h3 id="how-to-call-c-from-d"> How to call C# from D</h3>
+<ul>
+<li>.NET DLL are not normal .DLL (static vs dynamic)
+</li>
+<li>use RGieseck's package to call C# from D (dynamic DLL)
+</li>
+<li>or use static DLL
+</li>
+<li>or Derelict + MONO
+</li>
+<li>describes how to properly marshal things for C#
+</li>
+<li>looks like JNI very much to me
+</li>
+</ul>
+<h3 id="dennis"> Dennis</h3>
+<ul>
+<li>Show a program with only return everywhere
+</li>
+<li>that's what DIP1000 does on your brain
+</li>
+</ul>
+<h3 id="dub-improvements"> DUB improvements</h3>
+<ul>
+<li>colors, dub select, recursive dub upgrade, performance improvements
+</li>
+<li>plenty of good stuff
+</li>
+<li>git dependencies
+</li>
+<li>use <code class="prettyprint">dub upgrade -s</code> all the time (was not made default after discussion)
+</li>
+</ul>
+<h3 id="d-charts"> D Charts</h3>
+<ul>
+<li><p>hilarious chartist view of D number of PRs over time
+</p>
+</li>
+</ul>
+<h3 id="feep"> Feep</h3>
+<ul>
+<li>showcase of strange behaviour of programs
+</li>
+<li>talk is too fast for le to understand
+</li>
+</ul>
+<h3 id="eyal-presents-lamdu"> Eyal presents lamdu (!)</h3>
+<ul>
+<li>lamdu, super cool completion
+</li>
+<li>cool IDE with dyamic code layout, color completion, code completion, always-correct AST
+</li>
+<li>langauge is haskell-like
+</li>
+<li>an IDE for the future
+</li>
+<li>actually completely futuristic 
+</li>
+<li>switch to right-to-left hebrew code
+</li>
+<li>written in Haskell + OpenGL
+</li>
+<li>apparently there is a whole field of "structural/projectional code editors"
+</li>
+<li>sounds more "organic" than using a normal IDE
+</li>
+</ul>
+<h3 id="caching-range-elements"> Caching range elements</h3>
+<ul>
+<li>10M elements appended in a slice =&gt; 23 realloc, interesting data point
+</li>
+<li>input range that buffers when you read front() on an empty range
+</li>
+</ul>
+<h3 id="some-eda-mini-talk"> Some EDA mini-talk</h3>
+<ul>
+<li>described EDA open-source tooling in D they have been doing
+</li>
+<li>I got the story somehow at BeerConf but this had more technical detail
+</li>
+<li>their website tagion.org is cool to look at
+</li>
+</ul>
+<h2 id="templated-hooks-in-druntime"> Templated hooks in Druntime</h2>
+<ul>
+<li>the ongoing project of reducing getting druntime to be more like headers
+</li>
+<li>do template reduce code size?
+</li>
+<li>advantage: can help -betterC keep features
+</li>
+<li>also, some typeinfo lookup is recursive
+</li>
+<li>also, druntime hooks have the wrong attributes
+</li>
+<li>also, such lowering happening in the frontend will be is easier
+</li>
+<li>also, want to reduce realying on TypeInfo. So many upsides!
+</li>
+<li>now, how much will the compilation time increase?
+</li>
+<li>already 2 SAoC students attacked that story
+</li>
+<li>all the changes have to be completely transparent to the users
+</li>
+<li>so: 4 of the 38 hooks converted already, added 9 more. Ongoing project.
+</li>
+<li>lowering must preserve number of evaluations, which is tricky.
+</li>
+<li>benchmarks: array creation benefit, array append only slightly (3 to 5% faster though)
+</li>
+<li>compile time increase looks quite bad in the numbers... 
+</li>
+<li>for some hooks =&gt; not really beneficial
+</li>
+<li>find threshold for instantiations count?
+</li>
+<li>lowerings for immutable as-seen are problematic, says type people
+</li>
+<li>John Colvin propose to use more type-punning to reduce the instantiations
+</li>
+<li>this topic is kinda cursed, but necessary
+</li>
+</ul>
+<blockquote><p> Personal takeaway: Industry people like me freaking out about instantiations, but I'm sure it's going to be okay.
+</p>
+</blockquote>
+<h2 id="robert-s-talk-moving-from-bugzilla-to-phobos"> Robert's talk (moving from Bugzilla to Phobos)</h2>
+<ul>
+<li>a bit of a Phobos gems
+</li>
+<li>project to move from Bugzilla to Phobos is boring, because Phobos itself is awesome
+</li>
+<li>5 traits in std.traits are the most used ones
+</li>
+<li>std.json works for 99% of use cases,  it's nice
+</li>
+<li>likes <code class="prettyprint">enforce</code>
+</li>
+<li>shows rare <code class="prettyprint">format</code> features, for example you can format whole arrays with separators
+</li>
+<li><code class="prettyprint">std.format</code> is an interesting read
+</li>
+<li><code class="prettyprint">canFind</code>
+</li>
+<li>is for GC for everyone and auto-decoding
+</li>
+</ul>
+<blockquote><p> Personal takeaway: Pretty cool. My Phobos-fu has always been a been rusty, compared to what exist in Phobos. I like the talks on the unknown basics.
+</p>
+</blockquote>
+<h2 id="mike-s-talk"> Mike's talk</h2>
+<ul>
+<li>a helpful reminder of everything that happened before in D
+</li>
+<li>in early days, everyone was a contributor
+</li>
+<li>community is everything
+</li>
+<li>emphasize how huge Kenta Cho was for the D adoption
+</li>
+<li>announces a community management thing
+</li>
+<li>we need more contributors to be able to have people that we don't expect to contribute
+</li>
+<li>wants the ecosystem back and orderly
+</li>
+</ul>
+<blockquote><p> Personal takeaway: Mike is the man. Wouldn't be in D without him (and Kenta Cho). Cause he wrote dependable Derelict.
+</p>
+</blockquote>
+<p><strong>Conclusion:</strong><br/>D usage seems slightly augmenting, but contributors are dearly needed.<br/>I'd much prefer if there were 30 corporate sponsors, not 3 sponsors.<br/>3 days of interesting talks and high-intensity thinking takes a toll on me, along with short sleep, and I decide to skip the Hackathon day and go visit London.
 </p>
 </div><a name="DIID-#12---Simple-HTTP-server"></a><div class="idiom"><a class="permalink" href="#DIID-#12---Simple-HTTP-server">Link
 </a><h1 id="diid-12-simple-http-server"> DIID #12 - Simple HTTP server</h1>
@@ -702,6 +1397,48 @@ mixin GenericMain!myHTTPServer;
 <li><a href="https://code.dlang.org/packages/archttp">archttp</a>
 </li>
 </ul>
+</div><a name="DIID-#11---Write-current-date-on-a-PNG"></a><div class="idiom"><a class="permalink" href="#DIID-#11---Write-current-date-on-a-PNG">Link
+</a><h1 id="diid-11-write-current-date-on-a-png"> DIID #11 - Write current date on a PNG</h1>
+<p><strong>Solution:</strong> Use the <code class="prettyprint">dplug:graphics</code> <a href="https://code.dlang.org/packages/dplug%3Agraphics">package</a>.
+</p>
+<h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
+<pre class="prettyprint"><code>{
+    "name": "write-current-date-on-png",
+    "dependencies":
+    {
+        "dplug:graphics": "~&gt;12.0"      
+    }
+}
+</code></pre><h2 id="input-image-and-font-file"> Input image and font file</h2>
+<p>This program assumes <code class="prettyprint">input.png</code> and <code class="prettyprint">VeraBd.ttf</code> in the project directory.
+</p>
+<h2 id="source-main-d"> <code class="prettyprint">source/main.d</code></h2>
+<pre class="prettyprint"><code>static import std.file;
+import std.datetime;
+import dplug.graphics;
+
+
+void main(string[] args)
+{
+    // Load image.
+    auto image = loadOwnedImage( std.file.read("input.png") );
+
+    // Load font.
+    auto font = new Font( cast(ubyte[]) std.file.read("VeraBd.ttf") );
+
+    // Write text.
+    RGBA red = RGBA(255, 0, 0, 255);
+    float textX = 20;
+    float textY = 20;
+    float fontSize = 16;
+    string timeStr = Clock.currTime().toISOExtString();
+    image.toRef.fillText(font, timeStr, fontSize, 0.0, red, textX, textY, HorizontalAlignment.left);
+
+    // Save image.
+    std.file.write("output.png", image.toRef.convertImageRefToPNG);
+}
+</code></pre><p>Get <code class="prettyprint">dplug:graphics</code> documentation <a href="http://dplug.dpldocs.info/dplug.graphics.html">here</a>.<br/>Get the source code for all DIID examples <a href="https://github.com/p0nce/DIID">here</a>.<br/><strong>Alternative:</strong> <a href="https://forum.dlang.org/post/khfkwerastkiijdrslzt@forum.dlang.org">arsd solution</a>.
+</p>
 </div><a name="Installing-Dlang-on-Windows"></a><div class="idiom"><a class="permalink" href="#Installing-Dlang-on-Windows">Link
 </a><h1 id="installing-dlang-on-windows"> Installing Dlang on Windows</h1>
 <p><em>This idiom by Stephane Ribas.</em>
