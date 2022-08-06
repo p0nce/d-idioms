@@ -406,7 +406,9 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <title>d-idioms - Idioms for the D programming language</title></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-71912218-1', 'auto');ga('send', 'pageview');</script><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title-container"><div id="title">Idioms for the D Programming Language
-<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#DIID-#12---Simple-HTTP-server">DIID #12 - Simple HTTP server
+<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#The-merged-allocation-optimization">The merged allocation optimization
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Aug 6<span class="sub">th</span> 2022
+</span></div><div class="item-nav"><a href="#DIID-#12---Simple-HTTP-server">DIID #12 - Simple HTTP server
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created May 15<span class="sub">th</span> 2022
 </span></div><div class="item-nav"><a href="#DIID-#11---Write-current-date-on-a-PNG">DIID #11 - Write current date on a PNG
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created May 15<span class="sub">th</span> 2022
@@ -594,7 +596,83 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Dec 18<span class="sub">th</span> 2021
 </span></div><div class="item-nav"><a href="#Smallest-valid-D-program">Smallest valid D program
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Oct 19<span class="sub">th</span> 2016
-</span></div></nav><div class="container"><a name="DIID-#12---Simple-HTTP-server"></a><div class="idiom"><a class="permalink" href="#DIID-#12---Simple-HTTP-server">Link
+</span></div></nav><div class="container"><a name="The-merged-allocation-optimization"></a><div class="idiom"><a class="permalink" href="#The-merged-allocation-optimization">Link
+</a><h1 id="the-merged-allocation-optimization">The merged allocation optimization</h1>
+<p>One of the most suprisingly effective optimization is to merge your array allocations together, if they have a chance to be accessed together. 
+</p>
+<p>You can do that with eg. <code class="prettyprint">MergedAlloc</code>, a handy way to do that in an aggregate, that supports alignment, does the memory reclaim, and supports both pointers and slices.
+</p>
+<h2 id="usage"> Usage</h2>
+<p>Consider the following <code class="prettyprint">struct</code>. It process things with intermediate buffers, who themselved have alignment requirements.
+</p>
+<pre class="prettyprint"><code>struct A
+{
+    float[] buf0;
+    int[]   buf1;
+    double* buf2;
+
+    void init(int n)
+    {
+        // allocate arrays
+        buf0 = allocateAligned!float(n, 16);
+        buf1 = allocateAligned!int(n, 16);
+        buf2 = allocateAligned!double(n, 16).ptr;
+    }
+
+    ~this()
+    {
+        // reclaim memory
+        deallocate(buf0); 
+        deallocate(buf1);
+        deallocate(buf2);
+    }
+
+    void process(float[] input)
+    {
+        // Do things with buf0, buf1, buf2, and input
+    }
+}
+</code></pre><p>Let's introduce <code class="prettyprint">MergedAlloc</code> instead to have all the arrays in a single <code class="prettyprint">malloc</code> call.
+</p>
+<pre class="prettyprint"><code>struct A
+{
+    float[] buf0;
+    int[]   buf1;
+    double* buf2;
+    MergedAllocation mergedAlloc;
+
+    void init(int n)
+    {
+        mergedAlloc.start();       // initialize merged alloc counter
+        layout(n);                 // first layout call count the bytes
+        mergedAlloc.allocate();    // make single allocation
+        layout(n);                 // second layout call sets the final pointers
+    }
+
+    void layout(int n)
+    {
+        mergedAlloc.allocArray(buf0, n, 16);
+        mergedAlloc.allocArray(buf1, n, 16);
+        mergedAlloc.alloc(buf2, n, 16);
+    }
+
+    void process(float[] input)
+    {
+        // Do things with buf0, buf1, buf2, and input
+    }
+}
+</code></pre><p>The <code class="prettyprint">layout</code> functions is called twice:
+</p>
+<ul>
+<li>first call is as if the allocation was at address <code class="prettyprint">0</code>, and simply count the bytes
+</li>
+<li>second call sets the right pointers into fields, into the merge allocation
+</li>
+</ul>
+<h2 id="mergedalloc-implementation"> <code class="prettyprint">MergedAlloc</code> implementation</h2>
+<p>See its <a href="https://github.com/AuburnSounds/Dplug/blob/master/core/dplug/core/vec.d#L593">source code</a>.
+</p>
+</div><a name="DIID-#12---Simple-HTTP-server"></a><div class="idiom"><a class="permalink" href="#DIID-#12---Simple-HTTP-server">Link
 </a><h1 id="diid-12-simple-http-server"> DIID #12 - Simple HTTP server</h1>
 <p><strong>Solution:</strong> Use the <code class="prettyprint">arsd-occicial:cgi</code> <a href="https://code.dlang.org/packages/arsd-official%3Acgi">package</a>.
 </p>
