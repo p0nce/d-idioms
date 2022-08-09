@@ -1,6 +1,6 @@
 # DIID #12 - Simple HTTP server
 
-**Solution:** Use the `arsd-occicial:cgi` [package](https://code.dlang.org/packages/arsd-official%3Acgi).
+**Solution:** Use the `arsd-official:cgi` [package](https://code.dlang.org/packages/arsd-official%3Acgi).
 
 ## `dub.json`
 
