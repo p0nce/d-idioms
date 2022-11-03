@@ -32,7 +32,8 @@ T[n] s(T, size_t n)(auto ref T[n] array) pure nothrow @nogc @safe
 
 void main() @nogc
 {
-    int[] myDynamicArray = [1, 2, 3].s; // Slice that static array which is on stack
+    auto tmp = [1, 2, 3].s; // Create the static array on the stack
+    int[] myDynamicArray = tmp[]; // Slice that static array which is on stack
 
     // Use myDynamicArray...
 }
