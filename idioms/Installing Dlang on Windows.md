@@ -4,17 +4,7 @@ _This idiom by Stephane Ribas._
 
 _Installing the D programming language on Windows can be sometimes difficult. This guide is intended to provide a beginner-friendly tutorial for foolproof D installation, using Visual Studio + VisualD._
 
-## **General plan to install D language, LDC, etc.**
-
-Install & compile D code by following those steps:
-
-1. 1. Install Microsoft Visual Studio.
-2. 2. Add C++ & Windows SDK libs.
-3. 3. Install Visual D.
-4. 4. Check the LDC path in the `PATH` environment variable.
-5. 5. Open a terminal window, check that DUB and compilers are working.
-
-_The order is important!_
+_The order of the steps is important!_
 
 ## **1. Install Microsoft Visual Studio IDE + Libraries**
 

@@ -406,10 +406,12 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <title>d-idioms - Idioms for the D programming language</title></head><body><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-71912218-1', 'auto');ga('send', 'pageview');</script><script src="highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title-container"><div id="title">Idioms for the D Programming Language
-<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#The-merged-allocation-optimization">The merged allocation optimization
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Aug 6<span class="sub">th</span> 2022
+<br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#@nogc-Array-Literals&#x3A;-Breaking-the-Limits">@nogc Array Literals&#x3A; Breaking the Limits
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Nov 3<span class="sub">rd</span> 2022, created Oct 23<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#DIID-#12---Simple-HTTP-server">DIID #12 - Simple HTTP server
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created May 15<span class="sub">th</span> 2022
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Aug 9<span class="sub">th</span> 2022, created May 15<span class="sub">th</span> 2022
+</span></div><div class="item-nav"><a href="#The-merged-allocation-optimization">The merged allocation optimization
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Aug 6<span class="sub">th</span> 2022
 </span></div><div class="item-nav"><a href="#DIID-#11---Write-current-date-on-a-PNG">DIID #11 - Write current date on a PNG
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created May 15<span class="sub">th</span> 2022
 </span></div><div class="item-nav"><a href="#Installing-Dlang-on-Windows">Installing Dlang on Windows
@@ -420,8 +422,6 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Mar 14<span class="sub">th</span> 2022
 </span></div><div class="item-nav"><a href="#&#x2F;+-+&#x2F;-nestable-comments-and-version(none)">&#x2F;+ +&#x2F; nestable comments and version(none)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Feb 22<span class="sub">th</span> 2022, created Mar 22<span class="sub">th</span> 2015
-</span></div><div class="item-nav"><a href="#@nogc-Array-Literals&#x3A;-Breaking-the-Limits">@nogc Array Literals&#x3A; Breaking the Limits
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Feb 22<span class="sub">th</span> 2022, created Oct 23<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#Adding-or-removing-an-element-from-arrays">Adding or removing an element from arrays
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Feb 22<span class="sub">th</span> 2022, created Mar 22<span class="sub">th</span> 2015
 </span></div><div class="item-nav"><a href="#assert(false)-is-special">assert(false) is special
@@ -596,7 +596,119 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Dec 18<span class="sub">th</span> 2021
 </span></div><div class="item-nav"><a href="#Smallest-valid-D-program">Smallest valid D program
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Oct 19<span class="sub">th</span> 2016
-</span></div></nav><div class="container"><a name="The-merged-allocation-optimization"></a><div class="idiom"><a class="permalink" href="#The-merged-allocation-optimization">Link
+</span></div></nav><div class="container"><a name="@nogc-Array-Literals&#x3A;-Breaking-the-Limits"></a><div class="idiom"><a class="permalink" href="#@nogc-Array-Literals&#x3A;-Breaking-the-Limits">Link
+</a><h1 id="nogc-array-literals-breaking-the-limits">@nogc Array Literals: Breaking the Limits</h1>
+<h2 id="array-literals-may-allocate"> Array literals may allocate</h2>
+<p>The most vexing limitation of <code class="prettyprint">@nogc</code> is that array literals generally can't be used anymore.
+</p>
+<pre class="prettyprint"><code>void main() @nogc
+{
+    // Works: the array literal is used as a value.
+    int[3] myStaticArray = [1, 2, 3]; 
+
+    // Doesn't work.
+    int[] myDynamicArray = [1, 2, 3];  // Error: array literal in @nogc function 
+                                       // may cause GC allocation
+}
+</code></pre><p>Indeed, such literals may well <strong>allocate a new array on the GC heap</strong>.
+</p>
+<h2 id="the-little-template-that-could"> The little template that could</h2>
+<p>Fortunately, like often in the D world, there is an easy work-around to lift the limitations.
+</p>
+<pre class="prettyprint"><code>T[n] s(T, size_t n)(auto ref T[n] array) pure nothrow @nogc @safe
+{
+    return array;
+}
+
+void main() @nogc
+{
+    auto tmp = [1, 2, 3].s; // Create the static array on the stack
+    int[] myDynamicArray = tmp[]; // Slice that static array which is on stack
+
+    // Use myDynamicArray...
+}
+</code></pre><h2 id="beware-of-the-stack-lifetime"> Beware of the stack lifetime</h2>
+<p>That work-around slices the stack allocated array and turn it into a slice. This would lead to memory corruption if the reference escapes. 
+</p>
+<p>Do not fear! The compiler warns you of escaped references to the stack, even in unsafe D.
+</p>
+<pre class="prettyprint"><code>// This function is illegal
+int[] doNotDoThat() @nogc
+{
+    return [1, 2, 3].s; // Error: escaping reference to stack allocated 
+                        // value returned by s([1, 2, 3])
+}
+</code></pre><p>Instead, duplicate this slice <code class="prettyprint">@nogc</code>-style, for example with <code class="prettyprint">malloc</code>. <strong>You are now able to use array literals in</strong> <code class="prettyprint">@nogc</code> <strong>code.</strong>
+</p>
+<p><em>This idiom originated from</em> <a href="https://github.com/Dgame">Randy Schütt</a>. 
+</p>
+</div><a name="DIID-#12---Simple-HTTP-server"></a><div class="idiom"><a class="permalink" href="#DIID-#12---Simple-HTTP-server">Link
+</a><h1 id="diid-12-simple-http-server"> DIID #12 - Simple HTTP server</h1>
+<p><strong>Solution:</strong> Use the <code class="prettyprint">arsd-official:cgi</code> <a href="https://code.dlang.org/packages/arsd-official%3Acgi">package</a>.
+</p>
+<h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
+<pre class="prettyprint"><code>{
+    "name": "simple-HTTP-server",
+    "dependencies":
+    {
+        "arsd-official:cgi": "~&gt;10.0"
+    }
+}
+</code></pre><h2 id="index-html"> <code class="prettyprint">index.html</code></h2>
+<pre class="prettyprint"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello&lt;/h1&gt;
+    &lt;p&gt;This page brought to you by D.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h2 id="source-main-d"> <code class="prettyprint">source/main.d</code></h2>
+<pre class="prettyprint"><code>static import std.file;
+import arsd.cgi;
+import std.format;
+import std.stdio;
+
+void myHTTPServer(Cgi cgi) 
+{
+    string url = cgi.pathInfo;
+    writefln("GET %s", url);
+    switch(cgi.pathInfo) 
+    {
+        case "/style.css":
+            cgi.setResponseContentType("text/css");
+            cgi.write("body { color: red; }");
+            break;
+
+        case "/":
+            cgi.setResponseContentType("text/html");
+            cgi.write(std.file.read("index.html"));
+            break;
+
+        default:
+            cgi.setResponseStatus(404);
+    }
+    cgi.close();
+}
+
+mixin GenericMain!myHTTPServer;
+</code></pre><h2 id="how-to-run"> How to run</h2>
+<p><code class="prettyprint">dub -- --port 8080</code> then open <code class="prettyprint">http://localhost:8080/</code>.
+</p>
+<p>Get <code class="prettyprint">cgi.d</code> documentation <a href="https://arsd-official.dpldocs.info/arsd.cgi.html">here</a>.<br/>Get the source code for all DIID examples <a href="https://github.com/p0nce/DIID">here</a>.
+</p>
+<h2 id="alternatives"> Alternatives:</h2>
+<ul>
+<li><a href="https://vibed.org/">vibe.d</a>
+</li>
+<li><a href="https://code.dlang.org/packages/serverino">serverino</a>
+</li>
+<li><a href="https://code.dlang.org/packages/archttp">archttp</a>
+</li>
+</ul>
+</div><a name="The-merged-allocation-optimization"></a><div class="idiom"><a class="permalink" href="#The-merged-allocation-optimization">Link
 </a><h1 id="the-merged-allocation-optimization">The merged allocation optimization</h1>
 <p>One of the most suprisingly effective optimization is to merge your array allocations together, if they have a chance to be accessed together. 
 </p>
@@ -672,72 +784,6 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <h2 id="mergedalloc-implementation"> <code class="prettyprint">MergedAlloc</code> implementation</h2>
 <p>See its <a href="https://github.com/AuburnSounds/Dplug/blob/master/core/dplug/core/vec.d#L593">source code</a>.
 </p>
-</div><a name="DIID-#12---Simple-HTTP-server"></a><div class="idiom"><a class="permalink" href="#DIID-#12---Simple-HTTP-server">Link
-</a><h1 id="diid-12-simple-http-server"> DIID #12 - Simple HTTP server</h1>
-<p><strong>Solution:</strong> Use the <code class="prettyprint">arsd-official:cgi</code> <a href="https://code.dlang.org/packages/arsd-official%3Acgi">package</a>.
-</p>
-<h2 id="dub-json"> <code class="prettyprint">dub.json</code></h2>
-<pre class="prettyprint"><code>{
-    "name": "simple-HTTP-server",
-    "dependencies":
-    {
-        "arsd-official:cgi": "~&gt;10.0"
-    }
-}
-</code></pre><h2 id="index-html"> <code class="prettyprint">index.html</code></h2>
-<pre class="prettyprint"><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;link rel="stylesheet" href="style.css"&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;Hello&lt;/h1&gt;
-    &lt;p&gt;This page brought to you by D.&lt;/p&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</code></pre><h2 id="source-main-d"> <code class="prettyprint">source/main.d</code></h2>
-<pre class="prettyprint"><code>static import std.file;
-import arsd.cgi;
-import std.format;
-import std.stdio;
-
-void myHTTPServer(Cgi cgi) 
-{
-    string url = cgi.pathInfo;
-    writefln("GET %s", url);
-    switch(cgi.pathInfo) 
-    {
-        case "/style.css":
-            cgi.setResponseContentType("text/css");
-            cgi.write("body { color: red; }");
-            break;
-
-        case "/":
-            cgi.setResponseContentType("text/html");
-            cgi.write(std.file.read("index.html"));
-            break;
-
-        default:
-            cgi.setResponseStatus(404);
-    }
-    cgi.close();
-}
-
-mixin GenericMain!myHTTPServer;
-</code></pre><h2 id="how-to-run"> How to run</h2>
-<p><code class="prettyprint">dub -- --port 8080</code> then open <code class="prettyprint">http://localhost:8080/</code>.
-</p>
-<p>Get <code class="prettyprint">cgi.d</code> documentation <a href="https://arsd-official.dpldocs.info/arsd.cgi.html">here</a>.<br/>Get the source code for all DIID examples <a href="https://github.com/p0nce/DIID">here</a>.
-</p>
-<h2 id="alternatives"> Alternatives:</h2>
-<ul>
-<li><a href="https://vibed.org/">vibe.d</a>
-</li>
-<li><a href="https://code.dlang.org/packages/serverino">serverino</a>
-</li>
-<li><a href="https://code.dlang.org/packages/archttp">archttp</a>
-</li>
-</ul>
 </div><a name="DIID-#11---Write-current-date-on-a-PNG"></a><div class="idiom"><a class="permalink" href="#DIID-#11---Write-current-date-on-a-PNG">Link
 </a><h1 id="diid-11-write-current-date-on-a-png"> DIID #11 - Write current date on a PNG</h1>
 <p><strong>Solution:</strong> Use the <code class="prettyprint">dplug:graphics</code> <a href="https://code.dlang.org/packages/dplug%3Agraphics">package</a>.
@@ -786,22 +832,7 @@ void main(string[] args)
 </p>
 <p><em>Installing the D programming language on Windows can be sometimes difficult. This guide is intended to provide a beginner-friendly tutorial for foolproof D installation, using Visual Studio + VisualD.</em>
 </p>
-<h2 id="general-plan-to-install-d-language-ldc-etc"> <strong>General plan to install D language, LDC, etc.</strong></h2>
-<p>Install & compile D code by following those steps:
-</p>
-<ol>
-<li>1. Install Microsoft Visual Studio.
-</li>
-<li>2. Add C++ & Windows SDK libs.
-</li>
-<li>3. Install Visual D.
-</li>
-<li>4. Check the LDC path in the <code class="prettyprint">PATH</code> environment variable.
-</li>
-<li>5. Open a terminal window, check that DUB and compilers are working.
-</li>
-</ol>
-<p><em>The order is important!</em>
+<p><em>The order of the steps is important!</em>
 </p>
 <h2 id="1-install-microsoft-visual-studio-ide-libraries"> <strong>1. Install Microsoft Visual Studio IDE + Libraries</strong></h2>
 <p>Before starting the D language installation, we recommend you to install FIRST the Microsoft Visual Studio Community IDE:
@@ -1049,52 +1080,7 @@ int main(string[] args)
 </code></pre><p>Indeed, <code class="prettyprint">none</code> is a special version identifier that cannot be set.
 </p>
 <pre class="prettyprint"><code>version = none; // Error: version identifier 'none' is reserved and cannot be set
-</code></pre></div><a name="@nogc-Array-Literals&#x3A;-Breaking-the-Limits"></a><div class="idiom"><a class="permalink" href="#@nogc-Array-Literals&#x3A;-Breaking-the-Limits">Link
-</a><h1 id="nogc-array-literals-breaking-the-limits">@nogc Array Literals: Breaking the Limits</h1>
-<h2 id="array-literals-may-allocate"> Array literals may allocate</h2>
-<p>The most vexing limitation of <code class="prettyprint">@nogc</code> is that array literals generally can't be used anymore.
-</p>
-<pre class="prettyprint"><code>void main() @nogc
-{
-    // Works: the array literal is used as a value.
-    int[3] myStaticArray = [1, 2, 3]; 
-
-    // Doesn't work.
-    int[] myDynamicArray = [1, 2, 3];  // Error: array literal in @nogc function 
-                                       // may cause GC allocation
-}
-</code></pre><p>Indeed, such literals may well <strong>allocate a new array on the GC heap</strong>.
-</p>
-<h2 id="the-little-template-that-could"> The little template that could</h2>
-<p>Fortunately, like often in the D world, there is an easy work-around to lift the limitations.
-</p>
-<pre class="prettyprint"><code>T[n] s(T, size_t n)(auto ref T[n] array) pure nothrow @nogc @safe
-{
-    return array;
-}
-
-void main() @nogc
-{
-    int[] myDynamicArray = [1, 2, 3].s; // Slice that static array which is on stack
-
-    // Use myDynamicArray...
-}
-</code></pre><h2 id="beware-of-the-stack-lifetime"> Beware of the stack lifetime</h2>
-<p>That work-around slices the stack allocated array and turn it into a slice. This would lead to memory corruption if the reference escapes. 
-</p>
-<p>Do not fear! The compiler warns you of escaped references to the stack, even in unsafe D.
-</p>
-<pre class="prettyprint"><code>// This function is illegal
-int[] doNotDoThat() @nogc
-{
-    return [1, 2, 3].s; // Error: escaping reference to stack allocated 
-                        // value returned by s([1, 2, 3])
-}
-</code></pre><p>Instead, duplicate this slice <code class="prettyprint">@nogc</code>-style, for example with <code class="prettyprint">malloc</code>. <strong>You are now able to use array literals in</strong> <code class="prettyprint">@nogc</code> <strong>code.</strong>
-</p>
-<p><em>This idiom originated from</em> <a href="https://github.com/Dgame">Randy Schütt</a>. 
-</p>
-</div><a name="Adding-or-removing-an-element-from-arrays"></a><div class="idiom"><a class="permalink" href="#Adding-or-removing-an-element-from-arrays">Link
+</code></pre></div><a name="Adding-or-removing-an-element-from-arrays"></a><div class="idiom"><a class="permalink" href="#Adding-or-removing-an-element-from-arrays">Link
 </a><h1 id="adding-or-removing-an-element-from-arrays">Adding or removing an element from arrays</h1>
 <p>Appending an element to a dynamic array:
 </p>
