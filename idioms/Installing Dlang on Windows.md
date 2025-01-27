@@ -12,11 +12,11 @@ Before starting the D language installation, we recommend you to install FIRST t
 
 1. To do so you will have to install **Microsoft Visual Installer** that can be downloaded from Microsoft Visual Studio [official website](https://visualstudio.microsoft.com).
 
-2. Once you have downloaded this executable and installed it on your PC, launch it and install the free **Microsoft Visual Studio Community Edition** (2019 version or above).
+2. Once you have downloaded this executable and installed it on your PC, launch it and install the free **Microsoft Visual Studio Community Edition** (2022 version or above). _On Windows arm64, you're out of luck as VisualD won't work, purchase an older x86_64 version._
 
 ![](assets/vs-community.png)
 
-3. **IMPORTANT:** Once installed, you need to install Windows SDK and C/C++ libs.
+3. **IMPORTANT:** Once installed, you need to install Windows SDK and C/C++ libs. Check "C/C++ desktop" choice in the VS installer.
 
 
 ## **2. Install librairies**
@@ -37,7 +37,7 @@ Before starting the D language installation, we recommend you to install FIRST t
 
 4. The program will show you all the Windows SDK libraries that you can install on your system.
 
-5. Install ALL OF THEM.
+5. Install ALL OF THEM. It's not clear how many Windows SDK you need, probably you need just one. But it's better safe than sorry!
 
 
 ### **Windows C++/C libs**
