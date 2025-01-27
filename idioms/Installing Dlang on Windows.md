@@ -12,12 +12,14 @@ Before starting the D language installation, we recommend you to install FIRST t
 
 1. To do so you will have to install **Microsoft Visual Installer** that can be downloaded from Microsoft Visual Studio [official website](https://visualstudio.microsoft.com).
 
-2. Once you have downloaded this executable and installed it on your PC, launch it and install the free **Microsoft Visual Studio Community Edition** (2022 version or above). _On Windows arm64, you're out of luck as VisualD won't work, purchase an older x86_64 version._
+2. Once you have downloaded this executable and installed it on your PC, launch it and install the free **Microsoft Visual Studio Community Edition** (2022 version or above). 
 
 ![](assets/vs-community.png)
 
 3. **IMPORTANT:** Once installed, you need to install Windows SDK and C/C++ libs. Check "C/C++ desktop" choice in the VS installer.
 
+4. **IMPORTANT:** On Windows arm64, you're out of luck as VisualD won't work on arm64, and you can't
+   opt out of the arm64 version of Visual Studio. Maybe purchase an older VS version? Or go VSCode instead.
 
 ## **2. Install librairies**
 
@@ -88,8 +90,9 @@ If you don't want to do this (you are not lazy) :
 
 **Here is a detailed guide to set your environment variables:** [https://www.computerhope.com/issues/ch000549.htm](https://www.computerhope.com/issues/ch000549.htm)
 
-_Note: environment variables are inherited from parent process to child process. After modifying them, you will have to restart your IDE, or terminal window, in order for them to udpate._
+_Note: Environment variables are inherited from parent process to child process. After modifying them, you will have to restart your IDE, or terminal window, in order for them to udpate._
 
+> _**Pro-tip:** Use WIN+R then type `sysdm.cpl` to setup environment variables._
 
 ## **5. This is the END...**
 

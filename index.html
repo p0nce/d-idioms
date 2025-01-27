@@ -407,7 +407,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <script>hljs.initHighlightingOnLoad();</script>
 <header><img id="logo" src="d-logo.svg"></img><div id="title-container"><div id="title">Idioms for the D Programming Language
 <br><div id="sub-title"><b>ἰδῐόω</b> (idióō): peculiarity, specific property, unique feature.</div></div></div></header><nav><div class="item-nav"><a href="#Installing-Dlang-on-Windows">Installing Dlang on Windows
-</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Dec 1<span class="sub">st</span> 2024, created Apr 15<span class="sub">th</span> 2022
+</a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Jan 27<span class="sub">th</span> 2025, created Apr 15<span class="sub">th</span> 2022
 </span></div><div class="item-nav"><a href="#@nogc-Array-Literals&#x3A;-Breaking-the-Limits">@nogc Array Literals&#x3A; Breaking the Limits
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Modified Nov 3<span class="sub">rd</span> 2022, created Oct 23<span class="sub">th</span> 2016
 </span></div><div class="item-nav"><a href="#DIID-#12---Simple-HTTP-server">DIID #12 - Simple HTTP server
@@ -611,7 +611,7 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 <li><p>To do so you will have to install <strong>Microsoft Visual Installer</strong> that can be downloaded from Microsoft Visual Studio <a href="https://visualstudio.microsoft.com">official website</a>.
 </p>
 </li>
-<li><p>Once you have downloaded this executable and installed it on your PC, launch it and install the free <strong>Microsoft Visual Studio Community Edition</strong> (2022 version or above). <em>On Windows arm64, you're out of luck as VisualD won't work, purchase an older x86</em>64 version._
+<li><p>Once you have downloaded this executable and installed it on your PC, launch it and install the free <strong>Microsoft Visual Studio Community Edition</strong> (2022 version or above). 
 </p>
 </li>
 </ol>
@@ -619,6 +619,9 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </p>
 <ol>
 <li><p><strong>IMPORTANT:</strong> Once installed, you need to install Windows SDK and C/C++ libs. Check "C/C++ desktop" choice in the VS installer.
+</p>
+</li>
+<li><p><strong>IMPORTANT:</strong> On Windows arm64, you're out of luck as VisualD won't work on arm64, and you can't<br/>   opt out of the arm64 version of Visual Studio. Maybe purchase an older VS version? Or go VSCode instead.
 </p>
 </li>
 </ol>
@@ -717,8 +720,11 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </p>
 <p><strong>Here is a detailed guide to set your environment variables:</strong> <a href="https://www.computerhope.com/issues/ch000549.htm">https://www.computerhope.com/issues/ch000549.htm</a>
 </p>
-<p><em>Note: environment variables are inherited from parent process to child process. After modifying them, you will have to restart your IDE, or terminal window, in order for them to udpate.</em>
+<p><em>Note: Environment variables are inherited from parent process to child process. After modifying them, you will have to restart your IDE, or terminal window, in order for them to udpate.</em>
 </p>
+<blockquote><p> <em>**Pro-tip:** Use WIN+R then type `sysdm.cpl` to setup environment variables.</em>
+</p>
+</blockquote>
 <h2 id="5-this-is-the-end"> <strong>5. This is the END...</strong></h2>
 <p>Open a <code class="prettyprint">CMD.exe</code> and try <code class="prettyprint">dub --version</code>. You should get an answer from the system with a version number. You can now start writing D code & compile it!
 </p>
