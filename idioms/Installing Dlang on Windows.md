@@ -18,8 +18,7 @@ Before starting the D language installation, we recommend you to install FIRST t
 
 3. **IMPORTANT:** Once installed, you need to install Windows SDK and C/C++ libs. Check "C/C++ desktop" choice in the VS installer.
 
-4. **IMPORTANT:** On Windows arm64, you're out of luck as VisualD won't work on arm64, and you can't
-   opt out of the arm64 version of Visual Studio. Maybe purchase an older VS version? Or go VSCode instead.
+4. **IMPORTANT:** On Windows arm64, use Visual Studio 2022+ (or paid Visual Studio 2019), LDC 1.41 or later, and VisualD 1.40 or later. Use then the "Visual Studio" debugger.
 
 ## **2. Install librairies**
 
