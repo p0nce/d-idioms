@@ -1,7 +1,7 @@
 Precise timestamps in milliseconds
 ==================================
 
-`core.time.MonoTime.currTime()` returns the most precise (as opposed to *accurate*) available clock.
+`core.time.MonoTime.currTime()` returns the most precise available clock.
 
 ```
 /// Returns: Most precise clock ticks, in milliseconds.
